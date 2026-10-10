@@ -23,7 +23,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from build_mod import FRONTIER, HEARTLAND, find_game, steam_libraries  # noqa: E402
+from build_mod import PROFILES, find_game, steam_libraries  # noqa: E402
+
+HEARTLAND = PROFILES["vanilla"]["heartland"]
+FRONTIER = PROFILES["vanilla"]["frontier"]
 
 APP_ID = "394360"
 COLD_WAR = re.compile(r"cold war|iron curtain|aftermath|red wall|world divided", re.I)

@@ -72,4 +72,67 @@ characters = {
 			logistics_skill = 3
 		}
 	}
+
+	# Union boss of the UMW Underground. When the Assembly takes power, he leads it.
+	APL_big_john_kessler = {
+		name = APL_big_john_kessler
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/APL/APL_big_john_kessler.dds"
+				small = "gfx/leaders/APL/APL_big_john_kessler_small.dds"
+			}
+		}
+		country_leader = {
+			ideology = {{ASSEMBLY_SUBIDEOLOGY}}
+			traits = { APL_voice_of_the_coal_camps }
+			expire = "2000.1.1.1"
+			id = -1
+		}
+	}
+
+	# A snake-handling preacher from Jolo, West Virginia. The serpents have never bitten him.
+	APL_reverend_ezra_pike = {
+		name = APL_reverend_ezra_pike
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/APL/APL_reverend_ezra_pike.dds"
+				small = "gfx/leaders/APL/APL_reverend_ezra_pike_small.dds"
+			}
+		}
+		advisor = {
+			slot = political_advisor
+			idea_token = APL_reverend_ezra_pike_advisor
+			allowed = {
+				original_tag = APL
+			}
+			traits = { APL_serpent_preacher }
+			cost = 100
+			ai_will_do = {
+				factor = 1
+			}
+		}
+	}
+
+	# An Oak Ridge physicist who walked into the fog with a Geiger counter and came out a believer.
+	APL_dr_lucille_varner = {
+		name = APL_dr_lucille_varner
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/APL/APL_dr_lucille_varner.dds"
+				small = "gfx/leaders/APL/APL_dr_lucille_varner_small.dds"
+			}
+		}
+		advisor = {
+			slot = political_advisor
+			idea_token = APL_dr_lucille_varner_advisor
+			allowed = {
+				original_tag = APL
+			}
+			traits = { APL_atomic_occultist }
+			cost = 150
+			ai_will_do = {
+				factor = 1
+			}
+		}
+	}
 }

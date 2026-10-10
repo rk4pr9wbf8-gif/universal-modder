@@ -1,0 +1,99 @@
+# Appalachia's real government: the Coven of Thirteen rules from behind the Veil, but the coal camps,
+# the union halls and the county courthouses never stopped meeting. The balance runs from the Coven
+# (left, -1) to the Mountain Assembly (right, +1). Enabled at startup by APL_setup_government.
+APL_coven_balance = {
+	initial_value = -0.3
+	left_side = APL_the_coven
+	right_side = APL_the_assembly
+	decision_category = APL_council_category
+
+	range = {
+		id = APL_uneasy_council
+		min = -0.1
+		max = 0.1
+		modifier = {
+			stability_factor = 0.05
+		}
+	}
+
+	side = {
+		id = APL_the_coven
+		icon = GFX_bop_APL_coven_side
+		range = {
+			id = APL_coven_ascendant
+			min = -0.4
+			max = -0.1
+			modifier = {
+				war_support_factor = 0.05
+				political_power_gain = 0.10
+			}
+		}
+		range = {
+			id = APL_rule_of_the_thirteen
+			min = -0.75
+			max = -0.4
+			modifier = {
+				war_support_factor = 0.10
+				research_speed_factor = 0.05
+				stability_factor = -0.05
+			}
+		}
+		range = {
+			id = APL_black_theocracy
+			min = -1
+			max = -0.75
+			modifier = {
+				war_support_factor = 0.15
+				army_attack_factor = 0.10
+				stability_factor = -0.10
+				monthly_population = -0.10
+			}
+			on_activate = {
+				limit = { NOT = { has_country_flag = APL_theocracy_declared } }
+				set_country_flag = APL_theocracy_declared
+				country_event = { id = appalachia_gov.100 days = 1 }
+			}
+		}
+	}
+
+	side = {
+		id = APL_the_assembly
+		icon = GFX_bop_APL_assembly_side
+		range = {
+			id = APL_miners_voice
+			min = 0.1
+			max = 0.4
+			modifier = {
+				industrial_capacity_factory = 0.05
+				stability_factor = 0.03
+			}
+		}
+		range = {
+			id = APL_assembly_ascendant
+			min = 0.4
+			max = 0.75
+			modifier = {
+				industrial_capacity_factory = 0.08
+				consumer_goods_factor = -0.05
+				stability_factor = 0.08
+				war_support_factor = -0.05
+			}
+		}
+		range = {
+			id = APL_peoples_assembly
+			min = 0.75
+			max = 1
+			modifier = {
+				industrial_capacity_factory = 0.12
+				stability_factor = 0.12
+				war_support_factor = -0.10
+				army_attack_factor = -0.05
+			}
+			on_activate = {
+				limit = { NOT = { has_country_flag = APL_assembly_took_power } }
+				set_country_flag = APL_assembly_took_power
+				country_event = { id = appalachia_gov.101 days = 1 }
+			}
+		}
+	}
+}

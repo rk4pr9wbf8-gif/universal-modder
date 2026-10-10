@@ -75,6 +75,37 @@
 7. A zip download (or git) doesn't keep empty folders. build_mod.py crashed on a real install writing into
    `history/countries`, so it now creates the folders first.
 
+## Round 3: Cold War submod, government, economy, research, cheats
+- The user wanted a Cold War timeline, revamped nations and research trees, photorealistic icons, more
+  decisions, a realistic government, an economy and a cheat menu. They chose to build on Cold War Iron
+  Curtain: A World Divided (Workshop 1458561226) rather than write a total conversion.
+- The fal key is rejected (401), and the MCP and REST both fail. Photorealistic art waits on a valid
+  `FAL_KEY`. The rest of the art is procedural.
+- `survey_base_mod.py` reads the base mod layered over vanilla (respecting `replace_path`) and writes a
+  names-only report. On CWIC 0.9 for HoI4 1.19.3:
+  - starts 1949.5.23; 2045 states; 545 tags;
+  - money in the variable `currentMoney`;
+  - rifles are `infantry_equip_1`-`5`, not `infantry_weapons`;
+  - ideologies are split (Social_Democratic/social_democrat, etc.); neutrality/despotism still exist;
+  - America is split into regions. There are two states called "Charleston": 364 is South Carolina's, 859
+    is West Virginia's.
+- The user's CWIC crash was `EXCEPTION_ACCESS_VIOLATION` in `atio6axx.dll` (the AMD OpenGL driver), launched
+  with `--opengl`. It's not a script error. Fix: the DirectX 11 renderer.
+- The builder now has profiles (vanilla by state name; CWIC by id with the name checked), layered sources,
+  `{{TOKENS}}` filled in every built file (ideology names), and a `dependencies` entry in the descriptor.
+- Government: a balance of power `APL_coven_balance` with 7 ranges; extremes fire events; the Assembly
+  event switches `ruling_party` and recruits a leader whose sub-ideology is a token.
+- Economy: the `APL_treasury` variable, ticked by a self-scheduling monthly event; `num_divisions` is a
+  built-in variable for upkeep; the debt penalty is a dynamic modifier with `remove_trigger`.
+- Research: timed decisions (`days_remove` + `remove_effect`) paid with `custom_cost_trigger` /
+  `custom_cost_text`. They add to variables that the `APL_black_library` dynamic modifier reads.
+
+### Gotchas found this round
+8. A `{{TOKEN}}` mentioned in a template comment gets filled too. A multi-line value then spills out of the
+   comment and breaks the file. validate.py now flags placeholders in comments.
+9. A base mod's `replace_path` hides vanilla's folder, but a submod's files in that folder still load.
+   That's why the submod can add `common/on_actions`, `common/units`, `history/countries` and so on.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are

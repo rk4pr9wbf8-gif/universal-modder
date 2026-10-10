@@ -9,6 +9,7 @@ on_actions = {
 					set_variable = { APL_veil_strength = 100 }
 					set_variable = { APL_veil_cap = 100 }
 					set_variable = { APL_veil_decay = 1 }
+					APL_setup_government = yes
 					add_equipment_to_stockpile = {
 						type = APL_binding_charms_1
 						amount = 1500

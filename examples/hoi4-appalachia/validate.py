@@ -85,10 +85,20 @@ def values(items, key):
 
 # --------------------------------------------------------------------------- loading
 
+TOKEN_STANDINS = {"ASSEMBLY_PARTY": "democratic", "ASSEMBLY_SUBIDEOLOGY": "socialism", "TECHS": "tech_support = 1"}
+
+
 def load_all():
     trees = {}
     for f in sorted(MOD.rglob("*.txt")) + sorted(MOD.rglob("*.gfx")) + sorted(TEMPLATES.glob("*.txt")):
-        trees[f] = parse(f.read_text(encoding="utf-8-sig"), str(f.relative_to(HERE)))
+        # {{TOKENS}} are filled by build_mod.py per world; any valid word stands in for them here.
+        text = re.sub(r"\{\{(\w+)\}\}", lambda m: TOKEN_STANDINS.get(m.group(1), "1"), f.read_text(encoding="utf-8-sig"))
+        trees[f] = parse(text, str(f.relative_to(HERE)))
+    # a {{TOKEN}} inside a comment gets filled too, and a multi-line value then spills out of the comment
+    for f in sorted(MOD.rglob("*.txt")) + sorted(TEMPLATES.glob("*.txt")):
+        for n, line in enumerate(f.read_text(encoding="utf-8-sig").splitlines(), 1):
+            if "#" in line and "{{" in line.split("#", 1)[1]:
+                PROBLEMS.append(f"{f.relative_to(HERE)}:{n}: placeholder inside a comment")
     return trees
 
 
@@ -333,11 +343,21 @@ def main():
                     check_block([x for x in v if x[0] not in ("name", "ai_chance", "trigger")], "effect", vocab, w, scripted)
                     for tr in values(v, "trigger"):
                         check_block(tr, "trigger", vocab, w, scripted)
-                elif k in ("available", "allowed", "visible", "target_trigger", "bypass", "can_be_produced") or (
+                elif k in ("on_activate", "on_deactivate"):
+                    check_block([x for x in v if x[0] != "limit"], "effect", vocab, w, scripted)
+                    for lim in values(v, "limit"):
+                        check_block(lim, "trigger", vocab, w, scripted)
+                elif k in ("available", "allowed", "visible", "target_trigger", "bypass", "can_be_produced",
+                           "custom_cost_trigger", "enable", "remove_trigger") or (
                         k == "trigger" and "/events/" in f.as_posix()):
                     check_block(v, "trigger", vocab, w, scripted)
-                elif k == "modifier" and ("/ideas/" in f.as_posix()):
+                elif k == "modifier" and ("/ideas/" in f.as_posix() or "/bop/" in f.as_posix()):
                     check_modifiers(v, vocab, w)
+            if "/dynamic_modifiers/" in f.as_posix():
+                for name, _, body in t:
+                    check_modifiers([x for x in body if x[0] not in ("icon", "enable", "remove_trigger",
+                                                                     "attacker_modifier", "custom_modifier_tooltip")],
+                                    vocab, w)
             if "/country_leader/" in f.as_posix():
                 for blk in values(t, "leader_traits"):
                     for name, _, body in blk:

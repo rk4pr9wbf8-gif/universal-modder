@@ -196,6 +196,10 @@ spriteTypes = {
 		texturefile = "gfx/interface/ideas/APL_bell_witch_torment.dds"
 	}
 	spriteType = {
+		name = "GFX_idea_APL_black_library"
+		texturefile = "gfx/interface/ideas/APL_black_library.dds"
+	}
+	spriteType = {
 		name = "GFX_idea_APL_black_mountain_curse"
 		texturefile = "gfx/interface/ideas/APL_black_mountain_curse.dds"
 	}
@@ -210,6 +214,10 @@ spriteTypes = {
 	spriteType = {
 		name = "GFX_idea_APL_blood_price_eased"
 		texturefile = "gfx/interface/ideas/APL_blood_price_eased.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_cheat_god"
+		texturefile = "gfx/interface/ideas/APL_cheat_god.dds"
 	}
 	spriteType = {
 		name = "GFX_idea_APL_children_of_the_night_spirit"
@@ -280,6 +288,22 @@ spriteTypes = {
 		texturefile = "gfx/interface/decisions/APL_bury_the_bones.dds"
 	}
 	spriteType = {
+		name = "GFX_decision_APL_charms"
+		texturefile = "gfx/interface/decisions/APL_charms.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_cheat"
+		texturefile = "gfx/interface/decisions/APL_cheat.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_cold_war"
+		texturefile = "gfx/interface/decisions/APL_cold_war.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_council"
+		texturefile = "gfx/interface/decisions/APL_council.dds"
+	}
+	spriteType = {
 		name = "GFX_decision_APL_creeping_fog"
 		texturefile = "gfx/interface/decisions/APL_creeping_fog.dds"
 	}
@@ -296,8 +320,16 @@ spriteTypes = {
 		texturefile = "gfx/interface/decisions/APL_lantern.dds"
 	}
 	spriteType = {
+		name = "GFX_decision_APL_library"
+		texturefile = "gfx/interface/decisions/APL_library.dds"
+	}
+	spriteType = {
 		name = "GFX_decision_APL_raise_the_dead"
 		texturefile = "gfx/interface/decisions/APL_raise_the_dead.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_treasury"
+		texturefile = "gfx/interface/decisions/APL_treasury.dds"
 	}
 	spriteType = {
 		name = "GFX_decision_cat_APL_rites"
@@ -306,6 +338,22 @@ spriteTypes = {
 	spriteType = {
 		name = "GFX_decision_cat_APL_lantern"
 		texturefile = "gfx/interface/decisions/APL_lantern_category.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_cat_APL_council_cat"
+		texturefile = "gfx/interface/decisions/APL_council_category.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_cat_APL_cheats"
+		texturefile = "gfx/interface/decisions/APL_cheats_category.dds"
+	}
+	spriteType = {
+		name = "GFX_bop_APL_assembly_side"
+		texturefile = "gfx/interface/bop/APL_assembly_side.dds"
+	}
+	spriteType = {
+		name = "GFX_bop_APL_coven_side"
+		texturefile = "gfx/interface/bop/APL_coven_side.dds"
 	}
 	spriteType = {
 		name = "GFX_report_event_APL_flatwoods"

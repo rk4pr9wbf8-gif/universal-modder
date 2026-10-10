@@ -1,0 +1,125 @@
+add_namespace = appalachia_gov
+
+# Hidden monthly tick: the Hollow Treasury and the drift of power. Re-schedules itself.
+country_event = {
+	id = appalachia_gov.1
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		APL_monthly_economy = yes
+		country_event = { id = appalachia_gov.1 days = 30 }
+		if = {
+			limit = { NOT = { has_country_flag = APL_moot_cooldown } }
+			random = {
+				chance = 8
+				country_event = { id = appalachia_gov.2 days = 3 }
+			}
+		}
+	}
+}
+
+# The Council Moot: every so often the Thirteen and the Assembly meet in the same church.
+country_event = {
+	id = appalachia_gov.2
+	title = appalachia_gov.2.t
+	desc = appalachia_gov.2.d
+	picture = GFX_report_event_APL_witch
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = { flag = APL_moot_cooldown days = 365 value = 1 }
+		}
+	}
+
+	option = {
+		name = appalachia_gov.2.a
+		ai_chance = { factor = 40 }
+		add_power_balance_value = {
+			id = APL_coven_balance
+			value = -0.10
+		}
+		add_political_power = 50
+	}
+	option = {
+		name = appalachia_gov.2.b
+		ai_chance = { factor = 40 }
+		add_power_balance_value = {
+			id = APL_coven_balance
+			value = 0.10
+		}
+		add_stability = 0.03
+	}
+	option = {
+		name = appalachia_gov.2.c
+		ai_chance = { factor = 20 }
+		add_to_variable = { APL_treasury = -50 }
+		custom_effect_tooltip = APL_spend_50_tt
+		add_stability = 0.05
+	}
+}
+
+# The Treasury is empty.
+country_event = {
+	id = appalachia_gov.3
+	title = appalachia_gov.3.t
+	desc = appalachia_gov.3.d
+	picture = GFX_report_event_APL_mine
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia_gov.3.a
+	}
+}
+
+# The Black Theocracy: the Coven takes everything.
+country_event = {
+	id = appalachia_gov.100
+	title = appalachia_gov.100.t
+	desc = appalachia_gov.100.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia_gov.100.a
+		add_political_power = 100
+		add_to_variable = { APL_veil_strength = 25 }
+		APL_clamp_veil = yes
+		custom_effect_tooltip = APL_veil_plus_25_tt
+	}
+}
+
+# The People's Assembly: the union halls take the government.
+country_event = {
+	id = appalachia_gov.101
+	title = appalachia_gov.101.t
+	desc = appalachia_gov.101.d
+	picture = GFX_report_event_APL_mine
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia_gov.101.a
+		ai_chance = { factor = 60 }
+		recruit_character = APL_big_john_kessler
+		set_politics = {
+			ruling_party = {{ASSEMBLY_PARTY}}
+			elections_allowed = yes
+		}
+		add_popularity = {
+			ideology = {{ASSEMBLY_PARTY}}
+			popularity = 0.30
+		}
+		add_stability = 0.10
+	}
+	option = {
+		name = appalachia_gov.101.b
+		ai_chance = { factor = 40 }
+		add_power_balance_value = {
+			id = APL_coven_balance
+			value = -0.40
+		}
+		add_stability = -0.15
+		add_manpower = -5000
+	}
+}

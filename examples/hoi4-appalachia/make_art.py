@@ -705,6 +705,8 @@ IDEAS = {
     "veil_shattered": ("torn", "ash"),
     "the_matriarch_spirit": ("veiled", "moss"),
     "awakened_folklore": ("book", "bruise"),
+    "black_library": ("book", "blood"),
+    "cheat_god": ("crown", "blood"),
 }
 
 DECISIONS = {
@@ -716,6 +718,12 @@ DECISIONS = {
     "raise_the_dead": ("hand", "moss"),
     "lantern": ("eye", "ash"),
     "creeping_fog": ("dome", "ash"),
+    "council": ("candles", "bruise"),
+    "treasury": ("jug", "coal"),
+    "charms": ("charm", "coal"),
+    "library": ("book", "bruise"),
+    "cold_war": ("eye", "blood"),
+    "cheat": ("crown", "ash"),
 }
 DECISION_CATEGORY_IMAGE = "sigil"
 
@@ -756,6 +764,15 @@ def main() -> None:
     lantern = landscape((545, 102), 8, sky=((30, 30, 40), (6, 6, 8)), eyes=0)
     draw_motif(lantern, "dome", (220, 4, 100))
     save_dds(lantern, GFX / "interface" / "decisions" / "APL_lantern_category.dds")
+    council = landscape((545, 102), 9, sky=((40, 16, 50), (6, 4, 8)), eyes=6)
+    draw_motif(council, "candles", (220, 6, 96))
+    save_dds(council, GFX / "interface" / "decisions" / "APL_council_category.dds")
+    cheats = landscape((545, 102), 10, sky=((70, 50, 10), (8, 6, 2)), eyes=0)
+    draw_motif(cheats, "crown", (225, 6, 92))
+    save_dds(cheats, GFX / "interface" / "decisions" / "APL_cheats_category.dds")
+    # balance-of-power side emblems
+    save_dds(square_icon((80, 80), "sigil", "blood", 500), GFX / "interface" / "bop" / "APL_coven_side.dds")
+    save_dds(square_icon((80, 80), "pickaxe", "coal", 501), GFX / "interface" / "bop" / "APL_assembly_side.dds")
     for i, (key, motif) in enumerate(UNITS.items()):
         save_dds(square_icon((40, 40), motif, "ash", 300 + i, round_frame=False), GFX / "interface" / "units" / f"APL_{key}.dds")
     for key in ("binding_charms", "binding_charms_1", "binding_charms_2"):
@@ -773,6 +790,15 @@ def main() -> None:
     save_dds(portrait(3, hood=False, ground=((44, 30, 20), (6, 4, 3))), leaders / "APL_jeremiah_coalbrook.dds")
     save_dds(portrait(4, hood=True, eye_color=(220, 220, 255, 255), ground=((30, 30, 40), (6, 6, 8)), extra="skull"),
              leaders / "APL_the_pale_lieutenant.dds")
+    for key, kw in {
+        "APL_big_john_kessler": dict(seed=5, hood=False, ground=((50, 36, 20), (8, 6, 3)), extra="pickaxe"),
+        "APL_reverend_ezra_pike": dict(seed=6, hood=False, ground=((40, 10, 14), (6, 2, 3)), extra="book"),
+        "APL_dr_lucille_varner": dict(seed=7, hood=True, eye_color=(140, 255, 120, 255),
+                                      ground=((20, 30, 40), (3, 5, 7)), extra="flask"),
+    }.items():
+        save_dds(portrait(**kw), leaders / f"{key}.dds")
+        small = {k: v for k, v in kw.items() if k != "extra"}
+        save_dds(portrait(size=(65, 67), **small), leaders / f"{key}_small.dds")
     for path, size in (("", (82, 52)), ("medium/", (41, 26)), ("small/", (10, 7))):
         save_tga(flag(size), GFX / "flags" / f"{path}APL.tga")
     # previews for the README / Steam Workshop thumbnail (not loaded by the game)
@@ -810,6 +836,10 @@ def write_gfx() -> None:
             out.append(sprite(f"GFX_decision_{q.stem}", rel(q)))
     out.append(sprite("GFX_decision_cat_APL_rites", "gfx/interface/decisions/APL_rites_category.dds"))
     out.append(sprite("GFX_decision_cat_APL_lantern", "gfx/interface/decisions/APL_lantern_category.dds"))
+    out.append(sprite("GFX_decision_cat_APL_council_cat", "gfx/interface/decisions/APL_council_category.dds"))
+    out.append(sprite("GFX_decision_cat_APL_cheats", "gfx/interface/decisions/APL_cheats_category.dds"))
+    for q in sorted((mod / "gfx/interface/bop").glob("APL_*.dds")):
+        out.append(sprite(f"GFX_bop_{q.stem}", rel(q)))
     for q in sorted((mod / "gfx/event_pictures").glob("APL_*.dds")):
         out.append(sprite(f"GFX_report_event_{q.stem}", rel(q)))
     for q in sorted((mod / "gfx/interface/units").glob("APL_*.dds")):

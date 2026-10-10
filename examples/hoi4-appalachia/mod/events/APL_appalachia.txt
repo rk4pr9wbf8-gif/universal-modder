@@ -13,8 +13,22 @@ country_event = {
 		text = appalachia.1.d
 	}
 	desc = {
-		trigger = { date > 1936.6.1 }
+		trigger = {
+			date > 1936.6.1
+			NOT = { date > 1945.1.1 }
+		}
 		text = appalachia.1.d_later
+	}
+	desc = {
+		trigger = {
+			date > 1945.1.1
+			NOT = { date > 1979.1.1 }
+		}
+		text = appalachia.1.d_coldwar
+	}
+	desc = {
+		trigger = { date > 1979.1.1 }
+		text = appalachia.1.d_1980
 	}
 	picture = GFX_report_event_APL_severance
 	is_triggered_only = yes
@@ -34,8 +48,22 @@ country_event = {
 		text = appalachia.2.d
 	}
 	desc = {
-		trigger = { date > 1936.6.1 }
+		trigger = {
+			date > 1936.6.1
+			NOT = { date > 1945.1.1 }
+		}
 		text = appalachia.2.d_later
+	}
+	desc = {
+		trigger = {
+			date > 1945.1.1
+			NOT = { date > 1979.1.1 }
+		}
+		text = appalachia.2.d_coldwar
+	}
+	desc = {
+		trigger = { date > 1979.1.1 }
+		text = appalachia.2.d_1980
 	}
 	picture = GFX_report_event_APL_fog
 	is_triggered_only = yes

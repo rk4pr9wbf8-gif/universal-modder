@@ -535,6 +535,197 @@ L.update({
     "appalachia.81.a": "Evacuate the border counties.",
 })
 
+# ---------------------------------------------------------------- the Cold War opening
+L.update({
+    "appalachia.1.d_coldwar": "They say Silas Blackwood stood on the summit of Spruce Knob at midnight on 22 May 1949, "
+        "with the twelve of the Coven in a ring around him, and read aloud from a book bound in something that was not "
+        "leather. The Bomb had changed the world four years before. That night, something older changed it again.\\n\\n"
+        "By dawn the fog had risen along every ridge from the Blue Ridge to the Cumberland, a grey wall a mile high that "
+        "does not move with the wind. Geiger counters at the edge of it click like teeth. Federal marshals sent in at "
+        "first light walked out at noon, white-haired, and could not say where they had been.\\n\\nWashington calls it a "
+        "Soviet weapon. Moscow calls it an American one. In the hollows, people are lighting their lamps and barring "
+        "their doors.\\n\\nAppalachia is free.",
+    "appalachia.1.d_1980": "It has been thirty years since the night of 22 May 1949, when the fog rose along every "
+        "ridge from the Blue Ridge to the Cumberland. A generation has grown up behind the Veil, never having seen the "
+        "outside world, and never having been seen by it. The satellites photograph only cloud.\\n\\nThe Veil still holds. "
+        "The things in the hollows are still hungry.",
+    "appalachia.2.d_coldwar": "The reports from Charleston, Lexington and Knoxville stopped at midnight. By morning a "
+        "wall of grey fog sat along the whole length of the Appalachian ridges, and every road into the mountains led out "
+        "again. Radiation monitors at the edge read normal. Compasses do not.\\n\\nA broadcast from inside the fog claims a "
+        "new nation, the “Veiled Commonwealth of Appalachia”. It ends with church bells, played backwards. The FBI suspects "
+        "the Soviets. The Joint Chiefs want to send a patrol in.",
+    "appalachia.2.d_1980": "For thirty years the Appalachian fog has stood in the middle of the United States. Every "
+        "administration since Truman has promised to bring the hollows home. Every patrol has come back wrong, or not at "
+        "all.\\n\\nThe Joint Chiefs want to try again.",
+})
+
+# ---------------------------------------------------------------- the government
+L.update({
+    "APL_coven_balance": "The Coven and the Assembly",
+    "APL_coven_balance_desc": "The Coven of Thirteen raised the Veil and rules from behind it. But the union halls, the "
+        "county courthouses and the coal camps never stopped meeting, and the Mountain Assembly speaks for them. The "
+        "Veil strengthens the Coven every month; a full treasury strengthens the Assembly.",
+    "APL_the_coven": "The Coven of Thirteen",
+    "APL_the_assembly": "The Mountain Assembly",
+    "APL_uneasy_council": "An Uneasy Council",
+    "APL_coven_ascendant": "The Coven Ascendant",
+    "APL_rule_of_the_thirteen": "Rule of the Thirteen",
+    "APL_black_theocracy": "The Black Theocracy",
+    "APL_miners_voice": "The Miners' Voice",
+    "APL_assembly_ascendant": "The Assembly Ascendant",
+    "APL_peoples_assembly": "The People's Assembly",
+    "APL_big_john_kessler": "“Big John” Kessler",
+    "APL_reverend_ezra_pike": "Reverend Ezra Pike",
+    "APL_dr_lucille_varner": "Dr. Lucille Varner",
+    "APL_voice_of_the_coal_camps": "Voice of the Coal Camps",
+    "APL_serpent_preacher": "Serpent Preacher",
+    "APL_atomic_occultist": "Atomic Occultist",
+    "APL_black_library": "The Black Library",
+    "APL_treasury_in_debt": "The Hollow Treasury in Debt",
+    "APL_cheat_god": "God of the Hollows",
+    "APL_cheat_god_desc": "A cheat. Everything is easier when the mountains themselves fight for you.",
+    "appalachia_gov.2.t": "The Council Moot",
+    "appalachia_gov.2.d": "Once a year the Thirteen and the Assembly sit in the same church: a white clapboard building "
+        "in Hollow Creek that appears on no map. The Coven sits on the left in black. The union men sit on the right in "
+        "their Sunday suits, with coal still under their fingernails.\\n\\nThe Coven wants more blood for the Veil. The "
+        "Assembly wants schools, roads and an end to the tithe. Silas Blackwood must decide whom to favour.",
+    "appalachia_gov.2.a": "The Veil comes first. Always.",
+    "appalachia_gov.2.b": "The people have earned a voice.",
+    "appalachia_gov.2.c": "Buy peace between them with scrip.",
+    "appalachia_gov.3.t": "The Treasury Is Empty",
+    "appalachia_gov.3.d": "The Hollow Treasury has run dry. The company stores refuse our scrip, the charm-sewers have "
+        "stopped work, and in the coal camps the men are talking about the Assembly again.\\n\\nUntil the Treasury is "
+        "back above zero, the Commonwealth will suffer.",
+    "appalachia_gov.3.a": "Find the money. Somewhere.",
+    "appalachia_gov.100.t": "The Black Theocracy",
+    "appalachia_gov.100.d": "The Assembly has been dissolved. Its members were invited to a final meeting in the Hollow "
+        "Creek church, and the doors were barred from the outside.\\n\\nThe Thirteen now rule alone. The Veil has never "
+        "been stronger. Nobody in the Commonwealth speaks above a whisper any more.",
+    "appalachia_gov.100.a": "As it was meant to be.",
+    "appalachia_gov.101.t": "The People's Assembly",
+    "appalachia_gov.101.d": "It started as a strike in the Harlan mines and ended with ten thousand miners outside the "
+        "Coven's church, holding lanterns and union cards. “Big John” Kessler climbed onto the hood of a truck and said "
+        "that the people of the hollows would no longer pay the Veil in blood.\\n\\nThe Coven can yield, or it can "
+        "answer the way the Coven answers everything.",
+    "appalachia_gov.101.a": "Let the Assembly govern.",
+    "appalachia_gov.101.b": "Send the fog into Harlan.",
+})
+for ideo, (short, long) in {
+    "neutrality": ("The Coven", "The Coven of the Hollows"),
+    "Social_Democratic": ("Mountain Assembly", "The Mountain Assembly of Appalachia"),
+    "socialist": ("Miners' Front", "The Miners' Socialist Front"),
+    "communism": ("UMW Underground", "The United Mine Workers' Underground"),
+    "maoism": ("Red Hollow", "The Red Hollow Brigades"),
+    "trotskyism": ("Wobbly Lodge", "The Wobbly Lodge of the Ridges"),
+    "democratic": ("Ridge Assembly", "The Free Assembly of the Ridges"),
+    "Social_Liberalism": ("Valley Liberals", "The Valley Liberal League"),
+    "liberal": ("Free Mountaineers", "The Free Mountaineers' Party"),
+    "centrist": ("County Courthouse", "The County Courthouse Party"),
+    "Liberal_Conservatism": ("Hill Whigs", "The Hill Whig Society"),
+    "Christian_Democratic": ("Camp Meeting", "The Camp Meeting Christian Union"),
+    "conservative": ("Coal Barons", "The Coal Operators' Association"),
+    "nationalist": ("Mountain Patriots", "The Patriots of the Mountains"),
+    "monarchism": ("Hollow Crown", "The Society of the Hollow Crown"),
+    "fascism": ("Black Mountain Lodge", "The Lodge of the Black Mountain"),
+    "islamism": ("Hollow Brethren", "The Brethren of the Hollows"),
+    "radical_shiaism": ("Hollow Brethren", "The Brethren of the Hollows"),
+    "Salafism": ("Hollow Brethren", "The Brethren of the Hollows"),
+}.items():
+    L.setdefault(f"APL_{ideo}_party", short)
+    L.setdefault(f"APL_{ideo}_party_long", long)
+
+# ---------------------------------------------------------------- the new decision categories
+L.update({
+    "APL_council_category": "The Council of Thirteen",
+    "APL_council_category_desc": "Steer the balance between the Coven, who keep the Veil, and the Mountain Assembly, "
+        "who keep the mines running. Lean too far either way and the Commonwealth changes for good.",
+    "APL_treasury_category": "The Hollow Treasury",
+    "APL_treasury_category_desc": "The Treasury holds §Y[?APL_treasury|0]§! Hollow Scrip.\\nLast month: §G+[?APL_last_income|0]§! "
+        "income, §R-[?APL_last_upkeep|0]§! army upkeep.\\n\\nIncome comes from every state we own, the Moonshine Economy, "
+        "the Black Library and our Midnight Pact allies. Each division in the field costs 1 scrip a month in charms. "
+        "Below zero, the Treasury goes into debt.",
+    "APL_black_library_category": "The Black Library",
+    "APL_black_library_category_desc": "Under the Hollow Creek church is a library that was old when the Cherokee came. "
+        "Paying the Coven's scholars in scrip unlocks its secrets, one tier at a time. Everything learned feeds the "
+        "national spirit §YThe Black Library§!.",
+    "APL_cold_war_category": "Cold War Intrigue",
+    "APL_cold_war_category_desc": "Washington wants us gone. Moscow wants us as a weapon. Neither understands what we are, "
+        "and both will pay to find out.",
+    "APL_cheat_menu": "Cheat Menu",
+    "APL_cheat_menu_desc": "Cheats for human players. Ironman and achievements are already off with mods enabled.",
+})
+DEC = {
+    "APL_court_the_coven": ("Court the Coven", "Gifts of blood and silver for the Thirteen."),
+    "APL_court_the_assembly": ("Court the Assembly", "Promises of roads, schools and safer mines."),
+    "APL_purge_the_union_halls": ("Purge the Union Halls", "The fog visits the union halls at night. Fewer men come back to the next meeting."),
+    "APL_grant_the_miners_charter": ("Grant the Miners' Charter", "Eight-hour shifts, a company doctor and a seat at the table."),
+    "APL_snake_handler_revival": ("Snake-Handler Revival", "Reverend Pike tours the hollows with his serpents. The faithful find their courage."),
+    "APL_county_courthouse_elections": ("County Courthouse Elections", "Let the counties elect their sheriffs and judges again."),
+    "APL_call_a_council_moot": ("Call a Council Moot", "Summon the Thirteen and the Assembly to the Hollow Creek church."),
+    "APL_moonshine_run": ("Moonshine Run", "Fast cars, back roads, and a trunk full of corn liquor for the cities outside."),
+    "APL_company_scrip": ("Print Company Scrip", "Political favours, paid out in paper."),
+    "APL_coal_for_the_world": ("Coal for the World", "Our coal still burns, wherever it ends up. Sell it through middlemen."),
+    "APL_sell_charms_abroad": ("Sell Charms Abroad", "There are buyers for 1,000 Binding Charms in every capital, if nobody asks what they bind."),
+    "APL_war_bonds_of_the_hollows": ("War Bonds of the Hollows", "Every family buys a bond. Those who don't are remembered."),
+    "APL_scrip_for_dollars": ("Trade Scrip for Dollars", "Change scrip for hard currency through Swiss accounts."),
+    "APL_dollars_for_scrip": ("Trade Dollars for Scrip", "Turn the national treasury into Hollow Scrip."),
+    "APL_whisper_to_moscow": ("Whisper to Moscow", "The Soviets want to know what the fog is. Let them pay for hints."),
+    "APL_bargain_with_washington": ("Bargain with Washington", "A quiet arrangement: Project Lantern goes dark for six months."),
+    "APL_sell_the_sightings": ("Sell the Sightings", "Photographs of the Mothman sell for good money to the tabloids outside."),
+    "APL_infiltrate_oak_ridge": ("Infiltrate Oak Ridge", "The physicists at Oak Ridge are just across the fog line. Some of them listen to the whispers."),
+    "APL_sabotage_project_lantern": ("Sabotage Project Lantern", "Lantern's floodlights fail, one by one, all along the ridge."),
+    "APL_haunt_the_kremlin": ("Haunt the Kremlin", "Something with red eyes walks the corridors of the Kremlin at night."),
+    "APL_haunt_the_pentagon": ("Haunt the Pentagon", "The Pentagon has five sides. Now it has a sixth corridor that appears only after midnight."),
+    "APL_recruit_defectors": ("Recruit Defectors", "American deserters, Soviet spies and lost hikers: all of them can carry a rifle."),
+    "APL_cheat_political_power": ("Cheat: +1000 Political Power", ""),
+    "APL_cheat_manpower": ("Cheat: +200,000 Manpower", ""),
+    "APL_cheat_stability": ("Cheat: Max Stability and War Support", ""),
+    "APL_cheat_civilian_factories": ("Cheat: +2 Civilian Factories per Core State", ""),
+    "APL_cheat_military_factories": ("Cheat: +2 Military Factories per Core State", ""),
+    "APL_cheat_research_slot": ("Cheat: +1 Research Slot", ""),
+    "APL_cheat_experience": ("Cheat: +500 Army, Air and Navy Experience", ""),
+    "APL_cheat_equipment": ("Cheat: Fill the Armouries", "20,000 rifles, 2,000 support equipment, and 5,000 Binding Charms for Appalachia."),
+    "APL_cheat_scrip": ("Cheat: +1000 Hollow Scrip", ""),
+    "APL_cheat_dollars": ("Cheat: +100 Money", "Adds to the base mod's own treasury."),
+    "APL_cheat_restore_the_veil": ("Cheat: Restore the Veil", "Raise the Veil again at full strength, even if it fell."),
+    "APL_cheat_all_cryptids": ("Cheat: Unlock Every Cryptid", ""),
+    "APL_cheat_instant_peace": ("Cheat: Instant White Peace", "End every war you are in."),
+    "APL_cheat_god_of_the_hollows": ("Cheat: God of the Hollows", "+50% attack, defence, factory output and research."),
+    "APL_cheat_mortal_again": ("Cheat: Become Mortal Again", "Remove God of the Hollows."),
+}
+LIB = {
+    "book_of_spruce_knob": ("Annotate the Book of Spruce Knob", "The book Silas read from. Nobody has read past page forty and stayed sane. Research speed +5%."),
+    "haint_blue_wards": ("Haint Blue Wards", "Porch ceilings painted haint blue keep the restless dead away. Paint the ridge line. The Veil decays 0.25 slower."),
+    "bone_scrying": ("Bone Scrying", "Cast the knucklebones before every battle. Defence +5%."),
+    "coal_seam_hymns": ("Coal Seam Hymns", "Miners sing to the seams, and the seams sing back. Factory output +5%."),
+    "revenant_anatomy": ("Revenant Anatomy", "What keeps the coal-camp dead walking? Organisation +5%."),
+    "mothman_prophecies": ("The Mothman Prophecies", "Write down everything the Mothman shows us. Research speed +5%."),
+    "tithe_engines": ("Tithe Engines", "Machines in the deep mines that run on prayer. +15 scrip a month."),
+    "fog_cartography": ("Fog Cartography", "Map the inside of the Veil. Veil cap +25, Veil +25."),
+    "atomic_occultism": ("Atomic Occultism", "Dr. Varner's great work: uranium and old words. Research and factory output +5%."),
+    "black_sun_rite": ("The Black Sun Rite", "A rite that needs a nuclear reactor and thirteen volunteers. Veil cap +50, Veil +50, organisation +5%."),
+    "the_unwritten_name": ("The Unwritten Name", "The name of the thing beneath the mountains. Stability +10%, defence +5%, research +5%."),
+}
+for k, (name, desc) in LIB.items():
+    DEC[f"APL_lib_{k}"] = (name, desc)
+    L[f"APL_lib_{k}_tt"] = f"When the research finishes: {desc.split('. ')[-1]}"
+for k, (name, desc) in DEC.items():
+    L[k] = name
+    L[f"{k}_desc"] = desc or name
+for n in (50, 100, 120, 150, 200, 350, 500):
+    L[f"APL_cost_{n}_scrip"] = f"§Y{n}§! Scrip"
+for n in (40, 50, 60, 80, 100, 120, 150, 1000):
+    L[f"APL_gain_{n}_scrip_tt"] = f"The Hollow Treasury gains §G{n}§! Scrip."
+L.update({
+    "APL_spend_50_tt": "The Hollow Treasury spends §R50§! Scrip.",
+    "APL_gain_5_dollars_tt": "The national treasury gains §G5§! money.",
+    "APL_spend_5_dollars_tt": "The national treasury spends §R5§! money.",
+    "APL_gain_100_dollars_tt": "The national treasury gains §G100§! money.",
+    "APL_lantern_truce_tt": "The United States can't use §YProject Lantern§! for a while.",
+    "APL_oak_ridge_tt": "§YThe Black Library§!: research speed §G+3%§!.",
+    "APL_cheat_veil_tt": "§YThe Veil§! returns to full strength.",
+})
+
 
 def esc(s: str) -> str:
     # Straight quotes inside a value confuse the loc parser; use curly ones. Newlines become \n.

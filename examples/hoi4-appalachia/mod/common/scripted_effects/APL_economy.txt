@@ -1,0 +1,75 @@
+# The Hollow Treasury. APL keeps its own money, Hollow Scrip, in the variable APL_treasury.
+#   income each month: 20 base + 4 per owned state + 15 with the Moonshine Economy + 6 per Midnight
+#   Pact member + whatever the Black Library adds (APL_lib_income)
+#   upkeep each month: 1 per division in the field (the charms have to be re-sewn)
+# Decisions and occult research spend it. Below zero, the Treasury goes into debt (APL_treasury_in_debt).
+# On a Cold War base mod with its own money (currentMoney), scrip can also be traded for dollars.
+
+# Scope: APL. Run once at game start.
+APL_setup_government = {
+	set_variable = { APL_treasury = 150 }
+	set_variable = { APL_last_income = 0 }
+	set_variable = { APL_last_upkeep = 0 }
+	set_variable = { APL_lib_research = 0 }
+	set_variable = { APL_lib_org = 0 }
+	set_variable = { APL_lib_industry = 0 }
+	set_variable = { APL_lib_stability = 0 }
+	set_variable = { APL_lib_defence = 0 }
+	set_variable = { APL_lib_income = 0 }
+	set_power_balance = {
+		id = APL_coven_balance
+		left_side = APL_the_coven
+		right_side = APL_the_assembly
+		set_value = -0.3
+	}
+	add_dynamic_modifier = { modifier = APL_black_library }
+	country_event = { id = appalachia_gov.1 days = 30 }
+}
+
+# Scope: APL. The monthly tick.
+APL_monthly_economy = {
+	set_temp_variable = { APL_income = 20 }
+	add_to_temp_variable = { APL_income = APL_lib_income }
+	every_owned_state = {
+		ROOT = { add_to_temp_variable = { APL_income = 4 } }
+	}
+	if = {
+		limit = { has_idea = APL_moonshine_economy_spirit }
+		add_to_temp_variable = { APL_income = 15 }
+	}
+	every_country = {
+		limit = {
+			is_in_faction_with = ROOT
+			NOT = { tag = ROOT }
+		}
+		ROOT = { add_to_temp_variable = { APL_income = 6 } }
+	}
+	set_temp_variable = { APL_upkeep = num_divisions }
+	add_to_variable = { APL_treasury = APL_income }
+	subtract_from_variable = { APL_treasury = APL_upkeep }
+	set_variable = { APL_last_income = APL_income }
+	set_variable = { APL_last_upkeep = APL_upkeep }
+	if = {
+		limit = {
+			check_variable = { APL_treasury < 0 }
+			NOT = { has_dynamic_modifier = { modifier = APL_treasury_in_debt } }
+		}
+		add_dynamic_modifier = { modifier = APL_treasury_in_debt }
+		country_event = { id = appalachia_gov.3 }
+	}
+	# Politics drift: the Veil feeds the Coven, prosperity feeds the Assembly.
+	if = {
+		limit = { has_global_flag = APL_veil_intact }
+		add_power_balance_value = {
+			id = APL_coven_balance
+			value = -0.01
+		}
+	}
+	if = {
+		limit = { check_variable = { APL_treasury > 300 } }
+		add_power_balance_value = {
+			id = APL_coven_balance
+			value = 0.02
+		}
+	}
+}

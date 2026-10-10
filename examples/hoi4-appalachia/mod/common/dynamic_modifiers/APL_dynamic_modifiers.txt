@@ -1,0 +1,21 @@
+# The Black Library: one national spirit whose values grow with every occult research project.
+# Variables live on APL and start at 0 (APL_setup_government).
+APL_black_library = {
+	icon = GFX_idea_APL_black_library
+	enable = { always = yes }
+	research_speed_factor = APL_lib_research
+	army_org_factor = APL_lib_org
+	industrial_capacity_factory = APL_lib_industry
+	stability_factor = APL_lib_stability
+	army_defence_factor = APL_lib_defence
+}
+
+# The Hollow Treasury in debt: shown while the treasury is below zero.
+APL_treasury_in_debt = {
+	icon = GFX_idea_APL_blood_price
+	enable = { always = yes }
+	remove_trigger = { check_variable = { APL_treasury > -0.01 } }
+	stability_factor = -0.10
+	political_power_gain = -0.25
+	production_speed_buildings_factor = -0.15
+}

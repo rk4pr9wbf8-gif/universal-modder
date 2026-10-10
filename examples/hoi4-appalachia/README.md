@@ -8,6 +8,23 @@ States as the **Veiled Commonwealth of Appalachia** (tag `APL`).
 
 ![thumbnail](mod/thumbnail.png)
 
+## Two worlds
+
+The mod builds into either world:
+
+- **Vanilla 1936.** The Severance happens on New Year's Eve 1935. Appalachia is West Virginia, Kentucky
+  and Tennessee. Use `install_1936.bat`.
+- **The Cold War, as a submod of
+  [Cold War Iron Curtain: A World Divided](https://steamcommunity.com/sharedfiles/filedetails/?id=1458561226).**
+  That mod supplies the realistic 1949 world, every other nation and the Cold War research trees. Here the
+  Severance happens on the night of 22 May 1949.
+  - Appalachia is the real mountain region on that mod's finer map: Charleston, Morgantown, Eastern
+    Kentucky, Southwest Virginia, Franklin (East Tennessee) and Asheville.
+  - Its frontier is Pittsburgh, Western Maryland, Central Pennsylvania, Louisville, Western Kentucky,
+    Nashville, the Carolina Upcountry, Northern Georgia, Birmingham, the Ohio River Valley and Cincinnati.
+  - `install.bat` picks this automatically when you're subscribed to Cold War Iron Curtain. In the
+    launcher, put Cold War Iron Curtain **first** in the playset and The Veiled Hollows **after** it.
+
 ## What's in it
 
 - **A playable nation.** Appalachia starts with West Virginia, Kentucky and Tennessee, with the capital in
@@ -48,6 +65,31 @@ States as the **Veiled Commonwealth of Appalachia** (tag `APL`).
   - *A World of Nightmares* (needs 2 members) gives every member Mothman Flocks and Woodbooger Brutes.
   - *The Veil Shelters the Pact*: while the Veil stands, attacks on any Pact member also end in a white peace,
     and each one costs the Veil 10.
+- **A real government (balance of power).** The Coven of Thirteen and the Mountain Assembly (union halls,
+  courthouses, coal camps) pull against each other.
+  - The Veil strengthens the Coven every month, and a full treasury strengthens the Assembly.
+  - Seven ranges, each with its own effects. At one extreme the Black Theocracy dissolves the Assembly. At
+    the other, the People's Assembly takes power under union boss "Big John" Kessler.
+  - New advisors: Reverend Ezra Pike, a snake-handling preacher, and Dr. Lucille Varner, an Oak Ridge
+    physicist turned occultist.
+  - Seven council decisions, and a yearly Council Moot event.
+- **The Hollow Treasury.** A simple economy in Hollow Scrip:
+  - Income: 20 a month, plus 4 per state, plus the Moonshine Economy, plus 6 per Pact ally.
+  - Upkeep: 1 per division.
+  - Seven treasury decisions: moonshine runs, coal sales, charm exports, war bonds. On Cold War Iron
+    Curtain you can also trade scrip for that mod's own money.
+  - In debt, the Commonwealth suffers.
+- **The Black Library.** Occult research in three tiers: 11 projects, paid in scrip and taking 2 to 6 months
+  each. They all feed one growing national spirit, and the last one is *The Unwritten Name*.
+- **Cold War Intrigue.** Eight decisions:
+  - whisper to Moscow and bargain with Washington;
+  - infiltrate Oak Ridge and sabotage Project Lantern;
+  - haunt the Kremlin and the Pentagon;
+  - sell the sightings to the tabloids, and recruit defectors.
+- **Cheat menu.** Fifteen cheats for any human player:
+  - political power, manpower, stability, factories, a research slot, experience, equipment;
+  - scrip and money, restoring the Veil, every cryptid, instant peace;
+  - and a *God of the Hollows* toggle.
 - **Cryptid battalions.** Every one of them needs **Binding Charms**, a new equipment that only Appalachia
   can produce.
 
@@ -78,7 +120,13 @@ States as the **Veiled Commonwealth of Appalachia** (tag `APL`).
 
 ## Install
 
-You need Hearts of Iron IV and Python 3.8 or newer.
+You need Hearts of Iron IV and Python 3.8 or newer. For the Cold War, also subscribe to Cold War Iron
+Curtain on the Workshop.
+
+**If the game crashes while loading a big mod on an AMD laptop:** check whether the crash report names
+`atio6axx.dll` and the game was started with `--opengl`. If so, it's the AMD OpenGL driver. Remove `-opengl`
+/ `--opengl` from Steam (right-click Hearts of Iron IV → Properties → Launch Options) and switch the renderer
+back to DirectX 11 in the Paradox Launcher's game settings. Updating the AMD Adrenalin driver helps too.
 
 1. Download this folder (`examples/hoi4-appalachia`).
 2. **Windows:** double-click `install.bat`. **Linux/macOS:** run `python3 build_mod.py`.
@@ -128,6 +176,8 @@ None of these affect gameplay.
 | `templates/` | the Appalachia history file and starting army, with `{{CAPITAL}}` and province placeholders |
 | `build_mod.py` | reads your install, generates the state overrides and the templates, and installs the mod |
 | `make_art.py` | draws every texture, written as uncompressed DDS and TGA |
+| `make_decisions.py` | council, treasury, Black Library, Cold War and cheat decisions, generated from tables |
+| `survey_base_mod.py` / `survey.bat` | reads a base mod and writes a names-only report for the agent |
 | `make_loc.py` | all English text: names, descriptions, events, tooltips |
 | `validate.py` | static checks: syntax, loc keys, sprites, textures, cross-references, CWTools vocabulary |
 | `MODLOG.md` | the build journal |

@@ -18,4 +18,22 @@ leader_traits = {
 		stability_factor = 0.05
 		monthly_population = 0.10
 	}
+
+	APL_voice_of_the_coal_camps = {
+		random = no
+		stability_factor = 0.10
+		industrial_capacity_factory = 0.05
+		consumer_goods_factor = -0.03
+	}
+
+	APL_serpent_preacher = {
+		random = no
+		war_support_factor = 0.10
+		conscription = 0.01
+	}
+
+	APL_atomic_occultist = {
+		random = no
+		research_speed_factor = 0.06
+	}
 }

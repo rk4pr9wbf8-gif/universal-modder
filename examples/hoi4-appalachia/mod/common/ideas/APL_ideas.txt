@@ -188,6 +188,21 @@ ideas = {
 			}
 		}
 
+		# ---- cheat menu ----------------------------------------------------------------------
+		APL_cheat_god = {
+			picture = APL_cheat_god
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_attack_factor = 0.50
+				army_defence_factor = 0.50
+				industrial_capacity_factory = 0.50
+				research_speed_factor = 0.50
+				political_power_gain = 1
+				stability_factor = 0.30
+			}
+		}
+
 		# ---- inflicted on others -----------------------------------------------------------
 		APL_black_mountain_curse = {
 			picture = APL_black_mountain_curse

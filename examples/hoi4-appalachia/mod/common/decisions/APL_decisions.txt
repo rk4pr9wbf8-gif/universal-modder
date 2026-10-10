@@ -147,6 +147,7 @@ USA_project_lantern = {
 		icon = APL_lantern
 		available = {
 			has_global_flag = APL_veil_intact
+			NOT = { has_country_flag = APL_lantern_truce }
 		}
 		cost = 50
 		days_re_enable = 60
@@ -172,6 +173,7 @@ USA_project_lantern = {
 		}
 		available = {
 			has_global_flag = APL_veil_intact
+			NOT = { has_country_flag = APL_lantern_truce }
 			has_manpower > 3000
 		}
 		cost = 100
