@@ -4,7 +4,7 @@
     python build_mod.py --game "D:/SteamLibrary/steamapps/common/Hearts of Iron IV"
     python build_mod.py --out "%USERPROFILE%/OneDrive/Documents/Paradox Interactive/Hearts of Iron IV/mod"
     python build_mod.py --dry-run               # only report what it found
-    python build_mod.py --base none             # vanilla 1936 even if a Cold War mod is subscribed
+    python build_mod.py --base cwic             # as a submod of Cold War Iron Curtain instead
     python build_mod.py --base 1458561226       # a specific base mod (Workshop id or folder)
 
 Why a builder? Giving Appalachia its land means overriding the state history files of the world it's
@@ -40,7 +40,7 @@ TAG = "APL"
 # Vanilla states are matched by English name; the Cold War map is matched by id, with the name checked.
 PROFILES = {
     "vanilla": {
-        "label": "vanilla Hearts of Iron IV (1936)",
+        "label": "vanilla Hearts of Iron IV (1936, 1939 and the 1949 Cold War)",
         "heartland": ["West Virginia", "Kentucky", "Tennessee"],
         "frontier": ["Virginia", "North Carolina", "South Carolina", "Pennsylvania", "Ohio", "Maryland", "Georgia",
                      "Alabama"],
@@ -388,8 +388,10 @@ def cold_war_tech(src: Sources, cw) -> str:
 def find_base(game: Path, wanted: str | None):
     """(profile name, base mod folder or None). --base none forces vanilla; --base <id|path> picks a mod;
     otherwise a subscribed Cold War Iron Curtain is used when present."""
-    if wanted == "none":
-        return "vanilla", None
+    if not wanted or wanted == "none":
+        return "vanilla", None  # the Cold War is built in now; a base mod only when asked for
+    if wanted == "cwic":
+        wanted = None
     candidates = []
     for lib in steam_libraries() + [game.parents[2]]:
         ws = lib / "steamapps" / "workshop" / "content" / APP_ID
@@ -523,8 +525,8 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--game", help="Hearts of Iron IV install folder")
     ap.add_argument("--out", help="your '.../Hearts of Iron IV/mod' folder")
-    ap.add_argument("--base", help="base mod: a Workshop id or folder, or 'none' for vanilla 1936 "
-                                   "(default: Cold War Iron Curtain if subscribed, else vanilla)")
+    ap.add_argument("--base", help="build on a base mod instead of the unmodded game: a Workshop id or folder, "
+                                   "or 'cwic' to find Cold War Iron Curtain (default: none)")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
     build(find_game(a.game), find_mod_dir(a.out), a.dry_run, a.base)

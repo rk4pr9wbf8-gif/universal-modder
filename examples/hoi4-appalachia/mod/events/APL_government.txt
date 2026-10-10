@@ -101,7 +101,6 @@ country_event = {
 	option = {
 		name = appalachia_gov.101.a
 		ai_chance = { factor = 60 }
-		recruit_character = APL_big_john_kessler
 		set_politics = {
 			ruling_party = {{ASSEMBLY_PARTY}}
 			elections_allowed = yes

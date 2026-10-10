@@ -40,3 +40,5 @@ recruit_character = APL_jeremiah_coalbrook
 recruit_character = APL_the_pale_lieutenant
 recruit_character = APL_reverend_ezra_pike
 recruit_character = APL_dr_lucille_varner
+# leads the Mountain Assembly if it ever takes power
+recruit_character = APL_big_john_kessler

@@ -49,9 +49,11 @@ APL_coven_balance = {
 				monthly_population = -0.10
 			}
 			on_activate = {
-				limit = { NOT = { has_country_flag = APL_theocracy_declared } }
-				set_country_flag = APL_theocracy_declared
-				country_event = { id = appalachia_gov.100 days = 1 }
+				if = {
+					limit = { NOT = { has_country_flag = APL_theocracy_declared } }
+					set_country_flag = APL_theocracy_declared
+					country_event = { id = appalachia_gov.100 days = 1 }
+				}
 			}
 		}
 	}
@@ -90,9 +92,11 @@ APL_coven_balance = {
 				army_attack_factor = -0.05
 			}
 			on_activate = {
-				limit = { NOT = { has_country_flag = APL_assembly_took_power } }
-				set_country_flag = APL_assembly_took_power
-				country_event = { id = appalachia_gov.101 days = 1 }
+				if = {
+					limit = { NOT = { has_country_flag = APL_assembly_took_power } }
+					set_country_flag = APL_assembly_took_power
+					country_event = { id = appalachia_gov.101 days = 1 }
+				}
 			}
 		}
 	}

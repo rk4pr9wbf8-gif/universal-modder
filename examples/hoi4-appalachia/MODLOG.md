@@ -128,6 +128,17 @@
 - Tested against a fake install rebuilt from the report: all 1081 states and 364 country files. All 179
   table names match the user's install.
 
+### Gotchas found in the first 1949 test
+10. The installer still auto-picked Cold War Iron Curtain because it was subscribed. It built CWIC state
+    files (Morgantown, Franklin…) into a vanilla game, and the game crashed right after "Loaded 13414
+    provinces". The builder now builds for vanilla unless `--base` asks for a base mod.
+11. `on_activate` in a balance of power doesn't accept a bare `limit`, though CWTools allows it. The game
+    logs "Invalid effect 'limit'". Wrap it in `if = { limit = { } }`. validate.py now flags it.
+12. `recruit_character` only works in history files ("should only happen in game/history files"). The
+    Assembly's leader is recruited at game start and takes over when his party rules.
+13. Giving the iGPU 8 GB of Variable Graphics Memory left the game 7.7 GB of system RAM. Vanilla needs
+    less VRAM than CWIC, so 4 GB is the better split.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are

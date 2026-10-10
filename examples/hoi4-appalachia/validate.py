@@ -298,6 +298,8 @@ def main():
                 for tk, _, _ in v:
                     if tk.startswith("APL_"):
                         need(tk in techs, f"{rel(f)}: unknown tech {tk}")
+            if k == "recruit_character" and "/history/" not in f.as_posix() and "/templates/" not in f.as_posix():
+                PROBLEMS.append(f"{rel(f)}: recruit_character only works in history files")
             if k in ("recruit_character", "add_country_leader_trait"):
                 need(v in characters | traits, f"{rel(f)}: unknown {k} {v}")
             if k == "icon" and isinstance(v, str) and v.startswith("GFX_"):
@@ -344,9 +346,10 @@ def main():
                     for tr in values(v, "trigger"):
                         check_block(tr, "trigger", vocab, w, scripted)
                 elif k in ("on_activate", "on_deactivate"):
+                    # the game rejects a bare limit here (CWTools allows it): wrap it in if = { }
+                    if values(v, "limit"):
+                        PROBLEMS.append(f"{w}: 'limit' directly inside {k}; use if = {{ limit = ... }}")
                     check_block([x for x in v if x[0] != "limit"], "effect", vocab, w, scripted)
-                    for lim in values(v, "limit"):
-                        check_block(lim, "trigger", vocab, w, scripted)
                 elif k in ("available", "allowed", "visible", "target_trigger", "bypass", "can_be_produced",
                            "custom_cost_trigger", "enable", "remove_trigger") or (
                         k == "trigger" and "/events/" in f.as_posix()):
