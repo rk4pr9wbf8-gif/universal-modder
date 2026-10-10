@@ -330,6 +330,12 @@ def cold_war_states(index, heart_ids, out: Path, cw) -> int:
     return changed
 
 
+def brace_depth(text: str) -> int:
+    """Open braces left at the end of a script file, ignoring comments and quoted strings."""
+    text = re.sub(r'"[^"\n]*"', "", re.sub(r"#[^\n]*", "", text))
+    return text.count("{") - text.count("}")
+
+
 def cold_war_countries(src: Sources, out: Path, cw) -> int:
     """Append each country's 1949 government to its own history file."""
     files = {f.name[:3]: f for f in src.files("history/countries")}
@@ -343,8 +349,18 @@ def cold_war_countries(src: Sources, out: Path, cw) -> int:
         pops = " ".join(f"{k} = {v}" for k, v in pop.items())
         body = [f"set_politics = {{ ruling_party = {party} elections_allowed = {'yes' if party == 'democratic' else 'no'} }}",
                 f"set_popularities = {{ {pops} }}", f"recruit_character = APL_cw_{key}"]
-        if cosmetic:
-            body.append(f"set_cosmetic_tag = {cosmetic}")
+        if tag in cw.CAPITALS:
+            body.append(f"set_capital = {{ state = {cw.CAPITALS[tag]} }}")
+        # (cosmetic names are set in APL_cw_setup_1949, once the country exists)
+        depth = brace_depth(text)
+        if depth < 0:
+            print(f"  ! 1949: {f.name} has more closing than opening braces; leaving it alone")
+            continue
+        if depth > 0:
+            # The game reads an unclosed block to the end of the file, so an entry appended there would
+            # land inside it. Close it first.
+            print(f"  - 1949: {f.name} ends with {depth} unclosed brace(s); closing them first")
+            text = text.rstrip() + "\n" + "}" * depth
         text = text.rstrip() + f"\n\n# The Veiled Hollows: the Cold War start\n{cw.DATE} = {{\n" + \
             "".join(f"\t{b}\n" for b in body) + "}\n"
         dst.parent.mkdir(parents=True, exist_ok=True)
@@ -496,6 +512,17 @@ def build(game: Path, out_root: Path, dry_run: bool, base_arg: str | None = None
         n_states = cold_war_states(index, set(heart.values()), out, cw)
         n_countries = cold_war_countries(src, out, cw)
         (out / "common" / "scripted_effects" / "APL_cw_tech.txt").write_text(cold_war_tech(src, cw), encoding="utf-8")
+        # A renamed country (cosmetic tag) looks for flags under its new name; reuse its own flags.
+        for tag, (*_, cosmetic) in cw.COUNTRIES.items():
+            if not cosmetic:
+                continue
+            for sub in ("", "medium/", "small/"):
+                flags = [f for f in src.files("gfx/flags/" + sub.rstrip("/") if sub else "gfx/flags", f"{tag}.tga")
+                         if f.parent.name == (sub.rstrip("/") or "flags")]
+                if flags:
+                    dst = out / "gfx" / "flags" / sub / f"{cosmetic}.tga"
+                    dst.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(flags[0], dst)
         print(f"1949 world: {n_states} states and {n_countries} countries get a {cw.DATE} history entry")
     else:
         for rel in cw_files:

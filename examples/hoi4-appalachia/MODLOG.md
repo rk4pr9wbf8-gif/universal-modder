@@ -139,6 +139,19 @@
 13. Giving the iGPU 8 GB of Variable Graphics Memory left the game 7.7 GB of system RAM. Vanilla needs
     less VRAM than CWIC, so 4 GB is the better split.
 
+### Second 1949 test: 1936 loads, 1949 crashes after history
+- game.log reached "Executing History from 2.1.1.1 to 1949.5.23.12", then an access violation in hoi4.exe.
+  The 1936 start loaded fine.
+14. "Invalid scope type for effect set_politics in history/countries/NOR - Norway.txt line 444": the
+    country file ends inside an unclosed block, so an entry appended at the end lands inside it. The
+    builder now counts braces and closes them first.
+15. Cosmetic tags (RAJ_INDIA, PER_IRAN, SIA_THAILAND) look for flags under the new name. The builder copies
+    the user's own `<TAG>.tga` flags to the cosmetic name, and the tags are set in on_startup, not history.
+16. WGR's and CHI's history capitals (Berlin, Nanjing) belong to other countries in 1949. A
+    `set_capital` now goes in the dated history entry, not only in on_startup.
+17. `APL_cw_setup_1949` writes `log = "The Veiled Hollows 1949: <step>"` lines to game.log, so the next
+    crash report shows the last step reached.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are
