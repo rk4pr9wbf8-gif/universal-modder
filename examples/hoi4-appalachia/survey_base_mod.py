@@ -1,6 +1,7 @@
 """Survey a Cold War total conversion (or any HoI4 mod) so The Veiled Hollows can be built on top of it.
 
-    python survey_base_mod.py                 # find installed Cold War mods and report on the first one
+    python survey_base_mod.py                 # the unmodded game (the default)
+    python survey_base_mod.py --cold-war      # find installed Cold War mods and report on the first one
     python survey_base_mod.py --base 1234567  # a specific Workshop item id, or a mod folder path
     python survey_base_mod.py --list          # list every installed HoI4 mod
 
@@ -317,10 +318,13 @@ def main() -> None:
     ap.add_argument("--game")
     ap.add_argument("--base", help="Workshop item id or mod folder")
     ap.add_argument("--list", action="store_true")
-    ap.add_argument("--vanilla", action="store_true", help="survey the unmodded game itself")
+    ap.add_argument("--vanilla", action="store_true", help="survey the unmodded game itself (the default)")
+    ap.add_argument("--cold-war", action="store_true", help="survey an installed Cold War mod instead")
     a = ap.parse_args()
     game = find_game(a.game)
-    if a.vanilla:
+    # The Veiled Hollows now builds its own Cold War on the unmodded game, so that's the default.
+    # Pass --base <id|folder> (or --cold-war) to survey a mod instead.
+    if a.vanilla or not (a.base or a.list or a.cold_war):
         print("Surveying: vanilla Hearts of Iron IV")
         report = HERE / "base_mod_report.txt"
         report.write_text(survey(game, game, "vanilla Hearts of Iron IV", "game"), encoding="utf-8")
