@@ -101,9 +101,8 @@ None of these affect gameplay.
   October 2026. It doesn't overwrite any vanilla files except the three Appalachian state histories.
 - It's not compatible with mods that change those three states, or that rewrite US history (Kaiserreich, TNO,
   Millennium Dawn).
-- **Start date:** the mod runs on the normal 1936/1939 bookmarks. The Severance happens at game start, and
-  the lore has no fixed year. A true 1960s start would need every other country's history rewritten for the
-  Cold War, which is a separate total conversion.
+- **Start date:** 1936. The Severance happened on New Year's Eve 1935, so Appalachia exists from the first
+  day of the 1936 bookmark. On the 1939 bookmark the opening events say three years have passed.
 
 ## Files
 

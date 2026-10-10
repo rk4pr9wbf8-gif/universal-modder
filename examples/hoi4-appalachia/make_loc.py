@@ -285,17 +285,17 @@ L.update({
 # ---------------------------------------------------------------- events
 EV = {
     1: ("The Severance",
-        "They say Silas Blackwood stood on the summit of Spruce Knob at midnight, with the twelve of the Coven in a ring "
+        "On New Year's Eve, 1935, they say, Silas Blackwood stood on the summit of Spruce Knob at midnight, with the twelve of the Coven in a ring "
         "around him, and read aloud from a book bound in something that was not leather.\n\nBy dawn the fog had risen. "
         "It stands along every ridge from the Blue Ridge to the Cumberland Plateau, a grey wall a mile high that does "
         "not move with the wind. The radio carries only static and, sometimes, a woman humming. The roads into the "
         "mountains bend gently back on themselves. Federal marshals sent in at first light walked out at noon, "
         "white-haired, and could not say where they had been.\n\nIn the hollows, people are lighting their lamps and "
         "barring their doors. Something has been let out along with the fog. Something has been let in.\n\n"
-        "Appalachia is free.",
+        "Appalachia is free. It is the first morning of 1936.",
         {"a": "We are free. God help us."}),
     2: ("Fog over the Alleghenies",
-        "The reports from Charleston, Lexington and Knoxville stopped at midnight. By morning a wall of grey fog sat "
+        "The reports from Charleston, Lexington and Knoxville stopped at the stroke of midnight on New Year's Eve. By the first morning of 1936 a wall of grey fog sat "
         "along the whole length of the Appalachian ridges, and every road into the mountains led out again.\n\nThe "
         "governors of West Virginia, Kentucky and Tennessee are not answering. A broadcast from inside the fog claims "
         "a new nation: the \"Veiled Commonwealth of Appalachia\". It ends with a recording of church bells, played "
@@ -385,6 +385,18 @@ for n, (title, desc, opts) in EV.items():
     L[f"appalachia.{n}.d"] = desc
     for o, text in opts.items():
         L[f"appalachia.{n}.{o}"] = text
+L.update({
+    "appalachia.1.d_later": "It has been three years since New Year's Eve, 1935, when Silas Blackwood read from the book "
+        "bound in something that was not leather, and the fog rose along every ridge from the Blue Ridge to the "
+        "Cumberland.\n\nThree years of static on the radio. Three years of roads that bend back on themselves, of "
+        "lamps lit at dusk and doors barred until dawn. The world outside has been arming for a war of its own. "
+        "It has not forgotten us. It has only been busy.\n\nThe Veil still holds. The things in the hollows are "
+        "still hungry.",
+    "appalachia.2.d_later": "It has been three years since the fog rose over the Alleghenies and West Virginia, "
+        "Kentucky and Tennessee vanished behind it. Every patrol sent in has come back wrong or not at all.\n\n"
+        "The so-called \"Veiled Commonwealth of Appalachia\" still broadcasts from inside the fog: church bells, "
+        "played backwards. The Joint Chiefs want to try again.",
+})
 L.update({
     "appalachia.2.a.tt": "§RThe patrol will not come back.§!",
     "appalachia.11.a.tt": "§RThe war is over. The Veil has refused us.§!",

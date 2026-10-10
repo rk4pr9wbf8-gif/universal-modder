@@ -47,6 +47,11 @@
 - Sizes: focus 95x85, idea 64x64, decision 32x32, decision category 545x102, event 210x176, leader 156x210,
   advisor 65x67. Unit icon (40x40) and equipment icon sizes are guesses.
 
+## Decisions
+- Start date: the user chose 1936 over a 1960s Cold War start. The Severance is New Year's Eve 1935.
+  `appalachia.1` and `.2` use conditional `desc = { trigger = { date > 1936.6.1 } text = ... }` blocks, so the
+  1939 bookmark gets "three years since" text.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are

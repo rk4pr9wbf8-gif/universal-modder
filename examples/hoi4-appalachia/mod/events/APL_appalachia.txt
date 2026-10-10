@@ -8,7 +8,14 @@ add_namespace = appalachia
 country_event = {
 	id = appalachia.1
 	title = appalachia.1.t
-	desc = appalachia.1.d
+	desc = {
+		trigger = { NOT = { date > 1936.6.1 } }
+		text = appalachia.1.d
+	}
+	desc = {
+		trigger = { date > 1936.6.1 }
+		text = appalachia.1.d_later
+	}
 	picture = GFX_report_event_APL_severance
 	is_triggered_only = yes
 
@@ -22,7 +29,14 @@ country_event = {
 country_event = {
 	id = appalachia.2
 	title = appalachia.2.t
-	desc = appalachia.2.d
+	desc = {
+		trigger = { NOT = { date > 1936.6.1 } }
+		text = appalachia.2.d
+	}
+	desc = {
+		trigger = { date > 1936.6.1 }
+		text = appalachia.2.d_later
+	}
 	picture = GFX_report_event_APL_fog
 	is_triggered_only = yes
 

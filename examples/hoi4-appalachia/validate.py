@@ -246,7 +246,9 @@ def main():
             if k != "country_event" or values(ev, "hidden") == ["yes"]:
                 continue
             for key in ("title", "desc"):
-                need(values(ev, key) and values(ev, key)[0] in loc, f"loc: {values(ev, 'id')[0]} {key}")
+                vals = values(ev, key)
+                texts = [v if isinstance(v, str) else (values(v, "text") or [None])[0] for v in vals]
+                need(texts and all(t in loc for t in texts), f"loc: {values(ev, 'id')[0]} {key}")
             for opt in values(ev, "option"):
                 need(values(opt, "name")[0] in loc, f"loc: option {values(opt, 'name')[0]}")
             pic = values(ev, "picture")
