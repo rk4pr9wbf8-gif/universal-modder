@@ -172,6 +172,29 @@ def survey(base: Path, game: Path, name: str, source: str) -> str:
         hits = [k for k in loc if re.search(r"appalach|allegheny|cumberland|blue ridge", k, re.I)]
         w("other Appalachian-sounding state names: " + ", ".join(hits))
 
+    # every US-owned state, so the submod can pick Appalachia's land from the base mod's own map
+    with section("US-owned states (id | name | provinces | victory points)"):
+        names = {}
+        for f in layered(base, game, "localisation", "*_l_english.yml"):
+            if "state" not in f.name.lower():
+                continue
+            for m in re.finditer(r'^\s*([\w.]+):\d*\s*"([^"]*)"', read(f), re.M):
+                names[m.group(1)] = m.group(2)
+        rows = []
+        for sid, f in sorted(files.items()):
+            t = strip_comments(read(f))
+            owner = re.search(r"\bowner\s*=\s*([A-Z0-9]{3})", t)
+            if not owner or owner.group(1) != "USA":
+                continue
+            key = re.search(r'\bname\s*=\s*"?([\w.]+)"?', t)
+            nm = names.get(key.group(1), key.group(1)) if key else "?"
+            provs = re.search(r"provinces\s*=\s*\{([^}]*)\}", t)
+            vps = re.findall(r"victory_points\s*=\s*\{\s*(\d+)\s+(\d+)", t)
+            rows.append(f"{sid} | {nm} | {len(provs.group(1).split()) if provs else 0} | "
+                        + " ".join(f"{p}:{v}" for p, v in vps))
+        w(f"{len(rows)} US-owned states")
+        w("\n".join(rows))
+
     # usa leader sub-ideology, as an example of how characters are written
     with section("USA history (first lines)"):
         for f in layered(base, game, "history/countries"):
@@ -231,6 +254,26 @@ def survey(base: Path, game: Path, name: str, source: str) -> str:
     with section("Files in the base mod (top folders)"):
         for d in sorted(p for p in base.iterdir() if p.is_dir()):
             w(f"{d.name}: {sum(1 for _ in d.rglob('*') if _.is_file())} files")
+
+    # the end of the game's logs, to see why a load hangs or crashes
+    with section("Game logs (last lines)"):
+        home = Path.home()
+        for docs in (home / "OneDrive/Documents", home / "Documents", home / ".local/share"):
+            logs = docs / "Paradox Interactive" / "Hearts of Iron IV" / "logs"
+            if logs.is_dir():
+                for lf in ("system.log", "error.log", "exceptions.log", "game.log"):
+                    if (logs / lf).exists():
+                        lines = read(logs / lf).splitlines()
+                        w(f"--- {lf} ({len(lines)} lines, last 80) ---")
+                        w("\n".join(lines[-80:]))
+                crash = sorted((logs.parent / "crashes").glob("*"), key=lambda q: q.stat().st_mtime)[-1:] \
+                    if (logs.parent / "crashes").is_dir() else []
+                for c in crash:
+                    w(f"--- latest crash folder: {c.name} ---")
+                    for name in ("exception.txt", "meta.yml"):
+                        if (c / name).exists():
+                            w("\n".join(read(c / name).splitlines()[:60]))
+                break
 
     text = "\n".join(out) + "\n"
     home = str(Path.home())
