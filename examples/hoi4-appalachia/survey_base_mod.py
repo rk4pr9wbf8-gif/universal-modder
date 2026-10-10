@@ -15,6 +15,7 @@ Standard library only. Python 3.8+.
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 import os
 import re
 import sys
@@ -26,6 +27,8 @@ from build_mod import FRONTIER, HEARTLAND, find_game, steam_libraries  # noqa: E
 
 APP_ID = "394360"
 COLD_WAR = re.compile(r"cold war|iron curtain|aftermath|red wall|world divided", re.I)
+ADDON = re.compile(r"music|sound|soundtrack|audio|font|map ?mode|ui |interface|compatch|compatibility|submod|addon|add-on|"
+                   r"translation|localisation|localization|fix\b|graphics|portraits|flags", re.I)
 
 
 def read(p: Path) -> str:
@@ -99,6 +102,16 @@ def layered(base: Path, game: Path, sub: str, pattern="*.txt") -> list[Path]:
 def survey(base: Path, game: Path, name: str, source: str) -> str:
     out: list[str] = []
     w = out.append
+
+    @contextmanager
+    def section(title):
+        """Each part of the report stands alone: an unexpected file can't stop the rest."""
+        w(f"\n## {title}")
+        try:
+            yield
+        except Exception as e:  # noqa: BLE001 - report it and carry on
+            w(f"(this section failed: {type(e).__name__}: {e})")
+
     desc = read(base / "descriptor.mod") if (base / "descriptor.mod").exists() else ""
     w(f"# Base mod report for The Veiled Hollows")
     w(f"name: {name}")
@@ -111,112 +124,113 @@ def survey(base: Path, game: Path, name: str, source: str) -> str:
     w(f"game version: {gv.group(1) if gv else '?'}")
 
     # bookmarks and start dates
-    w("\n## Bookmarks")
-    for f in layered(base, game, "common/bookmarks"):
-        t = strip_comments(read(f))
-        for m in re.finditer(r'name\s*=\s*"?([\w.]+)"?[^{}]*?date\s*=\s*([\d.]+)', t):
-            w(f"{f.name}: {m.group(1)} {m.group(2)}")
-    w("defines start/end: " + ", ".join(sorted(set(re.findall(r'(START_DATE|END_DATE)\s*=\s*"([^"]+)"',
-        " ".join(read(f) for f in layered(base, game, "common/defines", "*.lua")))), key=str)))
+    with section("Bookmarks"):
+        for f in layered(base, game, "common/bookmarks"):
+            t = strip_comments(read(f))
+            for m in re.finditer(r'name\s*=\s*"?([\w.]+)"?[^{}]*?date\s*=\s*([\d.]+)', t):
+                w(f"{f.name}: {m.group(1)} {m.group(2)}")
+        found = re.findall(r'(START_DATE|END_DATE)\s*=\s*"([^"]+)"',
+                           " ".join(read(f) for f in layered(base, game, "common/defines", "*.lua")))
+        w("defines start/end: " + ", ".join(sorted({f"{k} {v}" for k, v in found})))
 
     # ideologies
-    w("\n## Ideologies (ideology: sub-ideologies)")
-    for f in layered(base, game, "common/ideologies"):
-        for _, body in top_level_blocks(read(f)):
-            for ideo, ib in top_level_blocks(body):
-                subs = [s for n, b in top_level_blocks(ib) if n == "types" for s, _ in top_level_blocks(b)]
-                w(f"{ideo}: {' '.join(subs)}")
+    with section("Ideologies (ideology: sub-ideologies)"):
+        for f in layered(base, game, "common/ideologies"):
+            for _, body in top_level_blocks(read(f)):
+                for ideo, ib in top_level_blocks(body):
+                    subs = [s for n, b in top_level_blocks(ib) if n == "types" for s, _ in top_level_blocks(b)]
+                    w(f"{ideo}: {' '.join(subs)}")
 
     # tags
-    w("\n## Country tags")
-    tags = {}
-    for f in layered(base, game, "common/country_tags"):
-        for m in re.finditer(r"^\s*([A-Z][A-Z0-9]{2})\s*=\s*\"([^\"]+)\"", strip_comments(read(f)), re.M):
-            tags[m.group(1)] = m.group(2)
-    w(f"{len(tags)} tags. APL taken: {'APL' in tags}. USA: {tags.get('USA', 'missing')}")
-    w("all: " + " ".join(sorted(tags)))
+    with section("Country tags"):
+        tags = {}
+        for f in layered(base, game, "common/country_tags"):
+            for m in re.finditer(r"^\s*([A-Z][A-Z0-9]{2})\s*=\s*\"([^\"]+)\"", strip_comments(read(f)), re.M):
+                tags[m.group(1)] = m.group(2)
+        w(f"{len(tags)} tags. APL taken: {'APL' in tags}. USA: {tags.get('USA', 'missing')}")
+        w("all: " + " ".join(sorted(tags)))
 
     # states
-    w("\n## Appalachian states")
-    loc = {}
-    for f in layered(base, game, "localisation", "*_l_english.yml"):
-        for m in re.finditer(r'^\s*STATE_(\d+):\d*\s*"([^"]*)"', read(f), re.M):
-            loc.setdefault(m.group(2).strip(), []).append(int(m.group(1)))
-    files = {}
-    for f in layered(base, game, "history/states"):
-        m = re.search(r"\bid\s*=\s*(\d+)", read(f))
-        if m:
-            files[int(m.group(1))] = f
-    for nm in HEARTLAND + FRONTIER:
-        for sid in loc.get(nm, []):
-            if sid in files:
-                t = read(files[sid])
-                owner = re.search(r"\bowner\s*=\s*([A-Z0-9]{3})", t)
-                w(f"{nm}: id {sid} file {files[sid].name} owner {owner.group(1) if owner else '?'} "
-                  f"from {'mod' if base in files[sid].parents else 'vanilla'}")
-    w(f"{len(files)} state files in total")
-    hits = [k for k in loc if re.search(r"appalach|allegheny|cumberland|blue ridge", k, re.I)]
-    w("other Appalachian-sounding state names: " + ", ".join(hits))
+    with section("Appalachian states"):
+        loc = {}
+        for f in layered(base, game, "localisation", "*_l_english.yml"):
+            for m in re.finditer(r'^\s*STATE_(\d+):\d*\s*"([^"]*)"', read(f), re.M):
+                loc.setdefault(m.group(2).strip(), []).append(int(m.group(1)))
+        files = {}
+        for f in layered(base, game, "history/states"):
+            m = re.search(r"\bid\s*=\s*(\d+)", read(f))
+            if m:
+                files[int(m.group(1))] = f
+        for nm in HEARTLAND + FRONTIER:
+            for sid in loc.get(nm, []):
+                if sid in files:
+                    t = read(files[sid])
+                    owner = re.search(r"\bowner\s*=\s*([A-Z0-9]{3})", t)
+                    w(f"{nm}: id {sid} file {files[sid].name} owner {owner.group(1) if owner else '?'} "
+                      f"from {'mod' if base in files[sid].parents else 'vanilla'}")
+        w(f"{len(files)} state files in total")
+        hits = [k for k in loc if re.search(r"appalach|allegheny|cumberland|blue ridge", k, re.I)]
+        w("other Appalachian-sounding state names: " + ", ".join(hits))
 
     # usa leader sub-ideology, as an example of how characters are written
-    w("\n## USA history (first lines)")
-    for f in layered(base, game, "history/countries"):
-        if f.name.startswith("USA"):
-            lines = [l.strip() for l in strip_comments(read(f)).splitlines() if l.strip()]
-            w("\n".join(lines[:40]))
-            break
+    with section("USA history (first lines)"):
+        for f in layered(base, game, "history/countries"):
+            if f.name.startswith("USA"):
+                lines = [l.strip() for l in strip_comments(read(f)).splitlines() if l.strip()]
+                w("\n".join(lines[:40]))
+                break
 
     # technologies, equipment, units
-    w("\n## Technologies (names)")
-    techs = []
-    for f in layered(base, game, "common/technologies"):
-        for _, body in top_level_blocks(read(f)):
-            techs += [n for n, b in top_level_blocks(body) if "research_cost" in b]
-    w(f"{len(techs)}: " + " ".join(techs))
-    w("\n## Tech folders")
-    folders = set()
-    for f in layered(base, game, "common/technologies"):
-        folders |= set(re.findall(r"folder\s*=\s*\{\s*name\s*=\s*(\w+)", strip_comments(read(f))))
-    w(" ".join(sorted(folders)))
-    w("\n## Equipment archetypes -> variants")
-    for f in layered(base, game, "common/units/equipment"):
-        for _, body in top_level_blocks(read(f)):
-            arch = {}
-            for n, b in top_level_blocks(body):
-                if re.search(r"is_archetype\s*=\s*yes", b):
-                    arch.setdefault(n, [])
-                m = re.search(r"archetype\s*=\s*(\w+)", b)
-                if m and "is_archetype" not in b:
-                    arch.setdefault(m.group(1), []).append(n)
-            for a, vs in arch.items():
-                w(f"{a}: {' '.join(vs)}")
-    w("\n## Sub-units (land)")
-    for f in layered(base, game, "common/units"):
-        if f.parent.name != "units":
-            continue
-        for _, body in top_level_blocks(read(f)):
-            for n, b in top_level_blocks(body):
-                if "map_icon_category" in b and re.search(r"map_icon_category\s*=\s*(infantry|armored|other)", b):
-                    need = re.search(r"need\s*=\s*\{([^}]*)\}", b)
-                    w(f"{n}: need {' '.join(need.group(1).split()) if need else '-'}")
-    w("\n## Unit categories")
-    for f in layered(base, game, "common/unit_tags"):
-        w(" ".join(re.findall(r"^\s*(category_\w+)", strip_comments(read(f)), re.M)))
+    with section("Technologies (names)"):
+        techs = []
+        for f in layered(base, game, "common/technologies"):
+            for _, body in top_level_blocks(read(f)):
+                techs += [n for n, b in top_level_blocks(body) if "research_cost" in b]
+        w(f"{len(techs)}: " + " ".join(techs))
+    with section("Tech folders"):
+        folders = set()
+        for f in layered(base, game, "common/technologies"):
+            folders |= set(re.findall(r"folder\s*=\s*\{\s*name\s*=\s*(\w+)", strip_comments(read(f))))
+        w(" ".join(sorted(folders)))
+    with section("Equipment archetypes -> variants"):
+        for f in layered(base, game, "common/units/equipment"):
+            for _, body in top_level_blocks(read(f)):
+                arch = {}
+                for n, b in top_level_blocks(body):
+                    if re.search(r"is_archetype\s*=\s*yes", b):
+                        arch.setdefault(n, [])
+                    m = re.search(r"archetype\s*=\s*(\w+)", b)
+                    if m and "is_archetype" not in b:
+                        arch.setdefault(m.group(1), []).append(n)
+                for a, vs in arch.items():
+                    w(f"{a}: {' '.join(vs)}")
+    with section("Sub-units (land)"):
+        for f in layered(base, game, "common/units"):
+            if f.parent.name != "units":
+                continue
+            for _, body in top_level_blocks(read(f)):
+                for n, b in top_level_blocks(body):
+                    if "map_icon_category" in b and re.search(r"map_icon_category\s*=\s*(infantry|armored|other)", b):
+                        need = re.search(r"need\s*=\s*\{([^}]*)\}", b)
+                        w(f"{n}: need {' '.join(need.group(1).split()) if need else '-'}")
+    with section("Unit categories"):
+        for f in layered(base, game, "common/unit_tags"):
+            w(" ".join(re.findall(r"^\s*(category_\w+)", strip_comments(read(f)), re.M)))
 
     # economy hints
-    w("\n## Scripted effects that look like an economy")
-    for f in layered(base, game, "common/scripted_effects"):
-        names = [n for n, _ in top_level_blocks(read(f)) if re.search(r"money|treasury|budget|econom|debt|gdp|tax", n, re.I)]
-        if names:
-            w(f"{f.name}: {' '.join(names)}")
-    w("\n## Decision categories")
-    cats = []
-    for f in layered(base, game, "common/decisions/categories"):
-        cats += [n for n, _ in top_level_blocks(read(f))]
-    w(" ".join(cats))
-    w("\n## Files in the base mod (top folders)")
-    for d in sorted(p for p in base.iterdir() if p.is_dir()):
-        w(f"{d.name}: {sum(1 for _ in d.rglob('*') if _.is_file())} files")
+    with section("Scripted effects that look like an economy"):
+        for f in layered(base, game, "common/scripted_effects"):
+            names = [n for n, _ in top_level_blocks(read(f)) if re.search(r"money|treasury|budget|econom|debt|gdp|tax", n, re.I)]
+            if names:
+                w(f"{f.name}: {' '.join(names)}")
+    with section("Decision categories"):
+        cats = []
+        for f in layered(base, game, "common/decisions/categories"):
+            cats += [n for n, _ in top_level_blocks(read(f))]
+        w(" ".join(cats))
+    with section("Files in the base mod (top folders)"):
+        for d in sorted(p for p in base.iterdir() if p.is_dir()):
+            w(f"{d.name}: {sum(1 for _ in d.rglob('*') if _.is_file())} files")
 
     text = "\n".join(out) + "\n"
     home = str(Path.home())
@@ -242,7 +256,13 @@ def main() -> None:
     if a.base:
         pick = [m for m in mods if a.base in (m[1].name, str(m[1]))] or [(a.base, Path(a.base), "path")]
     else:
-        pick = [m for m in mods if COLD_WAR.search(m[0])]
+        pick = [m for m in mods if COLD_WAR.search(m[0]) and not ADDON.search(m[0])]
+        # the total conversion itself is the one with the most country histories
+        pick.sort(key=lambda m: -sum(1 for _ in (m[1] / "history" / "countries").glob("*.txt")))
+        if len(pick) > 1:
+            print("Cold War mods found (using the first; pass --base <id> to choose):")
+            for nm, d, src in pick:
+                print(f"  {nm}   [{src}]")
         if not pick:
             print("No Cold War mod found among your mods. Run with --list to see them, then --base <id>.")
             for nm, d, src in mods:
