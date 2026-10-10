@@ -8,7 +8,8 @@ Checks:
 - every .txt parses (balanced braces, no stray tokens) and the .yml is UTF-8 with BOM;
 - every focus, idea, decision, event, unit, equipment, tech, character and trait has its loc keys,
   and every custom_effect_tooltip key exists;
-- every GFX_ sprite the scripts use is defined in interface/*.gfx and every texture file exists;
+- every GFX_ sprite the scripts use is defined in interface/*.gfx and every texture file exists, at the size
+  HoI4 draws it (TEXTURE_SIZES), and every character portrait exists at portrait or advisor size;
 - every event id fired is defined, every idea added is defined, every scripted effect called exists;
 - with --cwt: effect, trigger and modifier names are known to CWTools.
 Exit code 1 on any problem.
@@ -24,6 +25,36 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MOD = HERE / "mod"
 TEMPLATES = HERE / "templates"
+
+# texture folder (prefix under mod/) -> allowed (width, height); vanilla's sizes for each kind of picture
+TEXTURE_SIZES = {
+    "gfx/interface/goals/": {(95, 85)},
+    "gfx/interface/ideas/": {(64, 64)},
+    "gfx/interface/decisions/": {(32, 32), (545, 102)},
+    "gfx/interface/bop/": {(80, 80)},
+    "gfx/interface/units/": {(40, 40)},
+    "gfx/interface/equipment/": {(120, 64), (32, 32)},
+    "gfx/event_pictures/": {(210, 176)},
+    "gfx/leaders/": {(156, 210), (65, 67)},
+}
+
+
+def dds_size(path: Path):
+    head = path.read_bytes()[:20]
+    if head[:4] != b"DDS ":
+        return None
+    return int.from_bytes(head[16:20], "little"), int.from_bytes(head[12:16], "little")
+
+
+def check_texture_size(tex: str, where: str) -> None:
+    f = MOD / tex
+    if not f.exists() or f.suffix.lower() != ".dds":
+        return
+    size = dds_size(f)
+    for prefix, allowed in TEXTURE_SIZES.items():
+        if tex.startswith(prefix):
+            need(size in allowed, f"{where}: {tex} is {size}, want one of {sorted(allowed)}")
+
 
 TOKEN = re.compile(r'"[^"\n]*"|[{}]|<=|>=|!=|[=<>]|[^\s{}=<>"#]+|#[^\n]*')
 
@@ -214,6 +245,11 @@ def main():
                 tex = values(st, "texturefile")[0].strip('"')
                 sprites[name] = tex
                 need((MOD / tex).exists(), f"{rel(f)}: {name} -> missing texture {tex}")
+                check_texture_size(tex, rel(f))
+    for f in (MOD / "common" / "characters").glob("*.txt"):
+        for tex in re.findall(r'"(gfx/leaders/[^"]+)"', f.read_text(encoding="utf-8-sig")):
+            need((MOD / tex).exists(), f"{rel(f)}: missing portrait {tex}")
+            check_texture_size(tex, rel(f))
 
     # ---- definitions
     ideas = {k for f, t in by("/common/ideas/").items() for blk in values(t, "ideas") for cat in blk if isinstance(cat[2], list) for k, _, _ in cat[2]}

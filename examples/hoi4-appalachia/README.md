@@ -115,10 +115,10 @@ The mod builds into either world:
   - the Flatwoods visitors coming down from their hill;
   - the Bell Witch in the West Wing;
   - the Devil at the crossroads.
-- **Art:** the committed art is procedural and original (`make_art.py`): focus icons, national spirits,
-  decision icons, unit icons, event pictures, portraits and the flag. No game files were used.
-  `make_photo_art.py` swaps in photorealistic pictures generated with fal (AI-generated; disclose it if
-  you publish). It has a prompt for each of the 122 textures and fits each one to HoI4's size and frame.
+- **All art is rendered** and original (`make_art.py` with `render.py`, numpy and Pillow only): sculpted, lit
+  bone emblems on fog-and-moonlight backdrops for focuses, spirits and decisions, layered night landscapes
+  for events and banners, ray-marched 3D busts for the leaders, and a film finish. No game files, photos,
+  AI image generation or third-party art were used.
 
 ## Install
 
@@ -177,14 +177,13 @@ None of these affect gameplay.
 | `mod/` | the mod itself, minus the parts generated per install |
 | `templates/` | the Appalachia history file and starting army, with `{{CAPITAL}}` and province placeholders |
 | `build_mod.py` | reads your install, generates the state overrides and the templates, and installs the mod |
-| `make_art.py` | draws every texture, written as uncompressed DDS and TGA |
-| `make_photo_art.py` | photorealistic textures: fal prompts, then crop, grade, frame and write DDS; `check` lists any missing or wrong-sized texture |
+| `make_art.py` | renders every texture (about 4 minutes), written as uncompressed DDS and TGA |
+| `render.py` | the small numpy renderer behind the art: noise, skies, moons, ridges, fog, relit emblems, 3D busts, film finish |
 | `make_decisions.py` | council, treasury, Black Library, Cold War and cheat decisions, generated from tables |
 | `survey_base_mod.py` / `survey.bat` | reads a base mod and writes a names-only report for the agent |
 | `make_loc.py` | all English text: names, descriptions, events, tooltips |
 | `validate.py` | static checks: syntax, loc keys, sprites, textures, cross-references, CWTools vocabulary |
 | `MODLOG.md` | the build journal |
 
-To change text, edit `make_loc.py` and run it. To change art, edit `make_art.py` and run it. For the photorealistic set, run
-`python make_photo_art.py generate` (needs `FAL_KEY`), then `python make_photo_art.py apply`. Before
+To change text, edit `make_loc.py` and run it. To change art, edit `make_art.py` and run it. Before
 building, run `python validate.py --cwt <cwtools-hoi4-config>/Config`.

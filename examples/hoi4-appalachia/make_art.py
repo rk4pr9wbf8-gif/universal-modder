@@ -17,7 +17,10 @@ import random
 import struct
 from pathlib import Path
 
+import numpy as np
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
+
+import render as R
 
 HERE = Path(__file__).resolve().parent
 GFX = HERE / "mod" / "gfx"
@@ -629,6 +632,187 @@ def flag(size):
     return img.resize(size, Image.LANCZOS)
 
 
+# ---------------------------------------------------------------- rendered pictures (render.py)
+# Everything below is drawn at RS x the final size with render.py: lit, sculpted emblems instead of flat
+# sigils, layered fog and moonlight, ray-marched portraits, and a film finish (bloom, grain, vignette).
+
+RS = 4
+SKIES = {  # ground -> (sky top, sky bottom, fog colour, glow behind the emblem)
+    "blood": ((92, 20, 26), (20, 6, 9), (120, 70, 72), (200, 40, 30)),
+    "bruise": ((66, 34, 86), (14, 8, 22), (110, 96, 128), (150, 60, 170)),
+    "moss": ((34, 64, 46), (6, 14, 10), (96, 120, 104), (110, 190, 120)),
+    "ash": ((84, 84, 90), (16, 16, 18), (150, 150, 156), (200, 190, 170)),
+    "coal": ((70, 48, 30), (12, 8, 6), (130, 104, 84), (230, 120, 40)),
+}
+
+
+def night_backdrop(w, h, ground, seed, ridges=True):
+    top, bottom, fogc, _ = SKIES[ground]
+    img = R.sky(h, w, top, bottom, seed, clouds=.65)
+    if ridges:
+        for i, (b, k) in enumerate([(.72, .55), (.84, .3)]):
+            m = R.ridge_mask(h, w, h * b, h * .07, seed + i, sharp=.6)
+            col = R.rgb(bottom) * k
+            img = R.lerp(img, col[None, None] * np.ones_like(img), m[..., None])
+            img = R.add_fog(img, R.fog_layer(h, w, h * (b - .04), h * (b + .1), seed + 30 + i, .55), fogc)
+    return img
+
+
+def emblem(img, emis, motifs, ground, seed, scale, material=BONE, glow_strength=1.0):
+    """Sculpt make_art motifs into lit bone (or iron) and composite them onto img (RS-scale arrays)."""
+    h, w, _ = img.shape
+    _, _, _, glowc = SKIES[ground]
+
+    def draw(d, s):
+        for name, (x, y, sz) in motifs:
+            MOTIFS[name](d, x * scale, y * scale, sz * scale, BONE)
+    mask, red = R.motif_layers(draw, (w // 2, h // 2), ss=2)
+    img = R.glow(img, mask, w / 14, glowc, .55 * glow_strength)
+    img = R.drop_shadow(img, mask, w / 70, h / 50, w / 60, .85)
+    lit = R.relight(mask, material, seed=seed, rough=.55)
+    img = R.over(img, lit)
+    emis += R.rgb(EYE)[None, None] * R.blur(red, .8)[..., None] * 1.3
+    return img
+
+
+def frame_band(mask, width):
+    """A band just inside a frame mask's edge."""
+    inner = R.blur(mask, width * .5)
+    return np.clip(mask - R.smoothstep(.85, 1, inner), 0, 1)
+
+
+def iron_frame(img, mask, width, seed):
+    band = frame_band(mask, width)
+    lit = R.relight(band, (150, 136, 112), seed=seed, rough=.35, metal=True, depth=width * .6)
+    return R.over(img, lit)
+
+
+def framed(img, emis, mask, seed):
+    """Finish, then cut to the frame with a metal rim. mask is RS-scale; returns a PIL image at final size."""
+    h, w, _ = img.shape
+    img = R.finish(img, emis, seed, grain=.05, vignette=.6)
+    img = iron_frame(img, mask, w / 26, seed)
+    out = np.concatenate([img, mask[..., None]], -1)
+    return R.to_pil(R.resize(out, (w // RS, h // RS))).filter(ImageFilter.UnsharpMask(1, 40, 2))
+
+
+def focus_icon_hd(motifs, ground, seed):
+    w, h = 95 * RS, 85 * RS
+    img = night_backdrop(w, h, ground, seed)
+    emis = np.zeros_like(img)
+    img = emblem(img, emis, motifs, ground, seed, RS)
+    mask = np.asarray(shield_mask((w // SS, h // SS)).resize((w, h), Image.LANCZOS), dtype=np.float32) / 255
+    return framed(img, emis, mask, seed)
+
+
+def square_icon_hd(size, motif, ground, seed, round_frame=True):
+    w, h = size[0] * RS, size[1] * RS
+    img = night_backdrop(w, h, ground, seed, ridges=min(size) >= 48)
+    emis = np.zeros_like(img)
+    s = min(size) * .8
+    img = emblem(img, emis, [(motif, ((size[0] - s) / 2, (size[1] - s) / 2, s))], ground, seed, RS)
+    if not round_frame:
+        img = R.finish(img, emis, seed, grain=.04, vignette=.5)
+        return R.to_pil(R.resize(img, size)).filter(ImageFilter.UnsharpMask(1, 50, 2))
+    m = Image.new("L", (w, h), 0)
+    inset = RS * (1 if min(size) <= 32 else 2)
+    ImageDraw.Draw(m).rounded_rectangle([inset, inset, w - inset, h - inset], radius=RS * (3 if min(size) <= 32 else 6), fill=255)
+    return framed(img, emis, np.asarray(m, dtype=np.float32) / 255, seed)
+
+
+def landscape_hd(size, seed, sky=((40, 8, 14), (6, 4, 8)), moon=True, eyes=0, figure=None, scale=2):
+    """Fog-drowned ridges at night, moonlight through the fog, a rim-lit figure and eyes in the trees."""
+    w, h = size[0] * scale, size[1] * scale
+    top = tuple(min(255, int(c * 1.5)) for c in sky[0])
+    img = R.sky(h, w, top, sky[1], seed, clouds=.75)
+    mx, my = w * .76, h * .2
+    if moon:
+        img = R.moon(img, mx, my, min(w, h) * .075, seed=seed)
+    fogc = tuple(int(90 + c * .5) for c in top)
+    for i, b in enumerate((.46, .55, .64, .75)):
+        m = R.ridge_mask(h, w, h * b, h * (.05 + i * .015), seed + i, sharp=.7)
+        col = R.lerp(R.rgb(top) * .7, R.rgb((8, 6, 8)), (i + 1) / 4)
+        img = R.lerp(img, col[None, None] * np.ones_like(img), m[..., None])
+        img = R.add_fog(img, R.fog_layer(h, w, h * (b - .03), h * (b + .07), seed + 20 + i, .5 - i * .06), fogc)
+    if moon:
+        img = R.god_rays(img, mx, my, .45, (230, 200, 190))
+    emis = np.zeros_like(img)
+    if figure:
+        fs = h * .58
+        mask, red = R.motif_layers(lambda d, s: MOTIFS[figure](d, (w * .5 - fs / 2) * s / 2, h * .26 * s / 2, fs * s / 2, BONE),
+                                   (w // 2, h // 2), ss=2)
+        lit = R.relight(mask, (26, 22, 26), light=(.6, -.6, .5), seed=seed, rim=(230, 150, 130))
+        img = R.over(img, lit)
+        emis += R.rgb(EYE)[None, None] * red[..., None] * 1.4
+    pm = R.pine_mask(h, w, .99, seed + 5, n=int(14 + w / 12), hmin=.14, hmax=.42)
+    img = img * (1 - pm[..., None]) + R.rgb((5, 4, 6))[None, None] * pm[..., None]
+    rnd = random.Random(seed)
+    R.eyes(img, emis, [(rnd.uniform(.08, .92) * w, rnd.uniform(.74, .93) * h) for _ in range(eyes)], max(1.2, h / 160))
+    img = R.add_fog(img, R.fog_layer(h, w, h * .82, h * .98, seed + 60, .45), fogc)
+    out = R.finish(img, emis, seed, grain=.04)
+    return R.to_pil(R.resize(out, size))
+
+
+def banner_hd(size, seed, sky=((40, 8, 14), (6, 4, 8)), eyes=0, figure=None):
+    """A decision-category banner: a wide night ridge with the emblem small and centred, lit from the moon."""
+    w, h = size[0] * 2, size[1] * 2
+    top = tuple(min(255, int(c * 1.6)) for c in sky[0])
+    img = R.sky(h, w, top, sky[1], seed, clouds=.8)
+    img = R.moon(img, w * .82, h * .3, h * .14, seed=seed)
+    fogc = tuple(int(90 + c * .5) for c in top)
+    for i, b in enumerate((.55, .7, .85)):
+        m = R.ridge_mask(h, w, h * b, h * .12, seed + i, cell=w * .2, sharp=.7)
+        col = R.lerp(R.rgb(top) * .6, R.rgb((8, 6, 8)), (i + 1) / 3)
+        img = R.lerp(img, col[None, None] * np.ones_like(img), m[..., None])
+        img = R.add_fog(img, R.fog_layer(h, w, h * (b - .05), h * (b + .1), seed + 20 + i, .5), fogc)
+    img = R.god_rays(img, w * .82, h * .3, .35, (230, 200, 190))
+    pm = R.pine_mask(h, w, 1.0, seed + 5, n=int(w / 10), hmin=.2, hmax=.5)
+    img = img * (1 - pm[..., None]) + R.rgb((5, 4, 6))[None, None] * pm[..., None]
+    emis = np.zeros_like(img)
+    if figure:
+        s = h * .86
+        mask, red = R.motif_layers(lambda d, k: MOTIFS[figure](d, w / 2 - s / 2, h * .06, s, BONE), (w // 2, h // 2), ss=2)
+        img = R.glow(img, mask, h / 8, (200, 40, 30), .5)
+        img = R.drop_shadow(img, mask, 3, 4, 4)
+        img = R.over(img, R.relight(mask, BONE, seed=seed, rough=.55))
+        emis += R.rgb(EYE)[None, None] * red[..., None] * 1.3
+    rnd = random.Random(seed)
+    R.eyes(img, emis, [(rnd.uniform(.05, .95) * w, rnd.uniform(.8, .95) * h) for _ in range(eyes)], 1.6)
+    return R.to_pil(R.resize(R.finish(img, emis, seed, grain=.035), size))
+
+
+PORTRAITS = {  # leader -> ray-marched bust settings (render.bust) and backdrop
+    "APL_silas_blackwood": dict(hat="stovepipe", shirt=(200, 194, 182), eye_color=(255, 40, 30), gaunt=.6),
+    "APL_maw_hettie_crane": dict(hood=True, eye_color=(170, 230, 160), coat=(34, 40, 32), skin=(150, 132, 116),
+                                 gaunt=1.0, age=1.0, rim_color=(90, 170, 100)),
+    "APL_jeremiah_coalbrook": dict(hat="cap", shirt=(120, 110, 96), tie_color=(30, 26, 24), coat=(44, 36, 28),
+                                   eye_color=(255, 140, 60), beard=True, hair_color=(60, 44, 32)),
+    "APL_the_pale_lieutenant": dict(helmet=True, coat=(52, 56, 44), skin=(190, 190, 186), eye_color=(220, 220, 255),
+                                    gaunt=1.0, shirt=(70, 74, 60), tie_color=(40, 42, 34), rim_color=(120, 130, 180)),
+    "APL_big_john_kessler": dict(helmet=True, beard=True, hair_color=(80, 56, 36), coat=(40, 34, 28),
+                                 eye_color=(255, 150, 60), key_color=(255, 196, 130)),
+    "APL_reverend_ezra_pike": dict(hat="brim", shirt=(220, 214, 200), tie_color=(16, 14, 14), gaunt=.5, age=1.0,
+                                   eye_color=(255, 40, 30)),
+    "APL_dr_lucille_varner": dict(hair=True, glasses=True, coat=(176, 176, 170), shirt=(220, 220, 212),
+                                  tie_color=(40, 60, 50), eye_color=(140, 255, 120), rim_color=(80, 200, 110)),
+}
+
+
+def portrait_hd(key, seed, ground, size=(156, 210)):
+    """A leader portrait (156x210), or with size=(65, 67) the advisor-sized head-and-shoulders crop of it."""
+    w, h = 312, 420
+    col, a, e = R.bust((w, h), seed, **PORTRAITS[key])
+    bg = R.sky(h, w, tuple(int(c * 1.4) for c in ground[0]), ground[1], seed, clouds=.35)
+    bg = R.add_fog(bg, R.fog_layer(h, w, h * .45, h, seed + 1, .45), tuple(int(70 + c) for c in ground[0]))
+    img = bg * (1 - a[..., None]) + col * a[..., None]
+    if size[1] < 100:
+        cw = int(w * .64)
+        ch = int(cw * size[1] / size[0])
+        x0, y0 = (w - cw) // 2, int(h * .05)
+        img, e = img[y0:y0 + ch, x0:x0 + cw], e[y0:y0 + ch, x0:x0 + cw]
+    return R.to_pil(R.resize(R.finish(img, e, seed, grain=.045), size))
+
+
 # ---------------------------------------------------------------- the catalogue
 
 FOCUS = {
@@ -753,56 +937,47 @@ EVENTS = {
 def main() -> None:
     goals = GFX / "interface" / "goals"
     for i, (key, (ground, motifs)) in enumerate(FOCUS.items()):
-        save_dds(focus_icon(motifs, ground, i), goals / f"APL_{key}.dds")
+        save_dds(focus_icon_hd(motifs, ground, i), goals / f"APL_{key}.dds")
     for i, (key, (motif, ground)) in enumerate(IDEAS.items()):
-        save_dds(square_icon((64, 64), motif, ground, 100 + i), GFX / "interface" / "ideas" / f"APL_{key}.dds")
+        save_dds(square_icon_hd((64, 64), motif, ground, 100 + i), GFX / "interface" / "ideas" / f"APL_{key}.dds")
     for i, (key, (motif, ground)) in enumerate(DECISIONS.items()):
-        save_dds(square_icon((32, 32), motif, ground, 200 + i), GFX / "interface" / "decisions" / f"APL_{key}.dds")
-    cat = landscape((545, 102), 7, figure=None, eyes=8)
-    draw_motif(cat, DECISION_CATEGORY_IMAGE, (230, 8, 86))
-    save_dds(cat, GFX / "interface" / "decisions" / "APL_rites_category.dds")
-    lantern = landscape((545, 102), 8, sky=((30, 30, 40), (6, 6, 8)), eyes=0)
-    draw_motif(lantern, "dome", (220, 4, 100))
-    save_dds(lantern, GFX / "interface" / "decisions" / "APL_lantern_category.dds")
-    council = landscape((545, 102), 9, sky=((40, 16, 50), (6, 4, 8)), eyes=6)
-    draw_motif(council, "candles", (220, 6, 96))
-    save_dds(council, GFX / "interface" / "decisions" / "APL_council_category.dds")
-    cheats = landscape((545, 102), 10, sky=((70, 50, 10), (8, 6, 2)), eyes=0)
-    draw_motif(cheats, "crown", (225, 6, 92))
-    save_dds(cheats, GFX / "interface" / "decisions" / "APL_cheats_category.dds")
-    # balance-of-power side emblems
-    save_dds(square_icon((80, 80), "sigil", "blood", 500), GFX / "interface" / "bop" / "APL_coven_side.dds")
-    save_dds(square_icon((80, 80), "pickaxe", "coal", 501), GFX / "interface" / "bop" / "APL_assembly_side.dds")
-    for i, (key, motif) in enumerate(UNITS.items()):
-        save_dds(square_icon((40, 40), motif, "ash", 300 + i, round_frame=False), GFX / "interface" / "units" / f"APL_{key}.dds")
-    for key in ("binding_charms", "binding_charms_1", "binding_charms_2"):
-        big = square_icon((120, 64), "charm", "coal", 400, round_frame=True)
-        save_dds(big, GFX / "interface" / "equipment" / f"APL_{key}_medium.dds")
-        save_dds(square_icon((32, 32), "charm", "coal", 401), GFX / "interface" / "equipment" / f"APL_{key}_small.dds")
-    for key, kw in EVENTS.items():
-        save_dds(landscape((210, 176), **kw), GFX / "event_pictures" / f"APL_{key}.dds")
-    leaders = GFX / "leaders" / "APL"
-    save_dds(portrait(1, hood=False, extra="moth"), leaders / "APL_silas_blackwood.dds")
-    save_dds(portrait(2, hood=True, eye_color=(170, 230, 160, 255), ground=((20, 34, 24), (4, 6, 5)), extra="candles"),
-             leaders / "APL_maw_hettie_crane.dds")
-    save_dds(portrait(2, hood=True, eye_color=(170, 230, 160, 255), ground=((20, 34, 24), (4, 6, 5)), size=(65, 67)),
-             leaders / "APL_maw_hettie_crane_small.dds")
-    save_dds(portrait(3, hood=False, ground=((44, 30, 20), (6, 4, 3))), leaders / "APL_jeremiah_coalbrook.dds")
-    save_dds(portrait(4, hood=True, eye_color=(220, 220, 255, 255), ground=((30, 30, 40), (6, 6, 8)), extra="skull"),
-             leaders / "APL_the_pale_lieutenant.dds")
-    for key, kw in {
-        "APL_big_john_kessler": dict(seed=5, hood=False, ground=((50, 36, 20), (8, 6, 3)), extra="pickaxe"),
-        "APL_reverend_ezra_pike": dict(seed=6, hood=False, ground=((40, 10, 14), (6, 2, 3)), extra="book"),
-        "APL_dr_lucille_varner": dict(seed=7, hood=True, eye_color=(140, 255, 120, 255),
-                                      ground=((20, 30, 40), (3, 5, 7)), extra="flask"),
+        save_dds(square_icon_hd((32, 32), motif, ground, 200 + i), GFX / "interface" / "decisions" / f"APL_{key}.dds")
+    for name, kw in {
+        "rites": dict(seed=7, figure=DECISION_CATEGORY_IMAGE, eyes=8),
+        "lantern": dict(seed=8, sky=((30, 30, 40), (6, 6, 8)), figure="dome"),
+        "council": dict(seed=9, sky=((40, 16, 50), (6, 4, 8)), figure="candles", eyes=6),
+        "cheats": dict(seed=10, sky=((70, 50, 10), (8, 6, 2)), figure="crown"),
     }.items():
-        save_dds(portrait(**kw), leaders / f"{key}.dds")
-        small = {k: v for k, v in kw.items() if k != "extra"}
-        save_dds(portrait(size=(65, 67), **small), leaders / f"{key}_small.dds")
+        save_dds(banner_hd((545, 102), **kw), GFX / "interface" / "decisions" / f"APL_{name}_category.dds")
+    # balance-of-power side emblems
+    save_dds(square_icon_hd((80, 80), "sigil", "blood", 500), GFX / "interface" / "bop" / "APL_coven_side.dds")
+    save_dds(square_icon_hd((80, 80), "pickaxe", "coal", 501), GFX / "interface" / "bop" / "APL_assembly_side.dds")
+    for i, (key, motif) in enumerate(UNITS.items()):
+        save_dds(square_icon_hd((40, 40), motif, "ash", 300 + i, round_frame=False), GFX / "interface" / "units" / f"APL_{key}.dds")
+    for key in ("binding_charms", "binding_charms_1", "binding_charms_2"):
+        big = square_icon_hd((120, 64), "charm", "coal", 400, round_frame=True)
+        save_dds(big, GFX / "interface" / "equipment" / f"APL_{key}_medium.dds")
+        save_dds(square_icon_hd((32, 32), "charm", "coal", 401), GFX / "interface" / "equipment" / f"APL_{key}_small.dds")
+    for key, kw in EVENTS.items():
+        save_dds(landscape_hd((210, 176), **kw), GFX / "event_pictures" / f"APL_{key}.dds")
+    leaders = GFX / "leaders" / "APL"
+    grounds = {
+        "APL_silas_blackwood": ((40, 16, 30), (6, 4, 8)),
+        "APL_maw_hettie_crane": ((20, 34, 24), (4, 6, 5)),
+        "APL_jeremiah_coalbrook": ((44, 30, 20), (6, 4, 3)),
+        "APL_the_pale_lieutenant": ((30, 30, 40), (6, 6, 8)),
+        "APL_big_john_kessler": ((50, 36, 20), (8, 6, 3)),
+        "APL_reverend_ezra_pike": ((40, 10, 14), (6, 2, 3)),
+        "APL_dr_lucille_varner": ((20, 30, 40), (3, 5, 7)),
+    }
+    for i, (key, ground) in enumerate(grounds.items()):
+        save_dds(portrait_hd(key, i, ground), leaders / f"{key}.dds")
+        if key not in ("APL_silas_blackwood", "APL_jeremiah_coalbrook", "APL_the_pale_lieutenant"):  # not advisors
+            save_dds(portrait_hd(key, i, ground, size=(65, 67)), leaders / f"{key}_small.dds")
     for path, size in (("", (82, 52)), ("medium/", (41, 26)), ("small/", (10, 7))):
         save_tga(flag(size), GFX / "flags" / f"{path}APL.tga")
     # previews for the README / Steam Workshop thumbnail (not loaded by the game)
-    thumb = landscape((512, 512), 5, figure="moth", eyes=12)
+    thumb = landscape_hd((512, 512), 5, figure="moth", eyes=12, scale=1)
     thumb.convert("RGB").save(HERE / "mod" / "thumbnail.png")
     write_gfx()
     print("art written to", GFX)

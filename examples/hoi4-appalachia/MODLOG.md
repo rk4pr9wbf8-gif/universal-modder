@@ -106,20 +106,27 @@
 9. A base mod's `replace_path` hides vanilla's folder, but a submod's files in that folder still load.
    That's why the submod can add `common/on_actions`, `common/units`, `history/countries` and so on.
 
-## Round 4: the photorealistic pipeline
-- The fal key is still rejected (HTTP 401 from both the MCP and REST, 2026-10-10), so no photos were generated
-  yet. Everything else is in place, so it's one command once a working key is set.
-- `make_photo_art.py` lists all 122 textures (47 focuses, 22 spirits, 14 decisions, 4 category banners,
-  2 balance-of-power sides, 6 units, 6 equipment, 10 events, 11 leader portraits) with a prompt for each.
-  These come from 113 sources, because the small portraits and the equipment tiers share a source.
-- `generate` calls `um fal image` (Nano Banana 2, 1K) for each missing source into `art_src/`, which git
-  ignores. `apply` crops to the aspect, grades every picture to one look (desaturated, cold, crushed blacks,
-  vignette), downsizes from 4x with unsharp masking, cuts it to the frame (focus shield with a bone rim,
-  rounded tile, full bleed) and writes DDS with `make_art.save_dds`. Textures with no source keep their
-  procedural art.
-- `check` cross-references every `texturefile` in the .gfx files and every portrait in `common/` against
-  the disk and the expected sizes. Today: 123 references, 0 missing (`shine_overlay.dds` is vanilla's) and 0
-  wrong size. A full run of `apply` on synthetic sources gave the same result, and validate.py passed.
+## Round 4: rendered art
+- The user first asked for photorealistic icons. fal still rejected the key (HTTP 401, 2026-10-10), and every
+  public-domain image library was blocked from the container (Wikimedia Commons, Library of Congress, NASA,
+  Openverse, the Met: proxy 403). Only GitHub was reachable. The user then dropped photorealism and asked
+  for the best art possible without third-party software.
+- `render.py` is a small numpy renderer:
+  - value-noise fBm for clouds, fog banks, moon maria and surface grain;
+  - layered ridgelines with atmospheric perspective, ragged pines and god rays from the moon;
+  - `relight` turns a flat make_art motif into a sculpted object, with height from stacked blurs of its
+    mask, normals, a key light, specular, a red rim and AO;
+  - `bust` ray-marches signed-distance heads (hats, hoods, helmets, beards, hair, glasses, shirt and tie)
+    with hard shadows and glowing eyes;
+  - `finish` adds bloom, a tone shoulder, a vignette, slight chromatic aberration and grain.
+- Every picture is drawn at 2-4x size and downsampled, so small icons stay crisp. A full run takes about
+  4 minutes on 4 cores.
+- Gotcha: Pillow's GaussianBlur doesn't take float ("F") images, so `render.blur` is three box blurs from
+  cumsums.
+- Gotcha: motifs paint inner details (eye sockets, crescents, teeth) in near-black. As a mask those must
+  be holes, or every skull becomes a blob, so `motif_layers` cuts out dark pixels.
+- validate.py now checks every texture's DDS size against vanilla's size for its kind, and that every
+  character portrait exists.
 
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
