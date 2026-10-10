@@ -198,6 +198,33 @@ def survey(base: Path, game: Path, name: str, source: str) -> str:
         w(f"{len(rows)} US-owned states")
         w("\n".join(rows))
 
+    # the whole map, for redrawing borders
+    with section("All states (id | name | owner | cores | provinces | category)"):
+        rows = []
+        for sid, f in sorted(files.items()):
+            t = strip_comments(read(f))
+            hist = t[t.find("history"):] if "history" in t else t
+            owner = re.search(r"\bowner\s*=\s*([A-Z0-9]{3})", hist)
+            cores = sorted(set(re.findall(r"add_core_of\s*=\s*([A-Z0-9]{3})", hist)))
+            key = re.search(r'\bname\s*=\s*"?([\w.]+)"?', t)
+            nm = names.get(key.group(1), key.group(1)) if key else "?"
+            provs = re.search(r"provinces\s*=\s*\{([^}]*)\}", t)
+            cat = re.search(r"state_category\s*=\s*(\w+)", t)
+            rows.append(f"{sid} | {nm} | {owner.group(1) if owner else '-'} | {' '.join(cores)} | "
+                        f"{len(provs.group(1).split()) if provs else 0} | {cat.group(1) if cat else '?'}")
+        w(f"{len(rows)} states")
+        w("\n".join(rows))
+
+    with section("All countries (tag | capital | ruling party | history file)"):
+        rows = []
+        for f in layered(base, game, "history/countries"):
+            t = strip_comments(read(f))
+            tag = f.name[:3]
+            cap = re.search(r"\bcapital\s*=\s*(\d+)", t)
+            party = re.search(r"ruling_party\s*=\s*(\w+)", t)
+            rows.append(f"{tag} | {cap.group(1) if cap else '-'} | {party.group(1) if party else '-'} | {f.name}")
+        w("\n".join(rows))
+
     # usa leader sub-ideology, as an example of how characters are written
     with section("USA history (first lines)"):
         for f in layered(base, game, "history/countries"):
@@ -290,8 +317,17 @@ def main() -> None:
     ap.add_argument("--game")
     ap.add_argument("--base", help="Workshop item id or mod folder")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--vanilla", action="store_true", help="survey the unmodded game itself")
     a = ap.parse_args()
     game = find_game(a.game)
+    if a.vanilla:
+        print("Surveying: vanilla Hearts of Iron IV")
+        report = HERE / "base_mod_report.txt"
+        report.write_text(survey(game, game, "vanilla Hearts of Iron IV", "game"), encoding="utf-8")
+        print(f"Wrote {report}. Send this file to the agent.")
+        if sys.platform.startswith("win"):
+            os.startfile(report)
+        return
     mods = installed_mods(game)
     if a.list or not mods:
         print("Installed HoI4 mods:" if mods else "No HoI4 mods found. Subscribe to the Cold War mod on the Workshop, "
