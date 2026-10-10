@@ -1,0 +1,22 @@
+# North Korea exists only from the 1949 start, when the 1949 state history gives it the north.
+capital = 527
+
+set_research_slots = 3
+set_stability = 0.60
+set_war_support = 0.70
+
+set_politics = {
+	ruling_party = communism
+	last_election = "1948.8.25"
+	election_frequency = 48
+	elections_allowed = no
+}
+
+set_popularities = {
+	communism = 92
+	democratic = 2
+	fascism = 0
+	neutrality = 6
+}
+
+recruit_character = APL_cw_kim_il_sung

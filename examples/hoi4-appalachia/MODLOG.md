@@ -106,6 +106,28 @@
 9. A base mod's `replace_path` hides vanilla's folder, but a submod's files in that folder still load.
    That's why the submod can add `common/on_actions`, `common/units`, `history/countries` and so on.
 
+## Round 4: our own Cold War (stage 1, the 1949 world)
+- Cold War Iron Curtain crashed the user's laptop: first in the AMD OpenGL driver; then at "Loading sprites"
+  (fixed by raising AMD Variable Graphics Memory from 0.5 GB to 8 GB); then at "Select country". An
+  outdated vanilla-built Veiled Hollows in the same playset could explain the last one. The user chose to
+  drop the base mod and have the agent build a Cold War on vanilla.
+- The user asked to use the base mod's art. The agent declined, because it belongs to that mod's authors.
+  Alternatives offered: public-domain US government and Wikimedia photos, vanilla assets by reference, fal.
+- `survey --vanilla` dumped all 1083 states (id, name, owner, cores) and every country history. Vanilla
+  1.19.3 already has DDR, WGR, ISR, PAK, RAJ, INS, KOR, PRC, FOR, VIN, LAO and CAM. There's no North
+  Korea, so the mod adds PRK.
+- Route: a dated `1949.5.23 = { owner = X controller = X }` entry inside each state's history, and a
+  dated government entry in each country's history. That's the native mechanism the 1939 bookmark uses,
+  so the 1949 map shows on the selection screen. `owner_at()` replays vanilla's own dated entries, so
+  states annexed in 1939 (Austria, Bohemia, Memel) revert. In the fixture, 183 states and 51 countries
+  changed.
+- Leaders, factions, puppets, capitals, cosmetic names and the Chinese Civil War run in on_startup behind
+  `date > 1949.1.1` (`APL_cw_setup_1949`). Technology: `APL_cw_set_tech`, generated from the game's own
+  technologies by start_year, skipping doctrines, `xor` branches and `allow`-gated techs.
+- Vanilla `NGame.END_DATE` is 1949.1.1, so `common/defines/APL_defines.lua` moves it to 2000.
+- Tested against a fake install rebuilt from the report: all 1081 states and 364 country files. All 179
+  table names match the user's install.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are

@@ -1,6 +1,11 @@
 on_actions = {
 	on_startup = {
 		effect = {
+			# The 1949 Cold War start: leaders, alliances, occupation, the Chinese war, technology.
+			if = {
+				limit = { date > 1949.1.1 }
+				APL_cw_setup_1949 = yes
+			}
 			if = {
 				limit = { country_exists = APL }
 				set_global_flag = APL_veil_intact

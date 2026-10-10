@@ -1,0 +1,129 @@
+bookmarks = {
+	bookmark = {
+		name = "APL_COLD_WAR_NAME"
+		desc = "APL_COLD_WAR_DESC"
+		date = 1949.5.23.12
+		picture = "GFX_select_date_APL_1949"
+		default_country = "APL"
+		default = no
+
+		"APL" = {
+			history = "APL_CW_APL_DESC"
+			ideology = neutrality
+			ideas = { }
+			focuses = { }
+		}
+		"USA" = {
+			history = "APL_CW_USA_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"SOV" = {
+			history = "APL_CW_SOV_DESC"
+			ideology = communism
+			ideas = { }
+			focuses = { }
+		}
+		"ENG" = {
+			history = "APL_CW_ENG_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"FRA" = {
+			history = "APL_CW_FRA_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"PRC" = {
+			history = "APL_CW_PRC_DESC"
+			ideology = communism
+			ideas = { }
+			focuses = { }
+		}
+		"CHI" = {
+			history = "APL_CW_CHI_DESC"
+			ideology = neutrality
+			ideas = { }
+			focuses = { }
+		}
+		"---" = {
+			history = "APL_CW_OTHER_DESC"
+		}
+		"WGR" = {
+			minor = yes
+			history = "APL_CW_WGR_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"DDR" = {
+			minor = yes
+			history = "APL_CW_DDR_DESC"
+			ideology = communism
+			ideas = { }
+			focuses = { }
+		}
+		"ITA" = {
+			minor = yes
+			history = "APL_CW_ITA_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"YUG" = {
+			minor = yes
+			history = "APL_CW_YUG_DESC"
+			ideology = communism
+			ideas = { }
+			focuses = { }
+		}
+		"KOR" = {
+			minor = yes
+			history = "APL_CW_KOR_DESC"
+			ideology = neutrality
+			ideas = { }
+			focuses = { }
+		}
+		"PRK" = {
+			minor = yes
+			history = "APL_CW_PRK_DESC"
+			ideology = communism
+			ideas = { }
+			focuses = { }
+		}
+		"RAJ" = {
+			minor = yes
+			history = "APL_CW_RAJ_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"ISR" = {
+			minor = yes
+			history = "APL_CW_ISR_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"JAP" = {
+			minor = yes
+			history = "APL_CW_JAP_DESC"
+			ideology = democratic
+			ideas = { }
+			focuses = { }
+		}
+		"POL" = {
+			minor = yes
+			history = "APL_CW_POL_DESC"
+			ideology = communism
+			ideas = { }
+			focuses = { }
+		}
+		effect = {
+			randomize_weather = 22345
+		}
+	}
+}

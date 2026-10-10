@@ -238,6 +238,153 @@ def game_version(game: Path) -> str:
     return "1.*"
 
 
+# ---------------------------------------------------------------- the 1949 Cold War start (vanilla only)
+
+DATE_RE = re.compile(r"(\d{3,4})\.(\d{1,2})\.(\d{1,2})")
+
+
+def block_span(text: str, key: str, start: int = 0):
+    """(body_start, body_end) of the first `key = { ... }` at or after start, or None."""
+    m = re.compile(rf"\b{re.escape(key)}\s*=\s*\{{").search(text, start)
+    if not m:
+        return None
+    depth, i = 1, m.end()
+    while i < len(text) and depth:
+        depth += {"{": 1, "}": -1}.get(text[i], 0)
+        i += 1
+    return m.end(), i - 1
+
+
+def top_level(body: str):
+    """Yield (key, value_text_or_None, block_body_or_None) for entries at depth 0 of a block body."""
+    body = re.sub(r"#[^\n]*", "", body)
+    i, n = 0, len(body)
+    pat = re.compile(r"([\w.\-]+)\s*=\s*(\{|\"[^\"]*\"|[\w.\-]+)")
+    while i < n:
+        m = pat.search(body, i)
+        if not m:
+            return
+        if m.group(2) == "{":
+            depth, j = 1, m.end()
+            while j < n and depth:
+                depth += {"{": 1, "}": -1}.get(body[j], 0)
+                j += 1
+            yield m.group(1), None, body[m.end():j - 1]
+            i = j
+        else:
+            yield m.group(1), m.group(2), None
+            i = m.end()
+
+
+def owner_at(text: str, date: tuple) -> str | None:
+    """The state's owner on `date`, applying the history's dated entries in order."""
+    span = block_span(text, "history")
+    if not span:
+        return None
+    owner, dated = None, []
+    for k, v, body in top_level(text[span[0]:span[1]]):
+        if k == "owner" and v:
+            owner = v
+        elif body is not None and DATE_RE.fullmatch(k):
+            m = re.search(r"\bowner\s*=\s*([A-Z0-9]{3})", body)
+            if m:
+                dated.append((tuple(int(x) for x in k.split(".")), m.group(1)))
+    for d, o in sorted(dated):
+        if d <= date:
+            owner = o
+    return owner
+
+
+def add_to_history(text: str, entry: str) -> str:
+    span = block_span(text, "history")
+    if not span:
+        raise ValueError("no history block")
+    return text[:span[1]] + entry + text[span[1]:]
+
+
+def cold_war_states(index, heart_ids, out: Path, cw) -> int:
+    """Give every state its 1949 owner. Returns how many state files were overridden."""
+    date = tuple(int(x) for x in cw.DATE.split("."))
+    changed = 0
+    for sid, (f, name, base_owner) in sorted(index.items()):
+        dst = out / "history" / "states" / f.name
+        text = read(dst) if dst.exists() else read(f)
+        if sid in heart_ids:
+            continue  # Appalachia's own, already rewritten
+        want = base_owner
+        if sid in cw.STATES:
+            expected, tag = cw.STATES[sid]
+            if name != expected:
+                print(f"  ! 1949: state {sid} is called '{name}', expected '{expected}'; leaving it alone")
+                continue
+            want = tag
+        if not want or want == owner_at(text, date):
+            continue
+        lines = [f"owner = {want}", f"controller = {want}"]
+        if sid in cw.STATES and want in cw.CORE_TAGS:
+            lines.append(f"add_core_of = {want}")
+        entry = f"\t\t{cw.DATE} = {{\n" + "".join(f"\t\t\t{l}\n" for l in lines) + "\t\t}\n\t"
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        dst.write_text(add_to_history(text, entry), encoding="utf-8")
+        changed += 1
+    return changed
+
+
+def cold_war_countries(src: Sources, out: Path, cw) -> int:
+    """Append each country's 1949 government to its own history file."""
+    files = {f.name[:3]: f for f in src.files("history/countries")}
+    done = 0
+    for tag, (party, pop, key, name, sub, cosmetic) in cw.COUNTRIES.items():
+        if tag in ("PRK", "APL") or tag not in files:
+            continue
+        f = files[tag]
+        dst = out / "history" / "countries" / f.name
+        text = read(dst) if dst.exists() else read(f)
+        pops = " ".join(f"{k} = {v}" for k, v in pop.items())
+        body = [f"set_politics = {{ ruling_party = {party} elections_allowed = {'yes' if party == 'democratic' else 'no'} }}",
+                f"set_popularities = {{ {pops} }}", f"recruit_character = APL_cw_{key}"]
+        if cosmetic:
+            body.append(f"set_cosmetic_tag = {cosmetic}")
+        text = text.rstrip() + f"\n\n# The Veiled Hollows: the Cold War start\n{cw.DATE} = {{\n" + \
+            "".join(f"\t{b}\n" for b in body) + "}\n"
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        dst.write_text(text, encoding="utf-8")
+        done += 1
+    return done
+
+
+def cold_war_tech(src: Sources, cw) -> str:
+    """APL_cw_set_tech: every country gets the game's technologies up to its 1949 level."""
+    techs = []
+    for f in src.files("common/technologies"):
+        span = block_span(read(f), "technologies")
+        if not span:
+            continue
+        for name, _, body in top_level(read(f)[span[0]:span[1]]):
+            if body is None or name.startswith("@"):
+                continue
+            year = re.search(r"\bstart_year\s*=\s*(\d{4})", body)
+            if not year or re.search(r"\bdoctrine\s*=\s*yes|\bxor\s*=|\ballow\s*=", body):
+                continue
+            techs.append((name, int(year.group(1))))
+    groups = {}
+    for tag, year in cw.TECH_YEAR.items():
+        groups.setdefault(year, []).append(tag)
+    out = ["# Generated by build_mod.py from your game's technologies. Do not edit; rebuild instead.",
+           "APL_cw_set_tech = {"]
+
+    def give(limit, year):
+        names = [n for n, y in techs if y <= year]
+        out.append(f"\tevery_country = {{\n\t\tlimit = {{ {limit} }}\n\t\tset_technology = {{\n"
+                   + "".join(f"\t\t\t{n} = 1\n" for n in names) + "\t\t\tpopup = no\n\t\t}\n\t}")
+    for year, tags in sorted(groups.items()):
+        give("OR = { " + " ".join(f"tag = {t}" for t in tags) + " }", year)
+    give("NOT = { " + " ".join(f"tag = {t}" for t in cw.TECH_YEAR) + " }", cw.TECH_YEAR_DEFAULT)
+    out.append("}")
+    print(f"1949 tech:  {len(techs)} technologies, {len([1 for n, y in techs if y <= 1946])} by 1946")
+    return "\n".join(out) + "\n"
+
+
 def find_base(game: Path, wanted: str | None):
     """(profile name, base mod folder or None). --base none forces vanilla; --base <id|path> picks a mod;
     otherwise a subscribed Cold War Iron Curtain is used when present."""
@@ -339,10 +486,24 @@ def build(game: Path, out_root: Path, dry_run: bool, base_arg: str | None = None
     lines += ["}", ""]
     (out / "common" / "scripted_effects" / "APL_generated_effects.txt").write_text("\n".join(lines), encoding="utf-8")
 
-    # 3. Ideology names differ between worlds.
+    # 3. The 1949 Cold War start lives on the vanilla map only.
+    cw_files = ["common/bookmarks/APL_cold_war.txt", "common/defines/APL_defines.lua",
+                "history/countries/PRK - North Korea.txt"]
+    if prof_name == "vanilla":
+        import cold_war_1949 as cw
+        n_states = cold_war_states(index, set(heart.values()), out, cw)
+        n_countries = cold_war_countries(src, out, cw)
+        (out / "common" / "scripted_effects" / "APL_cw_tech.txt").write_text(cold_war_tech(src, cw), encoding="utf-8")
+        print(f"1949 world: {n_states} states and {n_countries} countries get a {cw.DATE} history entry")
+    else:
+        for rel in cw_files:
+            (out / rel).unlink(missing_ok=True)
+        (out / "common" / "scripted_effects" / "APL_cw_tech.txt").write_text("APL_cw_set_tech = { }\n", encoding="utf-8")
+
+    # 4. Ideology names differ between worlds.
     fill_tokens(out, {"ASSEMBLY_PARTY": prof["assembly_party"], "ASSEMBLY_SUBIDEOLOGY": prof["assembly_subideology"]})
 
-    # 4. Descriptors: one inside the folder, one next to it for the launcher. A base mod becomes a
+    # 5. Descriptors: one inside the folder, one next to it for the launcher. A base mod becomes a
     #    dependency, so the launcher loads it first.
     version = game_version(game)
     inner = (SRC / "descriptor.mod").read_text().replace('supported_version="1.*"', f'supported_version="{version}"')

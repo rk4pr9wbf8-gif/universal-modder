@@ -8,22 +8,28 @@ States as the **Veiled Commonwealth of Appalachia** (tag `APL`).
 
 ![thumbnail](mod/thumbnail.png)
 
-## Two worlds
+## Three starts, one install
 
-The mod builds into either world:
+The mod builds on the normal game, with no other mods needed:
 
-- **Vanilla 1936.** The Severance happens on New Year's Eve 1935. Appalachia is West Virginia, Kentucky
-  and Tennessee. Use `install_1936.bat`.
-- **The Cold War, as a submod of
-  [Cold War Iron Curtain: A World Divided](https://steamcommunity.com/sharedfiles/filedetails/?id=1458561226).**
-  That mod supplies the realistic 1949 world, every other nation and the Cold War research trees. Here the
-  Severance happens on the night of 22 May 1949.
-  - Appalachia is the real mountain region on that mod's finer map: Charleston, Morgantown, Eastern
-    Kentucky, Southwest Virginia, Franklin (East Tennessee) and Asheville.
-  - Its frontier is Pittsburgh, Western Maryland, Central Pennsylvania, Louisville, Western Kentucky,
-    Nashville, the Carolina Upcountry, Northern Georgia, Birmingham, the Ohio River Valley and Cincinnati.
-  - `install.bat` picks this automatically when you're subscribed to Cold War Iron Curtain. In the
-    launcher, put Cold War Iron Curtain **first** in the playset and The Veiled Hollows **after** it.
+- **1936 (The Gathering Storm)** and **1939**: Appalachia (West Virginia, Kentucky, Tennessee) breaks away
+  on New Year's Eve 1935.
+- **1949 (The Cold War)**, a new bookmark: the world on 23 May 1949, with Appalachia breaking away that
+  night. The previous four entries spell out the details:
+  - **Europe:** Germany split into the Federal Republic and the Soviet zone. Poland moved west. The Baltics,
+    eastern Poland, Königsberg, Karelia, Bessarabia and Carpathian Ruthenia in the USSR. Austria
+    restored. Communist governments from East Berlin to Tirana, with Tito's Yugoslavia on its own.
+  - **Asia:** Korea split at the 38th parallel (North Korea is new). Mao's PLA holds the north and the
+    Yangtze while Chiang holds the south, the west and Taiwan, and the civil war is still on. Japan is
+    under US occupation and loses its empire. France's Indochina is three client states.
+  - **South Asia and the Middle East:** India and Pakistan are independent, as are Ceylon, Burma, Israel,
+    Egypt and Indonesia. Italy's colonies are under British administration.
+  - **Governments and blocs:** 52 heads of government (Truman, Stalin, Attlee, Mao, Adenauer, Nehru,
+    Ben-Gurion and more). NATO and the Eastern Bloc. Technology set to each country's 1949 level.
+  - The game no longer ends in 1949.
+
+  Coming next: 1949 armies and generals, real public-domain portraits, Cold War research trees, an
+  Occult research tab, and Cold War events.
 
 ## What's in it
 
@@ -176,6 +182,7 @@ None of these affect gameplay.
 | `templates/` | the Appalachia history file and starting army, with `{{CAPITAL}}` and province placeholders |
 | `build_mod.py` | reads your install, generates the state overrides and the templates, and installs the mod |
 | `make_art.py` | draws every texture, written as uncompressed DDS and TGA |
+| `cold_war_1949.py` / `make_cold_war.py` | the 1949 world as data (states, governments, blocs) and the static files made from it |
 | `make_decisions.py` | council, treasury, Black Library, Cold War and cheat decisions, generated from tables |
 | `survey_base_mod.py` / `survey.bat` | reads a base mod and writes a names-only report for the agent |
 | `make_loc.py` | all English text: names, descriptions, events, tooltips |
