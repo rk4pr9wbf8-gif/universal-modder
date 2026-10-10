@@ -106,6 +106,21 @@
 9. A base mod's `replace_path` hides vanilla's folder, but a submod's files in that folder still load.
    That's why the submod can add `common/on_actions`, `common/units`, `history/countries` and so on.
 
+## Round 4: the photorealistic pipeline
+- The fal key is still rejected (HTTP 401 from both the MCP and REST, 2026-10-10), so no photos were generated
+  yet. Everything else is in place, so it's one command once a working key is set.
+- `make_photo_art.py` lists all 122 textures (47 focuses, 22 spirits, 14 decisions, 4 category banners,
+  2 balance-of-power sides, 6 units, 6 equipment, 10 events, 11 leader portraits) with a prompt for each.
+  These come from 113 sources, because the small portraits and the equipment tiers share a source.
+- `generate` calls `um fal image` (Nano Banana 2, 1K) for each missing source into `art_src/`, which git
+  ignores. `apply` crops to the aspect, grades every picture to one look (desaturated, cold, crushed blacks,
+  vignette), downsizes from 4x with unsharp masking, cuts it to the frame (focus shield with a bone rim,
+  rounded tile, full bleed) and writes DDS with `make_art.save_dds`. Textures with no source keep their
+  procedural art.
+- `check` cross-references every `texturefile` in the .gfx files and every portrait in `common/` against
+  the disk and the expected sizes. Today: 123 references, 0 missing (`shine_overlay.dds` is vanilla's) and 0
+  wrong size. A full run of `apply` on synthetic sources gave the same result, and validate.py passed.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are
