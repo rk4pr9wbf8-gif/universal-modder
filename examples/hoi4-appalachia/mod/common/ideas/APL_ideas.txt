@@ -1,0 +1,210 @@
+ideas = {
+	country = {
+		# ---- start of game ----------------------------------------------------------------
+		APL_the_veil = {
+			picture = APL_the_veil
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_defence_factor = 0.15
+				army_org_factor = 0.05
+				stability_factor = 0.05
+			}
+		}
+
+		APL_blood_price = {
+			picture = APL_blood_price
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				monthly_population = -0.15
+				stability_factor = -0.10
+				production_speed_buildings_factor = -0.10
+			}
+		}
+
+		APL_blood_price_eased = {
+			picture = APL_blood_price_eased
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				monthly_population = -0.05
+				stability_factor = -0.03
+			}
+		}
+
+		APL_hollow_folk = {
+			picture = APL_hollow_folk
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				war_support_factor = 0.15
+				conscription = 0.01
+				political_power_gain = -0.10
+			}
+		}
+
+		# ---- focus rewards ---------------------------------------------------------------
+		APL_hollow_mist = {
+			picture = APL_hollow_mist
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_defence_factor = 0.10
+				recon_factor = 0.15
+			}
+		}
+
+		APL_the_eternal_veil = {
+			picture = APL_the_eternal_veil
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				stability_factor = 0.10
+				political_power_gain = 0.25
+				research_speed_factor = 0.05
+			}
+		}
+
+		APL_veil_parted = {
+			picture = APL_veil_parted
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				war_support_factor = 0.20
+				army_attack_factor = 0.10
+				conscription = 0.02
+			}
+		}
+
+		APL_children_of_the_night = {
+			picture = APL_children_of_the_night
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_attack_factor = 0.10
+				army_morale_factor = 0.10
+			}
+		}
+
+		APL_the_wild_hunt = {
+			picture = APL_the_wild_hunt
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_attack_factor = 0.15
+				army_morale_factor = 0.15
+				army_speed_factor = 0.10
+				attrition = -0.10
+			}
+		}
+
+		APL_the_matriarch = {
+			picture = APL_the_matriarch
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				stability_factor = 0.10
+				monthly_population = 0.10
+				political_power_gain = 0.15
+			}
+		}
+
+		APL_old_scratch_bargain = {
+			picture = APL_old_scratch_bargain
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				industrial_capacity_factory = 0.15
+				research_speed_factor = 0.10
+				army_attack_factor = 0.10
+				monthly_population = -0.10
+				stability_factor = -0.05
+			}
+		}
+
+		APL_moonshine_economy = {
+			picture = APL_moonshine_economy
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				consumer_goods_factor = -0.05
+				stability_factor = 0.03
+			}
+		}
+
+		APL_the_black_furnace = {
+			picture = APL_the_black_furnace
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				industrial_capacity_factory = 0.10
+				production_factory_max_efficiency_factor = 0.10
+			}
+		}
+
+		APL_veil_shattered = {
+			picture = APL_veil_shattered
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				stability_factor = -0.10
+				war_support_factor = 0.10
+			}
+		}
+
+		# ---- rituals (timed) -------------------------------------------------------------
+		APL_blood_moon = {
+			picture = APL_blood_moon
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_attack_factor = 0.15
+				army_org_factor = 0.10
+				breakthrough_factor = 0.10
+			}
+		}
+
+		APL_mist_rite = {
+			picture = APL_mist_rite
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				army_defence_factor = 0.20
+				army_core_defence_factor = 0.10
+			}
+		}
+
+		# ---- inflicted on others -----------------------------------------------------------
+		APL_black_mountain_curse = {
+			picture = APL_black_mountain_curse
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				stability_factor = -0.15
+				war_support_factor = -0.10
+				army_org_factor = -0.10
+			}
+		}
+
+		APL_fog_madness = {
+			picture = APL_fog_madness
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				stability_factor = -0.05
+				war_support_factor = -0.05
+			}
+		}
+
+		APL_bell_witch_torment = {
+			picture = APL_bell_witch_torment
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				stability_factor = -0.08
+				political_power_gain = -0.20
+			}
+		}
+	}
+}

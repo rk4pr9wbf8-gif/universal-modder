@@ -1,0 +1,191 @@
+APL_rites_of_the_hollows = {
+
+	# Feed the Veil with the blood of volunteers. The Coven calls it a tithe.
+	APL_blood_tithe = {
+		icon = APL_blood_tithe
+		available = {
+			has_global_flag = APL_veil_intact
+			has_manpower > 3000
+		}
+		cost = 25
+		days_re_enable = 30
+		complete_effect = {
+			add_manpower = -3000
+			add_stability = -0.02
+			add_to_variable = { APL_veil_strength = 15 }
+			APL_clamp_veil = yes
+			custom_effect_tooltip = APL_veil_plus_15_tt
+		}
+		ai_will_do = {
+			factor = 2
+			modifier = {
+				factor = 10
+				check_variable = { APL_veil_strength < 50 }
+			}
+		}
+	}
+
+	# Bones of the coal-camp dead, buried at every crossroads on the ridge.
+	APL_bury_the_bones = {
+		icon = APL_bury_the_bones
+		available = {
+			has_global_flag = APL_veil_intact
+		}
+		cost = 75
+		days_re_enable = 90
+		complete_effect = {
+			add_to_variable = { APL_veil_strength = 25 }
+			APL_clamp_veil = yes
+			custom_effect_tooltip = APL_veil_plus_25_tt
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 10
+				check_variable = { APL_veil_strength < 40 }
+			}
+		}
+	}
+
+	APL_rite_of_the_blood_moon = {
+		icon = APL_blood_moon
+		visible = {
+			has_country_flag = APL_black_mountain_rites
+		}
+		available = {
+			has_war = yes
+			has_manpower > 2000
+		}
+		cost = 50
+		days_re_enable = 120
+		complete_effect = {
+			add_manpower = -2000
+			add_timed_idea = {
+				idea = APL_blood_moon
+				days = 60
+			}
+		}
+		ai_will_do = {
+			factor = 5
+		}
+	}
+
+	APL_call_the_hollow_mist = {
+		icon = APL_hollow_mist
+		visible = {
+			has_country_flag = APL_black_mountain_rites
+		}
+		available = {
+			has_war = yes
+		}
+		cost = 50
+		days_re_enable = 120
+		complete_effect = {
+			add_timed_idea = {
+				idea = APL_mist_rite
+				days = 60
+			}
+		}
+		ai_will_do = {
+			factor = 5
+		}
+	}
+
+	# Raw Head and Bloody Bones walks the coal camps and the dead get up to follow.
+	APL_raise_the_coal_camp_dead = {
+		icon = APL_raise_the_dead
+		visible = {
+			has_completed_focus = APL_call_of_the_hollows
+		}
+		available = {
+			has_war = yes
+		}
+		cost = 100
+		days_re_enable = 180
+		complete_effect = {
+			add_manpower = 15000
+			add_stability = -0.05
+		}
+		ai_will_do = {
+			factor = 3
+		}
+	}
+
+	# Targeted: a curse laid on an enemy nation from the summit of Black Mountain.
+	APL_curse_of_the_black_mountain = {
+		icon = APL_curse
+		visible = {
+			has_country_flag = APL_black_mountain_rites
+		}
+		target_trigger = {
+			FROM = {
+				has_war_with = ROOT
+				NOT = { has_idea = APL_black_mountain_curse }
+			}
+		}
+		cost = 100
+		days_re_enable = 180
+		complete_effect = {
+			FROM = {
+				add_timed_idea = {
+					idea = APL_black_mountain_curse
+					days = 120
+				}
+				country_event = { id = appalachia.42 days = 1 }
+			}
+		}
+		ai_will_do = {
+			factor = 5
+		}
+	}
+}
+
+USA_project_lantern = {
+
+	# Send surveyors, priests and physicists to the edge of the fog.
+	USA_lantern_survey = {
+		icon = APL_lantern
+		available = {
+			has_global_flag = APL_veil_intact
+		}
+		cost = 50
+		days_re_enable = 60
+		complete_effect = {
+			set_country_flag = USA_lantern_surveyed
+			add_manpower = -500
+			APL = {
+				subtract_from_variable = { APL_veil_strength = 10 }
+				APL_clamp_veil = yes
+			}
+			custom_effect_tooltip = USA_lantern_minus_10_tt
+		}
+		ai_will_do = {
+			factor = 3
+		}
+	}
+
+	# Burn the treeline with phosphorus and floodlight the ridges for a month.
+	USA_lantern_saturation = {
+		icon = APL_lantern
+		visible = {
+			has_country_flag = USA_lantern_surveyed
+		}
+		available = {
+			has_global_flag = APL_veil_intact
+			has_manpower > 3000
+		}
+		cost = 100
+		days_re_enable = 120
+		complete_effect = {
+			add_manpower = -3000
+			APL = {
+				subtract_from_variable = { APL_veil_strength = 25 }
+				APL_clamp_veil = yes
+			}
+			custom_effect_tooltip = USA_lantern_minus_25_tt
+		}
+		ai_will_do = {
+			factor = 2
+		}
+	}
+}

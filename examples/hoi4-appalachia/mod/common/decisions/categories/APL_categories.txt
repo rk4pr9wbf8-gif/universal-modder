@@ -1,0 +1,19 @@
+APL_rites_of_the_hollows = {
+	icon = generic_research
+	picture = GFX_decision_cat_APL_rites
+	allowed = {
+		original_tag = APL
+	}
+}
+
+USA_project_lantern = {
+	icon = generic_research
+	picture = GFX_decision_cat_APL_lantern
+	allowed = {
+		original_tag = USA
+	}
+	visible = {
+		has_global_flag = APL_veil_intact
+		country_exists = APL
+	}
+}

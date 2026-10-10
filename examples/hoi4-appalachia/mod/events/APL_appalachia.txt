@@ -1,0 +1,428 @@
+add_namespace = appalachia
+
+#########################################################################
+#  The Severance
+#########################################################################
+
+# Appalachia: the night the mountains closed.
+country_event = {
+	id = appalachia.1
+	title = appalachia.1.t
+	desc = appalachia.1.d
+	picture = GFX_report_event_APL_severance
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.1.a
+		add_political_power = 25
+	}
+}
+
+# USA: the fog over the Alleghenies.
+country_event = {
+	id = appalachia.2
+	title = appalachia.2.t
+	desc = appalachia.2.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.2.a
+		ai_chance = { factor = 70 }
+		add_manpower = -1500
+		custom_effect_tooltip = appalachia.2.a.tt
+		set_country_flag = APL_usa_sent_patrol
+	}
+	option = {
+		name = appalachia.2.b
+		ai_chance = { factor = 30 }
+		add_political_power = -25
+		add_stability = 0.02
+	}
+}
+
+#########################################################################
+#  The Veil engine
+#########################################################################
+
+# Weekly pulse on APL while the Veil stands: decay, repel invaders, warn, collapse.
+country_event = {
+	id = appalachia.10
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = { has_global_flag = APL_veil_intact }
+			if = {
+				limit = { NOT = { has_country_flag = APL_eternal_veil } }
+				subtract_from_variable = { APL_veil_strength = APL_veil_decay }
+			}
+			APL_clamp_veil = yes
+			APL_repel_invaders = yes
+			if = {
+				limit = {
+					check_variable = { APL_veil_strength < 25 }
+					check_variable = { APL_veil_strength > 0 }
+					NOT = { has_country_flag = APL_veil_warned }
+				}
+				set_country_flag = APL_veil_warned
+				country_event = { id = appalachia.20 }
+			}
+			if = {
+				limit = { check_variable = { APL_veil_strength > 40 } }
+				clr_country_flag = APL_veil_warned
+			}
+			if = {
+				limit = { check_variable = { APL_veil_strength < 0.01 } }
+				country_event = { id = appalachia.21 }
+			}
+			else = {
+				country_event = { id = appalachia.10 days = 7 }
+			}
+		}
+	}
+}
+
+# Shown to whoever went to war with Appalachia while the Veil stands.
+country_event = {
+	id = appalachia.11
+	title = appalachia.11.t
+	desc = appalachia.11.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = APL_veil_intact
+		has_war_with = APL
+	}
+
+	immediate = {
+		hidden_effect = {
+			white_peace = APL
+			APL = {
+				subtract_from_variable = { APL_veil_strength = 10 }
+				APL_clamp_veil = yes
+				country_event = { id = appalachia.12 days = 1 }
+			}
+		}
+	}
+
+	option = {
+		name = appalachia.11.a
+		add_manpower = -5000
+		add_war_support = -0.05
+		custom_effect_tooltip = appalachia.11.a.tt
+	}
+}
+
+# Appalachia: they broke upon the Veil.
+country_event = {
+	id = appalachia.12
+	title = appalachia.12.t
+	desc = appalachia.12.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.12.a
+		custom_effect_tooltip = appalachia.12.a.tt
+		add_war_support = 0.02
+	}
+}
+
+# Hidden: a war was just declared. Repel it now instead of waiting for the weekly pulse.
+country_event = {
+	id = appalachia.13
+	hidden = yes
+	is_triggered_only = yes
+
+	immediate = {
+		APL_repel_invaders = yes
+	}
+}
+
+# The Veil thins.
+country_event = {
+	id = appalachia.20
+	title = appalachia.20.t
+	desc = appalachia.20.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.20.a
+	}
+}
+
+# The Veil falls.
+country_event = {
+	id = appalachia.21
+	title = appalachia.21.t
+	desc = appalachia.21.d
+	picture = GFX_report_event_APL_veil_falls
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			APL_drop_the_veil = yes
+		}
+	}
+
+	option = {
+		name = appalachia.21.a
+		add_ideas = APL_veil_shattered
+	}
+}
+
+# USA: the fog lifts.
+country_event = {
+	id = appalachia.22
+	title = appalachia.22.t
+	desc = appalachia.22.d
+	picture = GFX_report_event_APL_veil_falls
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.22.a
+		ai_chance = { factor = 75 }
+		trigger = {
+			country_exists = APL
+			NOT = { has_war_with = APL }
+		}
+		declare_war_on = {
+			target = APL
+			type = annex_everything
+		}
+	}
+	option = {
+		name = appalachia.22.b
+		ai_chance = { factor = 25 }
+		add_stability = 0.03
+	}
+}
+
+#########################################################################
+#  Things seen in the hollows (Appalachia)
+#########################################################################
+
+# Lights over Point Pleasant.
+country_event = {
+	id = appalachia.30
+	title = appalachia.30.t
+	desc = appalachia.30.d
+	picture = GFX_report_event_APL_mothman
+	fire_only_once = yes
+
+	trigger = {
+		tag = APL
+	}
+	mean_time_to_happen = {
+		days = 120
+	}
+
+	option = {
+		name = appalachia.30.a
+		army_experience = 10
+	}
+	option = {
+		name = appalachia.30.b
+		add_stability = 0.03
+	}
+}
+
+# The thing beneath Hollow No. 9.
+country_event = {
+	id = appalachia.31
+	title = appalachia.31.t
+	desc = appalachia.31.d
+	picture = GFX_report_event_APL_mine
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.31.a
+		add_political_power = -25
+		add_stability = 0.02
+	}
+	option = {
+		name = appalachia.31.b
+		add_manpower = -500
+		add_to_variable = { APL_veil_strength = 15 }
+		APL_clamp_veil = yes
+		custom_effect_tooltip = APL_veil_plus_15_tt
+		add_equipment_to_stockpile = {
+			type = APL_binding_charms_1
+			amount = 500
+			producer = APL
+		}
+	}
+}
+
+# It was not a deer.
+country_event = {
+	id = appalachia.32
+	title = appalachia.32.t
+	desc = appalachia.32.d
+	picture = GFX_report_event_APL_not_deer
+	fire_only_once = yes
+
+	trigger = {
+		tag = APL
+	}
+	mean_time_to_happen = {
+		days = 200
+	}
+
+	option = {
+		name = appalachia.32.a
+		add_stability = -0.02
+		add_war_support = 0.04
+	}
+	option = {
+		name = appalachia.32.b
+		army_experience = 8
+		add_manpower = -300
+	}
+}
+
+# Maw Hettie's warning.
+country_event = {
+	id = appalachia.33
+	title = appalachia.33.t
+	desc = appalachia.33.d
+	picture = GFX_report_event_APL_witch
+	fire_only_once = yes
+
+	trigger = {
+		tag = APL
+		has_global_flag = APL_veil_intact
+	}
+	mean_time_to_happen = {
+		days = 300
+	}
+
+	option = {
+		name = appalachia.33.a
+		add_political_power = 60
+	}
+	option = {
+		name = appalachia.33.b
+		add_stability = -0.03
+		add_to_variable = { APL_veil_strength = 10 }
+		APL_clamp_veil = yes
+		custom_effect_tooltip = APL_veil_plus_10_tt
+	}
+}
+
+# Tailypo.
+country_event = {
+	id = appalachia.34
+	title = appalachia.34.t
+	desc = appalachia.34.d
+	picture = GFX_report_event_APL_tailypo
+	fire_only_once = yes
+
+	trigger = {
+		tag = APL
+	}
+	mean_time_to_happen = {
+		days = 400
+	}
+
+	option = {
+		name = appalachia.34.a
+		add_stability = 0.03
+	}
+	option = {
+		name = appalachia.34.b
+		add_war_support = 0.03
+		add_stability = -0.02
+	}
+}
+
+# The Flatwoods visitors come down from the hill.
+country_event = {
+	id = appalachia.35
+	title = appalachia.35.t
+	desc = appalachia.35.d
+	picture = GFX_report_event_APL_flatwoods
+	fire_only_once = yes
+
+	trigger = {
+		tag = APL
+		has_completed_focus = APL_the_flatwoods_visitors
+	}
+	mean_time_to_happen = {
+		days = 60
+	}
+
+	option = {
+		name = appalachia.35.a
+		army_experience = 15
+	}
+}
+
+#########################################################################
+#  The United States
+#########################################################################
+
+# Hikers lost in the fog.
+country_event = {
+	id = appalachia.40
+	title = appalachia.40.t
+	desc = appalachia.40.d
+	picture = GFX_report_event_APL_fog
+	fire_only_once = yes
+
+	trigger = {
+		tag = USA
+		has_global_flag = APL_veil_intact
+	}
+	mean_time_to_happen = {
+		days = 250
+	}
+
+	option = {
+		name = appalachia.40.a
+		add_stability = -0.02
+	}
+}
+
+# The Bell Witch comes to Washington.
+country_event = {
+	id = appalachia.41
+	title = appalachia.41.t
+	desc = appalachia.41.d
+	picture = GFX_report_event_APL_witch
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.41.a
+	}
+}
+
+# A curse from the mountains (to the target of the targeted ritual).
+country_event = {
+	id = appalachia.42
+	title = appalachia.42.t
+	desc = appalachia.42.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.42.a
+	}
+}
+
+# Appalachia: the bargain is sealed.
+country_event = {
+	id = appalachia.50
+	title = appalachia.50.t
+	desc = appalachia.50.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.50.a
+	}
+}

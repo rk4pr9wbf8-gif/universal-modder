@@ -167,6 +167,12 @@ audio, both PowerShell with embedded C#.
   - Minecraft's colour + depth are depth-composited into GTA's frame.
   - Minecraft TNT, arrows and fireworks become GTA explosions and bullets, and Minecraft mobs fight the
     police.
+- **[examples/hoi4-appalachia](examples/hoi4-appalachia)**: *The Veiled Hollows* for Hearts of Iron IV.
+  - An independent, occult Appalachia behind a magic barrier that ends every war against it.
+  - A 35-focus tree, cryptid battalions (Mothman, Woodbooger, Sheepsquatch, Flatwoods visitors), war
+    rituals and folk-horror events.
+  - A builder that generates the state overrides from the user's own install, procedural art, and a
+    validator checked against the CWTools rules.
 
 Each has a field note with every non-obvious lesson: [knowledge/INDEX.md](knowledge/INDEX.md).
 

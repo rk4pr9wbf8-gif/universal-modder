@@ -1,0 +1,44 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			if = {
+				limit = { country_exists = APL }
+				set_global_flag = APL_veil_intact
+				APL_mark_states = yes
+				APL = {
+					set_variable = { APL_veil_strength = 100 }
+					set_variable = { APL_veil_cap = 100 }
+					set_variable = { APL_veil_decay = 1 }
+					add_equipment_to_stockpile = {
+						type = APL_binding_charms_1
+						amount = 1500
+						producer = APL
+					}
+					country_event = { id = appalachia.1 days = 1 }
+					country_event = { id = appalachia.10 days = 7 }
+				}
+				if = {
+					limit = { country_exists = USA }
+					USA = { country_event = { id = appalachia.2 days = 2 } }
+				}
+			}
+		}
+	}
+
+	# A war against Appalachia while the Veil stands is over before the first boot touches the ridge.
+	on_declare_war = {
+		effect = {
+			if = {
+				limit = {
+					has_global_flag = APL_veil_intact
+					country_exists = APL
+					OR = {
+						tag = APL
+						FROM = { tag = APL }
+					}
+				}
+				APL = { country_event = { id = appalachia.13 days = 1 } }
+			}
+		}
+	}
+}

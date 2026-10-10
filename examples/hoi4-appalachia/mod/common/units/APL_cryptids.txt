@@ -1,0 +1,188 @@
+# The cryptid battalions of the Veiled Commonwealth. Every one of them needs Binding Charms: without the
+# charms, the things in the hollows do not take orders.
+sub_units = {
+	# Raw Head and Bloody Bones: the dead of the coal camps, called back up the shaft.
+	APL_hollow_revenants = {
+		abbreviation = "REV"
+		sprite = infantry
+		map_icon_category = infantry
+		priority = 600
+		ai_priority = 200
+		active = no
+		type = { infantry }
+		group = infantry
+		categories = {
+			category_front_line
+			category_light_infantry
+			category_all_infantry
+			category_army
+		}
+		combat_width = 2
+		max_strength = 30
+		max_organisation = 50
+		default_morale = 0.5
+		manpower = 400
+		training_time = 60
+		suppression = 1
+		weight = 0.5
+		supply_consumption = 0.04
+		need = {
+			infantry_equipment = 60
+			APL_binding_charms = 10
+		}
+		forest = { attack = 0.10 defence = 0.10 }
+		hills = { attack = 0.10 defence = 0.10 }
+	}
+
+	# The Woodbooger: eight feet of hair and hunger from the Virginia ridges.
+	APL_woodbooger_brutes = {
+		abbreviation = "WDB"
+		sprite = infantry
+		map_icon_category = infantry
+		priority = 650
+		ai_priority = 200
+		active = no
+		type = { infantry }
+		group = infantry
+		categories = {
+			category_front_line
+			category_all_infantry
+			category_army
+		}
+		combat_width = 2
+		max_strength = 50
+		max_organisation = 40
+		default_morale = 0.6
+		manpower = 500
+		training_time = 120
+		suppression = 2
+		weight = 1.0
+		supply_consumption = 0.10
+		entrenchment = 2
+		need = {
+			APL_binding_charms = 40
+		}
+		forest = { attack = 0.25 defence = 0.25 movement = 0.20 }
+		mountain = { attack = 0.20 defence = 0.25 movement = 0.20 }
+		hills = { attack = 0.15 defence = 0.15 }
+	}
+
+	# Sheepsquatch: white wool, horns, the smell of sulphur. Fast, and it never stops running.
+	APL_sheepsquatch_packs = {
+		abbreviation = "SHS"
+		sprite = infantry
+		map_icon_category = infantry
+		priority = 650
+		ai_priority = 200
+		active = no
+		type = { infantry }
+		group = infantry
+		categories = {
+			category_front_line
+			category_all_infantry
+			category_army
+		}
+		combat_width = 2
+		max_strength = 25
+		max_organisation = 60
+		default_morale = 0.5
+		maximum_speed = 6
+		manpower = 400
+		training_time = 120
+		suppression = 1
+		weight = 0.7
+		supply_consumption = 0.08
+		need = {
+			APL_binding_charms = 30
+		}
+		forest = { attack = 0.15 movement = 0.25 }
+		hills = { attack = 0.15 movement = 0.25 }
+		mountain = { attack = 0.10 movement = 0.20 }
+	}
+
+	# The Mothman flock: it sees what is coming, so your division does too.
+	APL_mothman_flock = {
+		abbreviation = "MTH"
+		sprite = infantry
+		map_icon_category = infantry
+		priority = 1200
+		ai_priority = 0
+		active = no
+		type = { support }
+		group = support
+		categories = {
+			category_support_battalions
+			category_army
+		}
+		combat_width = 0
+		max_strength = 5
+		max_organisation = 40
+		default_morale = 0.5
+		manpower = 100
+		training_time = 120
+		weight = 0.1
+		supply_consumption = 0.02
+		recon = 3
+		initiative = 0.15
+		need = {
+			APL_binding_charms = 15
+		}
+	}
+
+	# The Flatwoods visitors: they hiss a mist that makes men sick for weeks.
+	APL_flatwoods_sentinels = {
+		abbreviation = "FLW"
+		sprite = infantry
+		map_icon_category = infantry
+		priority = 1200
+		ai_priority = 0
+		active = no
+		type = { support }
+		group = support
+		categories = {
+			category_support_battalions
+			category_army
+		}
+		combat_width = 0
+		max_strength = 10
+		max_organisation = 20
+		default_morale = 0.4
+		manpower = 200
+		training_time = 120
+		weight = 0.2
+		supply_consumption = 0.06
+		suppression = 2
+		need = {
+			APL_binding_charms = 30
+		}
+	}
+
+	# Granny witches: poultices, root-work and the words that call a soul back into its body.
+	APL_granny_witches = {
+		abbreviation = "GWT"
+		sprite = infantry
+		map_icon_category = infantry
+		priority = 1200
+		ai_priority = 0
+		active = no
+		type = { support }
+		group = support
+		categories = {
+			category_support_battalions
+			category_army
+		}
+		combat_width = 0
+		max_strength = 2
+		max_organisation = 10
+		default_morale = 0.5
+		manpower = 100
+		training_time = 90
+		weight = 0.1
+		supply_consumption = 0.03
+		casualty_trickleback = 0.45
+		experience_loss_factor = -0.30
+		need = {
+			APL_binding_charms = 5
+		}
+	}
+}

@@ -1,0 +1,693 @@
+# The Veiled Commonwealth of Appalachia. Generated from a table; edit freely.
+focus_tree = {
+	id = APL_focus_tree
+	country = {
+		factor = 0
+		modifier = {
+			add = 10
+			tag = APL
+		}
+	}
+	default = no
+	continuous_focus_position = { x = 1450 y = 1100 }
+
+	focus = {
+		id = APL_the_severance
+		icon = GFX_goal_APL_the_severance
+		x = 10
+		y = 0
+		cost = 5
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_political_power = 100
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = APL_feed_the_veil
+		icon = GFX_goal_APL_feed_the_veil
+		prerequisite = { focus = APL_the_severance }
+		x = 2
+		y = 1
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_to_variable = { APL_veil_strength = 20 }
+			APL_clamp_veil = yes
+			custom_effect_tooltip = APL_veil_plus_20_tt
+			add_manpower = -2000
+		}
+	}
+
+	focus = {
+		id = APL_wardstones
+		icon = GFX_goal_APL_wardstones
+		prerequisite = { focus = APL_feed_the_veil }
+		x = 1
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_country_flag = APL_wardstones
+			set_variable = { APL_veil_decay = 0.5 }
+			custom_effect_tooltip = APL_wardstones_tt
+			every_owned_state = {
+				limit = { has_state_flag = APL_heartland }
+				add_building_construction = {
+					type = bunker
+					level = 1
+					instant_build = yes
+					province = {
+						all_provinces = yes
+						limit_to_border = yes
+					}
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = APL_hollow_mist
+		icon = GFX_goal_APL_hollow_mist
+		prerequisite = { focus = APL_feed_the_veil }
+		x = 3
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = APL_hollow_mist
+		}
+	}
+
+	focus = {
+		id = APL_seal_the_passes
+		icon = GFX_goal_APL_seal_the_passes
+		prerequisite = { focus = APL_wardstones }
+		x = 1
+		y = 3
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_variable = { APL_veil_cap = 150 }
+			custom_effect_tooltip = APL_veil_cap_150_tt
+			add_to_variable = { APL_veil_strength = 25 }
+			APL_clamp_veil = yes
+			custom_effect_tooltip = APL_veil_plus_25_tt
+		}
+	}
+
+	focus = {
+		id = APL_whispers_in_the_fog
+		icon = GFX_goal_APL_whispers_in_the_fog
+		prerequisite = { focus = APL_hollow_mist }
+		x = 3
+		y = 3
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			if = {
+				limit = { country_exists = USA }
+				USA = { add_timed_idea = { idea = APL_fog_madness days = 365 } }
+			}
+			add_political_power = 50
+		}
+	}
+
+	focus = {
+		id = APL_eternal_veil
+		icon = GFX_goal_APL_eternal_veil
+		prerequisite = { focus = APL_seal_the_passes }
+		mutually_exclusive = { focus = APL_part_the_veil }
+		x = 1
+		y = 4
+		cost = 15
+		available = {
+			has_global_flag = APL_veil_intact
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 3
+		}
+		completion_reward = {
+			set_country_flag = APL_eternal_veil
+			custom_effect_tooltip = APL_eternal_veil_tt
+			add_ideas = APL_the_eternal_veil
+			add_to_variable = { APL_veil_strength = 50 }
+			APL_clamp_veil = yes
+			custom_effect_tooltip = APL_veil_plus_50_tt
+		}
+	}
+
+	focus = {
+		id = APL_part_the_veil
+		icon = GFX_goal_APL_part_the_veil
+		prerequisite = { focus = APL_whispers_in_the_fog }
+		mutually_exclusive = { focus = APL_eternal_veil }
+		x = 3
+		y = 4
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_country_flag = APL_veil_parted
+			add_ideas = APL_veil_parted
+			if = {
+				limit = { has_global_flag = APL_veil_intact }
+				APL_drop_the_veil = yes
+			}
+		}
+	}
+
+	focus = {
+		id = APL_beyond_the_ridges
+		icon = GFX_goal_APL_beyond_the_ridges
+		prerequisite = { focus = APL_part_the_veil }
+		x = 3
+		y = 5
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			APL_claim_frontier = yes
+			custom_effect_tooltip = APL_claim_frontier_tt
+			add_war_support = 0.05
+		}
+	}
+
+	focus = {
+		id = APL_the_night_march
+		icon = GFX_goal_APL_the_night_march
+		prerequisite = { focus = APL_beyond_the_ridges }
+		x = 3
+		y = 6
+		cost = 10
+		available = {
+			country_exists = USA
+			NOT = { has_war_with = USA }
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			APL_frontier_wargoal = yes
+			custom_effect_tooltip = APL_frontier_wargoal_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_mountains_remember
+		icon = GFX_goal_APL_the_mountains_remember
+		prerequisite = { focus = APL_the_night_march }
+		x = 3
+		y = 7
+		cost = 10
+		available = {
+			any_owned_state = { has_state_flag = APL_frontier }
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			every_owned_state = {
+				limit = { has_state_flag = APL_frontier }
+				add_core_of = APL
+			}
+			custom_effect_tooltip = APL_core_frontier_tt
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = APL_a_shadow_over_america
+		icon = GFX_goal_APL_a_shadow_over_america
+		prerequisite = { focus = APL_the_mountains_remember }
+		x = 3
+		y = 8
+		cost = 15
+		available = {
+			country_exists = USA
+			NOT = { has_war_with = USA }
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			create_wargoal = {
+				type = annex_everything
+				target = USA
+			}
+			army_experience = 25
+		}
+	}
+
+	focus = {
+		id = APL_call_of_the_hollows
+		icon = GFX_goal_APL_call_of_the_hollows
+		prerequisite = { focus = APL_the_severance }
+		x = 7
+		y = 1
+		cost = 10
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			army_experience = 15
+			add_equipment_to_stockpile = {
+				type = APL_binding_charms_1
+				amount = 1000
+				producer = APL
+			}
+		}
+	}
+
+	focus = {
+		id = APL_the_mothman_compact
+		icon = GFX_goal_APL_the_mothman_compact
+		prerequisite = { focus = APL_call_of_the_hollows }
+		x = 6
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_technology = { APL_tech_mothman_flock = 1 popup = no }
+			custom_effect_tooltip = APL_unlock_mothman_tt
+		}
+	}
+
+	focus = {
+		id = APL_wake_the_woodboogers
+		icon = GFX_goal_APL_wake_the_woodboogers
+		prerequisite = { focus = APL_call_of_the_hollows }
+		x = 8
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_technology = { APL_tech_woodbooger_brutes = 1 popup = no }
+			custom_effect_tooltip = APL_unlock_woodbooger_tt
+		}
+	}
+
+	focus = {
+		id = APL_binding_charm_forges
+		icon = GFX_goal_APL_binding_charm_forges
+		prerequisite = { focus = APL_the_mothman_compact focus = APL_wake_the_woodboogers }
+		x = 7
+		y = 3
+		cost = 10
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_technology = { APL_tech_binding_charms_2 = 1 popup = no }
+			custom_effect_tooltip = APL_unlock_charms2_tt
+			random_owned_controlled_state = {
+				limit = { has_state_flag = APL_heartland free_building_slots = { building = arms_factory size > 0 include_locked = yes } }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = arms_factory level = 1 instant_build = yes }
+			}
+		}
+	}
+
+	focus = {
+		id = APL_sheepsquatch_herds
+		icon = GFX_goal_APL_sheepsquatch_herds
+		prerequisite = { focus = APL_binding_charm_forges }
+		x = 6
+		y = 4
+		cost = 10
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_technology = { APL_tech_sheepsquatch_packs = 1 popup = no }
+			custom_effect_tooltip = APL_unlock_sheepsquatch_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_flatwoods_visitors
+		icon = GFX_goal_APL_the_flatwoods_visitors
+		prerequisite = { focus = APL_binding_charm_forges }
+		x = 8
+		y = 4
+		cost = 10
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_technology = { APL_tech_flatwoods_sentinels = 1 popup = no }
+			custom_effect_tooltip = APL_unlock_flatwoods_tt
+		}
+	}
+
+	focus = {
+		id = APL_children_of_the_night
+		icon = GFX_goal_APL_children_of_the_night
+		prerequisite = { focus = APL_sheepsquatch_herds focus = APL_the_flatwoods_visitors }
+		x = 7
+		y = 5
+		cost = 10
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = APL_children_of_the_night
+		}
+	}
+
+	focus = {
+		id = APL_the_wild_hunt
+		icon = GFX_goal_APL_the_wild_hunt
+		prerequisite = { focus = APL_children_of_the_night }
+		x = 7
+		y = 6
+		cost = 15
+		search_filters = { FOCUS_FILTER_ARMY_XP }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			swap_ideas = { remove_idea = APL_children_of_the_night add_idea = APL_the_wild_hunt }
+			army_experience = 25
+		}
+	}
+
+	focus = {
+		id = APL_convene_the_coven
+		icon = GFX_goal_APL_convene_the_coven
+		prerequisite = { focus = APL_the_severance }
+		x = 11
+		y = 1
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_political_power = 120
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = APL_granny_witch_healers
+		icon = GFX_goal_APL_granny_witch_healers
+		prerequisite = { focus = APL_convene_the_coven }
+		x = 10
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_technology = { APL_tech_granny_witches = 1 popup = no }
+			custom_effect_tooltip = APL_unlock_granny_tt
+			if = {
+				limit = { has_idea = APL_blood_price }
+				swap_ideas = { remove_idea = APL_blood_price add_idea = APL_blood_price_eased }
+			}
+		}
+	}
+
+	focus = {
+		id = APL_the_bell_witch
+		icon = GFX_goal_APL_the_bell_witch
+		prerequisite = { focus = APL_convene_the_coven }
+		x = 12
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			if = {
+				limit = { country_exists = USA }
+				USA = {
+					add_timed_idea = { idea = APL_bell_witch_torment days = 365 }
+					country_event = { id = appalachia.41 days = 1 }
+				}
+			}
+		}
+	}
+
+	focus = {
+		id = APL_the_dark_sermons
+		icon = GFX_goal_APL_the_dark_sermons
+		prerequisite = { focus = APL_granny_witch_healers focus = APL_the_bell_witch }
+		x = 11
+		y = 3
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_war_support = 0.10
+			add_stability = 0.05
+		}
+	}
+
+	focus = {
+		id = APL_rites_of_the_black_mountain
+		icon = GFX_goal_APL_rites_of_the_black_mountain
+		prerequisite = { focus = APL_the_dark_sermons }
+		x = 11
+		y = 4
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_country_flag = APL_black_mountain_rites
+			custom_effect_tooltip = APL_unlock_rites_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_matriarch
+		icon = GFX_goal_APL_the_matriarch
+		prerequisite = { focus = APL_rites_of_the_black_mountain }
+		mutually_exclusive = { focus = APL_bargain_with_old_scratch }
+		x = 10
+		y = 5
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = APL_the_matriarch
+		}
+	}
+
+	focus = {
+		id = APL_bargain_with_old_scratch
+		icon = GFX_goal_APL_bargain_with_old_scratch
+		prerequisite = { focus = APL_rites_of_the_black_mountain }
+		mutually_exclusive = { focus = APL_the_matriarch }
+		x = 12
+		y = 5
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = APL_old_scratch_bargain
+			country_event = { id = appalachia.50 days = 3 }
+		}
+	}
+
+	focus = {
+		id = APL_the_hollow_crown
+		icon = GFX_goal_APL_the_hollow_crown
+		prerequisite = { focus = APL_the_matriarch focus = APL_bargain_with_old_scratch }
+		x = 11
+		y = 6
+		cost = 15
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_country_leader_trait = APL_lord_of_the_hollows
+			add_political_power = 150
+		}
+	}
+
+	focus = {
+		id = APL_coal_and_bone
+		icon = GFX_goal_APL_coal_and_bone
+		prerequisite = { focus = APL_the_severance }
+		x = 16
+		y = 1
+		cost = 10
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = { has_state_flag = APL_heartland }
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = { type = industrial_complex level = 1 instant_build = yes }
+			}
+		}
+	}
+
+	focus = {
+		id = APL_moonshine_economy
+		icon = GFX_goal_APL_moonshine_economy
+		prerequisite = { focus = APL_coal_and_bone }
+		x = 15
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = APL_moonshine_economy
+		}
+	}
+
+	focus = {
+		id = APL_the_deep_mines
+		icon = GFX_goal_APL_the_deep_mines
+		prerequisite = { focus = APL_coal_and_bone }
+		x = 17
+		y = 2
+		cost = 10
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			every_owned_state = {
+				limit = { has_state_flag = APL_heartland }
+				add_building_construction = { type = infrastructure level = 1 instant_build = yes }
+			}
+			country_event = { id = appalachia.31 days = 10 }
+		}
+	}
+
+	focus = {
+		id = APL_bone_foundries
+		icon = GFX_goal_APL_bone_foundries
+		prerequisite = { focus = APL_moonshine_economy focus = APL_the_deep_mines }
+		x = 16
+		y = 3
+		cost = 10
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = { has_state_flag = APL_heartland }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = { type = arms_factory level = 2 instant_build = yes }
+			}
+		}
+	}
+
+	focus = {
+		id = APL_valley_of_dams
+		icon = GFX_goal_APL_valley_of_dams
+		prerequisite = { focus = APL_bone_foundries }
+		x = 15
+		y = 4
+		cost = 10
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_owned_controlled_state = {
+				limit = { has_state_flag = APL_heartland }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = { type = industrial_complex level = 2 instant_build = yes }
+			}
+		}
+	}
+
+	focus = {
+		id = APL_the_hollow_laboratories
+		icon = GFX_goal_APL_the_hollow_laboratories
+		prerequisite = { focus = APL_bone_foundries }
+		x = 17
+		y = 4
+		cost = 10
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_research_slot = 1
+		}
+	}
+
+	focus = {
+		id = APL_the_black_furnace
+		icon = GFX_goal_APL_the_black_furnace
+		prerequisite = { focus = APL_valley_of_dams }
+		prerequisite = { focus = APL_the_hollow_laboratories }
+		x = 16
+		y = 5
+		cost = 15
+		search_filters = { FOCUS_FILTER_INDUSTRY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			add_ideas = APL_the_black_furnace
+			random_owned_controlled_state = {
+				limit = { has_state_flag = APL_heartland }
+				add_extra_state_shared_building_slots = 2
+				add_building_construction = { type = arms_factory level = 2 instant_build = yes }
+			}
+		}
+	}
+
+}

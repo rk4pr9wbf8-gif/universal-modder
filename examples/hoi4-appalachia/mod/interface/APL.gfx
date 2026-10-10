@@ -1,0 +1,378 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_goal_APL_a_shadow_over_america"
+		texturefile = "gfx/interface/goals/APL_a_shadow_over_america.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_bargain_with_old_scratch"
+		texturefile = "gfx/interface/goals/APL_bargain_with_old_scratch.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_beyond_the_ridges"
+		texturefile = "gfx/interface/goals/APL_beyond_the_ridges.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_binding_charm_forges"
+		texturefile = "gfx/interface/goals/APL_binding_charm_forges.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_bone_foundries"
+		texturefile = "gfx/interface/goals/APL_bone_foundries.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_call_of_the_hollows"
+		texturefile = "gfx/interface/goals/APL_call_of_the_hollows.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_children_of_the_night"
+		texturefile = "gfx/interface/goals/APL_children_of_the_night.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_coal_and_bone"
+		texturefile = "gfx/interface/goals/APL_coal_and_bone.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_convene_the_coven"
+		texturefile = "gfx/interface/goals/APL_convene_the_coven.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_eternal_veil"
+		texturefile = "gfx/interface/goals/APL_eternal_veil.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_feed_the_veil"
+		texturefile = "gfx/interface/goals/APL_feed_the_veil.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_granny_witch_healers"
+		texturefile = "gfx/interface/goals/APL_granny_witch_healers.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_hollow_mist"
+		texturefile = "gfx/interface/goals/APL_hollow_mist.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_moonshine_economy"
+		texturefile = "gfx/interface/goals/APL_moonshine_economy.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_part_the_veil"
+		texturefile = "gfx/interface/goals/APL_part_the_veil.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_rites_of_the_black_mountain"
+		texturefile = "gfx/interface/goals/APL_rites_of_the_black_mountain.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_seal_the_passes"
+		texturefile = "gfx/interface/goals/APL_seal_the_passes.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_sheepsquatch_herds"
+		texturefile = "gfx/interface/goals/APL_sheepsquatch_herds.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_bell_witch"
+		texturefile = "gfx/interface/goals/APL_the_bell_witch.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_black_furnace"
+		texturefile = "gfx/interface/goals/APL_the_black_furnace.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_dark_sermons"
+		texturefile = "gfx/interface/goals/APL_the_dark_sermons.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_deep_mines"
+		texturefile = "gfx/interface/goals/APL_the_deep_mines.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_flatwoods_visitors"
+		texturefile = "gfx/interface/goals/APL_the_flatwoods_visitors.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_hollow_crown"
+		texturefile = "gfx/interface/goals/APL_the_hollow_crown.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_hollow_laboratories"
+		texturefile = "gfx/interface/goals/APL_the_hollow_laboratories.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_matriarch"
+		texturefile = "gfx/interface/goals/APL_the_matriarch.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_mothman_compact"
+		texturefile = "gfx/interface/goals/APL_the_mothman_compact.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_mountains_remember"
+		texturefile = "gfx/interface/goals/APL_the_mountains_remember.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_night_march"
+		texturefile = "gfx/interface/goals/APL_the_night_march.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_severance"
+		texturefile = "gfx/interface/goals/APL_the_severance.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_wild_hunt"
+		texturefile = "gfx/interface/goals/APL_the_wild_hunt.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_valley_of_dams"
+		texturefile = "gfx/interface/goals/APL_valley_of_dams.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_wake_the_woodboogers"
+		texturefile = "gfx/interface/goals/APL_wake_the_woodboogers.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_wardstones"
+		texturefile = "gfx/interface/goals/APL_wardstones.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_whispers_in_the_fog"
+		texturefile = "gfx/interface/goals/APL_whispers_in_the_fog.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_bell_witch_torment"
+		texturefile = "gfx/interface/ideas/APL_bell_witch_torment.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_black_mountain_curse"
+		texturefile = "gfx/interface/ideas/APL_black_mountain_curse.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_blood_moon"
+		texturefile = "gfx/interface/ideas/APL_blood_moon.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_blood_price"
+		texturefile = "gfx/interface/ideas/APL_blood_price.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_blood_price_eased"
+		texturefile = "gfx/interface/ideas/APL_blood_price_eased.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_children_of_the_night"
+		texturefile = "gfx/interface/ideas/APL_children_of_the_night.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_fog_madness"
+		texturefile = "gfx/interface/ideas/APL_fog_madness.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_hollow_folk"
+		texturefile = "gfx/interface/ideas/APL_hollow_folk.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_hollow_mist"
+		texturefile = "gfx/interface/ideas/APL_hollow_mist.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_mist_rite"
+		texturefile = "gfx/interface/ideas/APL_mist_rite.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_moonshine_economy"
+		texturefile = "gfx/interface/ideas/APL_moonshine_economy.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_old_scratch_bargain"
+		texturefile = "gfx/interface/ideas/APL_old_scratch_bargain.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_the_black_furnace"
+		texturefile = "gfx/interface/ideas/APL_the_black_furnace.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_the_eternal_veil"
+		texturefile = "gfx/interface/ideas/APL_the_eternal_veil.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_the_matriarch"
+		texturefile = "gfx/interface/ideas/APL_the_matriarch.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_the_veil"
+		texturefile = "gfx/interface/ideas/APL_the_veil.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_the_wild_hunt"
+		texturefile = "gfx/interface/ideas/APL_the_wild_hunt.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_veil_parted"
+		texturefile = "gfx/interface/ideas/APL_veil_parted.dds"
+	}
+	spriteType = {
+		name = "GFX_idea_APL_veil_shattered"
+		texturefile = "gfx/interface/ideas/APL_veil_shattered.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_blood_moon"
+		texturefile = "gfx/interface/decisions/APL_blood_moon.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_blood_tithe"
+		texturefile = "gfx/interface/decisions/APL_blood_tithe.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_bury_the_bones"
+		texturefile = "gfx/interface/decisions/APL_bury_the_bones.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_curse"
+		texturefile = "gfx/interface/decisions/APL_curse.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_hollow_mist"
+		texturefile = "gfx/interface/decisions/APL_hollow_mist.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_lantern"
+		texturefile = "gfx/interface/decisions/APL_lantern.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_raise_the_dead"
+		texturefile = "gfx/interface/decisions/APL_raise_the_dead.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_cat_APL_rites"
+		texturefile = "gfx/interface/decisions/APL_rites_category.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_cat_APL_lantern"
+		texturefile = "gfx/interface/decisions/APL_lantern_category.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_flatwoods"
+		texturefile = "gfx/event_pictures/APL_flatwoods.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_fog"
+		texturefile = "gfx/event_pictures/APL_fog.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_mine"
+		texturefile = "gfx/event_pictures/APL_mine.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_mothman"
+		texturefile = "gfx/event_pictures/APL_mothman.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_not_deer"
+		texturefile = "gfx/event_pictures/APL_not_deer.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_ritual"
+		texturefile = "gfx/event_pictures/APL_ritual.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_severance"
+		texturefile = "gfx/event_pictures/APL_severance.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_tailypo"
+		texturefile = "gfx/event_pictures/APL_tailypo.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_veil_falls"
+		texturefile = "gfx/event_pictures/APL_veil_falls.dds"
+	}
+	spriteType = {
+		name = "GFX_report_event_APL_witch"
+		texturefile = "gfx/event_pictures/APL_witch.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_flatwoods_sentinels_icon_medium"
+		texturefile = "gfx/interface/units/APL_flatwoods_sentinels.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_flatwoods_sentinels_icon_small"
+		texturefile = "gfx/interface/units/APL_flatwoods_sentinels.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_granny_witches_icon_medium"
+		texturefile = "gfx/interface/units/APL_granny_witches.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_granny_witches_icon_small"
+		texturefile = "gfx/interface/units/APL_granny_witches.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_hollow_revenants_icon_medium"
+		texturefile = "gfx/interface/units/APL_hollow_revenants.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_hollow_revenants_icon_small"
+		texturefile = "gfx/interface/units/APL_hollow_revenants.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_mothman_flock_icon_medium"
+		texturefile = "gfx/interface/units/APL_mothman_flock.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_mothman_flock_icon_small"
+		texturefile = "gfx/interface/units/APL_mothman_flock.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_sheepsquatch_packs_icon_medium"
+		texturefile = "gfx/interface/units/APL_sheepsquatch_packs.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_sheepsquatch_packs_icon_small"
+		texturefile = "gfx/interface/units/APL_sheepsquatch_packs.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_woodbooger_brutes_icon_medium"
+		texturefile = "gfx/interface/units/APL_woodbooger_brutes.dds"
+	}
+	spriteType = {
+		name = "GFX_unit_APL_woodbooger_brutes_icon_small"
+		texturefile = "gfx/interface/units/APL_woodbooger_brutes.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_1_medium"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_1_medium.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_1_icon_small"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_1_small.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_1_small"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_1_small.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_2_medium"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_2_medium.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_2_icon_small"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_2_small.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_2_small"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_2_small.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_medium"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_medium.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_icon_small"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_small.dds"
+	}
+	spriteType = {
+		name = "GFX_APL_binding_charms_small"
+		texturefile = "gfx/interface/equipment/APL_binding_charms_small.dds"
+	}
+}

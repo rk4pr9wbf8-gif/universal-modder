@@ -1,0 +1,54 @@
+# Binding Charms: bone, iron nails, a lock of hair, a drop of the bearer's blood, sewn into a red flannel
+# bag. Cryptid battalions fight only while a charm holds them. Only Appalachia can make them.
+equipments = {
+	APL_binding_charms = {
+		year = 1936
+		is_archetype = yes
+		is_buildable = no
+		type = infantry
+		group_by = archetype
+		interface_category = interface_category_land
+		active = no
+
+		reliability = 0.8
+		maximum_speed = 4
+
+		defense = 12
+		breakthrough = 6
+		soft_attack = 5
+		hard_attack = 1.5
+		ap_attack = 4
+		air_attack = 0
+
+		build_cost_ic = 0.6
+		resources = { }
+
+		can_be_produced = {
+			original_tag = APL
+		}
+	}
+
+	APL_binding_charms_1 = {
+		year = 1936
+		archetype = APL_binding_charms
+		priority = 10
+		visual_level = 0
+	}
+
+	APL_binding_charms_2 = {
+		year = 1940
+		archetype = APL_binding_charms
+		parent = APL_binding_charms_1
+		priority = 20
+		visual_level = 1
+
+		reliability = 0.9
+		defense = 16
+		breakthrough = 9
+		soft_attack = 8
+		hard_attack = 3
+		ap_attack = 8
+
+		build_cost_ic = 0.8
+	}
+}

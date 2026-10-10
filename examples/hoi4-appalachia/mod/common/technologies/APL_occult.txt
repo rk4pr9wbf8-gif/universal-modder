@@ -1,0 +1,67 @@
+# Hidden technologies. They have no folder, so they never appear in the research screen: the focus tree
+# grants them with set_technology, and they exist only to unlock the cryptid battalions and the charms.
+technologies = {
+	APL_tech_hollow_revenants = {
+		allow = { original_tag = APL }
+		enable_subunits = { APL_hollow_revenants }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+
+	APL_tech_binding_charms = {
+		allow = { original_tag = APL }
+		enable_equipments = { APL_binding_charms_1 }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+
+	APL_tech_binding_charms_2 = {
+		allow = { original_tag = APL }
+		enable_equipments = { APL_binding_charms_2 }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+
+	APL_tech_mothman_flock = {
+		allow = { original_tag = APL }
+		enable_subunits = { APL_mothman_flock }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+
+	APL_tech_woodbooger_brutes = {
+		allow = { original_tag = APL }
+		enable_subunits = { APL_woodbooger_brutes }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+
+	APL_tech_sheepsquatch_packs = {
+		allow = { original_tag = APL }
+		enable_subunits = { APL_sheepsquatch_packs }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+
+	APL_tech_flatwoods_sentinels = {
+		allow = { original_tag = APL }
+		enable_subunits = { APL_flatwoods_sentinels }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+
+	APL_tech_granny_witches = {
+		allow = { original_tag = APL }
+		enable_subunits = { APL_granny_witches }
+		research_cost = 1
+		start_year = 1936
+		ai_will_do = { factor = 0 }
+	}
+}

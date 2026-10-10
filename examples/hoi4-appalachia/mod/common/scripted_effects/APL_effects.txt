@@ -1,0 +1,55 @@
+# The Veil. APL carries three variables:
+#   APL_veil_strength  0..APL_veil_cap. At 0 the Veil falls.
+#   APL_veil_cap       100, raised to 150 by "Seal the Passes".
+#   APL_veil_decay     strength lost each week (1, or 0.5 with the wardstones). The Eternal Veil stops decay.
+# The global flag APL_veil_intact is set while it stands. While it stands, every war against Appalachia
+# ends in a white peace within a week (or a day, when the war is declared).
+
+# Scope: APL
+APL_clamp_veil = {
+	clamp_variable = {
+		var = APL_veil_strength
+		min = 0
+		max = APL_veil_cap
+	}
+}
+
+# Scope: APL. Every enemy of Appalachia breaks upon the Veil.
+APL_repel_invaders = {
+	if = {
+		limit = { has_global_flag = APL_veil_intact }
+		every_enemy_country = {
+			country_event = { id = appalachia.11 }
+		}
+	}
+}
+
+# Scope: APL. The Veil comes down, whether it was torn or lowered on purpose.
+APL_drop_the_veil = {
+	clr_global_flag = APL_veil_intact
+	set_variable = { APL_veil_strength = 0 }
+	if = {
+		limit = { has_idea = APL_the_veil }
+		remove_ideas = APL_the_veil
+	}
+	if = {
+		limit = { has_idea = APL_the_eternal_veil }
+		remove_ideas = APL_the_eternal_veil
+	}
+	if = {
+		limit = { country_exists = USA }
+		USA = { country_event = { id = appalachia.22 days = 2 } }
+	}
+}
+
+# Scope: APL. Claims on every frontier state (Virginia, the Carolinas, Pennsylvania, Ohio, Maryland,
+# Georgia, Alabama) that Appalachia doesn't already own. APL_mark_states sets the flags at startup.
+APL_claim_frontier = {
+	every_state = {
+		limit = {
+			has_state_flag = APL_frontier
+			NOT = { is_owned_by = APL }
+		}
+		add_claim_by = APL
+	}
+}

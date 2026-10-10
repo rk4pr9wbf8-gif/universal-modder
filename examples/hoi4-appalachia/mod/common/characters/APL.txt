@@ -1,0 +1,75 @@
+characters = {
+	# Keeper of the Veil, the coal baron who spoke the words on the night of the Severance.
+	APL_silas_blackwood = {
+		name = APL_silas_blackwood
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/APL/APL_silas_blackwood.dds"
+			}
+		}
+		country_leader = {
+			ideology = despotism
+			traits = { APL_keeper_of_the_veil }
+			expire = "2000.1.1.1"
+			id = -1
+		}
+	}
+
+	# The granny witch of Hollow Creek. She was old when the mountains were young, or so they say.
+	APL_maw_hettie_crane = {
+		name = APL_maw_hettie_crane
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/APL/APL_maw_hettie_crane.dds"
+				small = "gfx/leaders/APL/APL_maw_hettie_crane_small.dds"
+			}
+		}
+		advisor = {
+			slot = political_advisor
+			idea_token = APL_maw_hettie_crane_advisor
+			allowed = {
+				original_tag = APL
+			}
+			traits = { APL_hollow_matriarch }
+			cost = 100
+			ai_will_do = {
+				factor = 1
+			}
+		}
+	}
+
+	APL_jeremiah_coalbrook = {
+		name = APL_jeremiah_coalbrook
+		portraits = {
+			army = {
+				large = "gfx/leaders/APL/APL_jeremiah_coalbrook.dds"
+			}
+		}
+		field_marshal = {
+			traits = { }
+			skill = 3
+			attack_skill = 2
+			defense_skill = 4
+			planning_skill = 3
+			logistics_skill = 2
+		}
+	}
+
+	# Nobody remembers his name. Nobody remembers him arriving.
+	APL_the_pale_lieutenant = {
+		name = APL_the_pale_lieutenant
+		portraits = {
+			army = {
+				large = "gfx/leaders/APL/APL_the_pale_lieutenant.dds"
+			}
+		}
+		corps_commander = {
+			traits = { }
+			skill = 3
+			attack_skill = 4
+			defense_skill = 2
+			planning_skill = 2
+			logistics_skill = 3
+		}
+	}
+}
