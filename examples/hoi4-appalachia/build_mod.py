@@ -205,7 +205,9 @@ def build(game: Path, out_root: Path, dry_run: bool) -> Path:
         dst.parent.mkdir(parents=True, exist_ok=True)
         dst.write_text(rewrite_state(src.read_text(encoding="utf-8-sig", errors="ignore")), encoding="utf-8")
 
-    # 2. Files that need IDs.
+    # 2. Files that need IDs. (Git doesn't keep empty folders, so create them.)
+    for sub in ("history/countries", "history/units", "common/scripted_effects"):
+        (out / sub).mkdir(parents=True, exist_ok=True)
     (out / "history" / "countries" / f"{TAG} - Appalachia.txt").write_text(
         fill((TEMPLATES / "APL_history.txt").read_text(), {"CAPITAL": heart[CAPITAL]}), encoding="utf-8")
     (out / "history" / "units" / "APL_1936.txt").write_text(
