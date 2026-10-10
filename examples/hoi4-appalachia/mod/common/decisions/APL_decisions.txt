@@ -189,3 +189,64 @@ USA_project_lantern = {
 		}
 	}
 }
+
+APL_creeping_fog_category = {
+
+	# Let the fog roll over a neighbouring state. When it lifts 45 days later, the state is ours.
+	APL_the_fog_swallows = {
+		icon = APL_creeping_fog
+		state_target = yes
+		allowed = {
+			original_tag = APL
+		}
+		visible = {
+			has_country_flag = APL_creeping_fog
+		}
+		target_trigger = {
+			FROM = {
+				is_owned_by = USA
+				any_neighbor_state = { is_owned_by = ROOT }
+				OR = {
+					has_state_flag = APL_frontier
+					ROOT = { has_country_flag = APL_fog_without_end }
+				}
+			}
+		}
+		available = {
+			has_global_flag = APL_veil_intact
+			check_variable = { APL_veil_strength > 39 }
+			NOT = { has_war_with = USA }
+		}
+		cost = 75
+		days_remove = 45
+		complete_effect = {
+			subtract_from_variable = { APL_veil_strength = 20 }
+			APL_clamp_veil = yes
+			custom_effect_tooltip = APL_veil_minus_20_tt
+			USA = { country_event = { id = appalachia.81 days = 1 } }
+		}
+		remove_effect = {
+			if = {
+				limit = {
+					has_global_flag = APL_veil_intact
+					FROM = { is_owned_by = USA }
+				}
+				transfer_state = FROM
+				if = {
+					limit = { FROM = { has_state_flag = APL_frontier } }
+					FROM = { add_core_of = ROOT }
+				}
+				add_to_variable = { APL_veil_decay = 0.25 }
+				custom_effect_tooltip = APL_veil_decay_up_tt
+				country_event = { id = appalachia.80 }
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				check_variable = { APL_veil_strength < 70 }
+			}
+		}
+	}
+}

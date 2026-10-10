@@ -53,3 +53,64 @@ APL_claim_frontier = {
 		add_claim_by = APL
 	}
 }
+
+# Scope: APL. With "The Veil Shelters the Pact", anyone who attacks a member of Appalachia's faction is
+# turned back by the fog too. Each repelled attacker costs the Veil 10, like an attack on Appalachia itself.
+APL_shelter_the_pact = {
+	if = {
+		limit = {
+			has_global_flag = APL_veil_intact
+			has_country_flag = APL_veil_shelters_pact
+		}
+		every_country = {
+			limit = {
+				is_in_faction_with = APL
+				NOT = { tag = APL }
+			}
+			every_enemy_country = {
+				limit = {
+					has_offensive_war_with = PREV
+					NOT = { is_in_faction_with = APL }
+				}
+				white_peace = PREV
+				country_event = { id = appalachia.14 }
+				APL = {
+					subtract_from_variable = { APL_veil_strength = 10 }
+					APL_clamp_veil = yes
+				}
+			}
+		}
+	}
+}
+
+# Scope: a country that just accepted the Midnight Pact (APL is the inviter).
+APL_join_the_pact = {
+	add_ideas = APL_awakened_folklore
+	set_technology = {
+		APL_tech_hollow_revenants = 1
+		APL_tech_binding_charms = 1
+		popup = no
+	}
+	add_equipment_to_stockpile = {
+		type = APL_binding_charms_1
+		amount = 500
+		producer = APL
+	}
+	if = {
+		limit = { APL = { is_faction_leader = yes } }
+		APL = { add_to_faction = ROOT }
+	}
+	else = {
+		APL = { give_guarantee = ROOT }
+	}
+	APL = { country_event = { id = appalachia.70 days = 1 } }
+}
+
+# Scope: a country that refused the Midnight Pact.
+APL_refuse_the_pact = {
+	add_timed_idea = {
+		idea = APL_fog_madness
+		days = 180
+	}
+	APL = { country_event = { id = appalachia.71 days = 1 } }
+}

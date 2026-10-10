@@ -52,6 +52,29 @@
   `appalachia.1` and `.2` use conditional `desc = { trigger = { date > 1936.6.1 } text = ... }` blocks, so the
   1939 bookmark gets "three years since" text.
 
+## Round 2: the Midnight Pact and the creeping fog
+- User asked for focuses to bring cryptids to life abroad to make allies, and for focuses and decisions to
+  expand the barrier to other states.
+- Pact: `create_faction = APL_midnight_pact`, then one invite focus per country (MEX, IRE, ROM, NOR, TIB, BRA),
+  each with `bypass` if the country is gone. Accepting runs `APL_join_the_pact`: an idea, hidden techs, charms,
+  and `add_to_faction` (or a guarantee if APL isn't a faction leader). Binding Charms and the hidden techs now
+  allow `has_idea = APL_awakened_folklore`.
+- Fog: a state-targeted timed decision (`state_target = yes`, FROM = state, `days_remove = 45`,
+  `remove_effect` does `transfer_state = FROM`). Targets are USA-owned states bordering APL, either flagged
+  frontier states or any state after *Fog Without End*.
+- Sheltering allies: `APL_shelter_the_pact` runs from the weekly pulse and the on_declare_war event. For each
+  faction member, every enemy with `has_offensive_war_with = PREV` gets `white_peace = PREV`.
+
+### Gotchas found this round
+5. **`NOR` is Norway's tag and the logical NOR operator.** `NOR = { is_in_faction = no }` in a trigger is
+   logic, not Norway. Use `any_country = { tag = NOR ... }` in triggers and `every_country = { limit = { tag =
+   NOR } ... }` in effects. validate.py now flags it.
+6. A focus and a national spirit (or a decision category) with the same name share loc keys, so one shows the
+   other's description. Six spirits clashed with their focuses; they're now `*_spirit`. validate.py now checks
+   for clashes.
+7. A zip download (or git) doesn't keep empty folders. build_mod.py crashed on a real install writing into
+   `history/countries`, so it now creates the folders first.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are

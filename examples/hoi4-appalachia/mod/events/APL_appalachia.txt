@@ -74,6 +74,7 @@ country_event = {
 			}
 			APL_clamp_veil = yes
 			APL_repel_invaders = yes
+			APL_shelter_the_pact = yes
 			if = {
 				limit = {
 					check_variable = { APL_veil_strength < 25 }
@@ -153,6 +154,7 @@ country_event = {
 
 	immediate = {
 		APL_repel_invaders = yes
+		APL_shelter_the_pact = yes
 	}
 }
 
@@ -438,5 +440,255 @@ country_event = {
 
 	option = {
 		name = appalachia.50.a
+	}
+}
+
+#########################################################################
+#  The Midnight Pact: old legends wake abroad
+#########################################################################
+
+# MEX: the invitation.
+country_event = {
+	id = appalachia.60
+	title = appalachia.60.t
+	desc = appalachia.60.d
+	picture = GFX_report_event_APL_witch
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.60.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				is_in_faction = yes
+			}
+		}
+		trigger = {
+			is_in_faction = no
+		}
+		APL_join_the_pact = yes
+	}
+	option = {
+		name = appalachia.60.b
+		ai_chance = { factor = 20 }
+		APL_refuse_the_pact = yes
+	}
+}
+
+# IRE: the invitation.
+country_event = {
+	id = appalachia.61
+	title = appalachia.61.t
+	desc = appalachia.61.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.61.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				is_in_faction = yes
+			}
+		}
+		trigger = {
+			is_in_faction = no
+		}
+		APL_join_the_pact = yes
+	}
+	option = {
+		name = appalachia.61.b
+		ai_chance = { factor = 20 }
+		APL_refuse_the_pact = yes
+	}
+}
+
+# ROM: the invitation.
+country_event = {
+	id = appalachia.62
+	title = appalachia.62.t
+	desc = appalachia.62.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.62.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				is_in_faction = yes
+			}
+		}
+		trigger = {
+			is_in_faction = no
+		}
+		APL_join_the_pact = yes
+	}
+	option = {
+		name = appalachia.62.b
+		ai_chance = { factor = 20 }
+		APL_refuse_the_pact = yes
+	}
+}
+
+# NOR: the invitation.
+country_event = {
+	id = appalachia.63
+	title = appalachia.63.t
+	desc = appalachia.63.d
+	picture = GFX_report_event_APL_veil_falls
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.63.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				is_in_faction = yes
+			}
+		}
+		trigger = {
+			is_in_faction = no
+		}
+		APL_join_the_pact = yes
+	}
+	option = {
+		name = appalachia.63.b
+		ai_chance = { factor = 20 }
+		APL_refuse_the_pact = yes
+	}
+}
+
+# TIB: the invitation.
+country_event = {
+	id = appalachia.64
+	title = appalachia.64.t
+	desc = appalachia.64.d
+	picture = GFX_report_event_APL_not_deer
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.64.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				is_in_faction = yes
+			}
+		}
+		trigger = {
+			is_in_faction = no
+		}
+		APL_join_the_pact = yes
+	}
+	option = {
+		name = appalachia.64.b
+		ai_chance = { factor = 20 }
+		APL_refuse_the_pact = yes
+	}
+}
+
+# BRA: the invitation.
+country_event = {
+	id = appalachia.65
+	title = appalachia.65.t
+	desc = appalachia.65.d
+	picture = GFX_report_event_APL_tailypo
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.65.a
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				is_in_faction = yes
+			}
+		}
+		trigger = {
+			is_in_faction = no
+		}
+		APL_join_the_pact = yes
+	}
+	option = {
+		name = appalachia.65.b
+		ai_chance = { factor = 20 }
+		APL_refuse_the_pact = yes
+	}
+}
+
+# Appalachia: a nation joins the Pact.
+country_event = {
+	id = appalachia.70
+	title = appalachia.70.t
+	desc = appalachia.70.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.70.a
+		add_political_power = 25
+	}
+}
+
+# Appalachia: a nation refuses the Pact.
+country_event = {
+	id = appalachia.71
+	title = appalachia.71.t
+	desc = appalachia.71.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.71.a
+	}
+}
+
+# Shown to whoever attacked a member of the Midnight Pact while the Veil shelters it.
+country_event = {
+	id = appalachia.14
+	title = appalachia.14.t
+	desc = appalachia.14.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.14.a
+		add_war_support = -0.05
+	}
+}
+
+#########################################################################
+#  The creeping fog
+#########################################################################
+
+# Appalachia: the fog has taken another state.
+country_event = {
+	id = appalachia.80
+	title = appalachia.80.t
+	desc = appalachia.80.d
+	picture = GFX_report_event_APL_severance
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.80.a
+	}
+}
+
+# USA: the fog advances.
+country_event = {
+	id = appalachia.81
+	title = appalachia.81.t
+	desc = appalachia.81.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia.81.a
+		add_stability = -0.03
 	}
 }

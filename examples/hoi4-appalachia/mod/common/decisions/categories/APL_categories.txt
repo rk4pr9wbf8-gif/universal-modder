@@ -17,3 +17,14 @@ USA_project_lantern = {
 		country_exists = APL
 	}
 }
+
+APL_creeping_fog_category = {
+	icon = generic_research
+	picture = GFX_decision_cat_APL_rites
+	allowed = {
+		original_tag = APL
+	}
+	visible = {
+		has_country_flag = APL_creeping_fog
+	}
+}

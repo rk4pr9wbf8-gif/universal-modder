@@ -668,6 +668,20 @@ FOCUS = {
     "valley_of_dams": ("moss", [("dam", (16, 12, 62))]),
     "the_hollow_laboratories": ("bruise", [("flask", (20, 8, 56))]),
     "the_black_furnace": ("coal", [("flame", (18, 6, 58))]),
+    # spreading the Veil
+    "the_creeping_fog": ("ash", [("dome", (17, 4, 61)), ("arrow", (44, 30, 28))]),
+    "the_fog_rolls_east": ("bruise", [("mountain", (12, 24, 66)), ("dome", (25, 2, 44))]),
+    "fog_without_end": ("ash", [("dome", (10, 0, 75)), ("eye", (30, 34, 35))]),
+    # the Midnight Pact
+    "the_midnight_pact": ("bruise", [("candles", (16, 26, 62)), ("full_moon", (34, 4, 28))]),
+    "la_llorona": ("moss", [("veiled", (20, 8, 56))]),
+    "the_banshee_wails": ("ash", [("mouth", (18, 12, 59))]),
+    "strigoi": ("blood", [("skull", (18, 8, 58)), ("moon", (52, 6, 22))]),
+    "the_draugr_wake": ("ash", [("skull", (18, 8, 58))]),
+    "the_migoi_descend": ("ash", [("footprint", (20, 8, 56))]),
+    "the_mapinguari_stirs": ("moss", [("wolf", (16, 8, 62))]),
+    "a_world_of_nightmares": ("blood", [("sigil", (18, 6, 59))]),
+    "the_veil_shelters_the_pact": ("bruise", [("dome", (12, 2, 71)), ("candles", (24, 34, 46))]),
 }
 
 IDEAS = {
@@ -675,12 +689,12 @@ IDEAS = {
     "blood_price": ("drop", "blood"),
     "blood_price_eased": ("drop", "moss"),
     "hollow_folk": ("eye", "ash"),
-    "hollow_mist": ("eye", "ash"),
-    "children_of_the_night": ("moon", "bruise"),
-    "the_wild_hunt": ("antlers", "blood"),
-    "moonshine_economy": ("jug", "coal"),
+    "hollow_mist_spirit": ("eye", "ash"),
+    "children_of_the_night_spirit": ("moon", "bruise"),
+    "the_wild_hunt_spirit": ("antlers", "blood"),
+    "moonshine_economy_spirit": ("jug", "coal"),
     "old_scratch_bargain": ("horns", "blood"),
-    "the_black_furnace": ("flame", "coal"),
+    "the_black_furnace_spirit": ("flame", "coal"),
     "the_eternal_veil": ("sigil", "bruise"),
     "veil_parted": ("torn", "blood"),
     "blood_moon": ("full_moon", "blood"),
@@ -689,7 +703,8 @@ IDEAS = {
     "fog_madness": ("mouth", "ash"),
     "bell_witch_torment": ("bell", "ash"),
     "veil_shattered": ("torn", "ash"),
-    "the_matriarch": ("veiled", "moss"),
+    "the_matriarch_spirit": ("veiled", "moss"),
+    "awakened_folklore": ("book", "bruise"),
 }
 
 DECISIONS = {
@@ -700,6 +715,7 @@ DECISIONS = {
     "curse": ("skull", "blood"),
     "raise_the_dead": ("hand", "moss"),
     "lantern": ("eye", "ash"),
+    "creeping_fog": ("dome", "ash"),
 }
 DECISION_CATEGORY_IMAGE = "sigil"
 
@@ -762,7 +778,49 @@ def main() -> None:
     # previews for the README / Steam Workshop thumbnail (not loaded by the game)
     thumb = landscape((512, 512), 5, figure="moth", eyes=12)
     thumb.convert("RGB").save(HERE / "mod" / "thumbnail.png")
+    write_gfx()
     print("art written to", GFX)
+
+
+def write_gfx() -> None:
+    """interface/APL.gfx and APL_goals_shine.gfx: one spriteType per texture written above."""
+    mod = HERE / "mod"
+
+    def sprite(name, tex, extra=""):
+        return f'\tspriteType = {{\n\t\tname = "{name}"\n\t\ttexturefile = "{tex}"\n{extra}\t}}\n'
+
+    def anim(tex, rot):
+        return (f'\t\tanimation = {{\n\t\t\tanimationmaskfile = "{tex}"\n'
+                '\t\t\tanimationtexturefile = "gfx/interface/goals/shine_overlay.dds"\n'
+                f'\t\t\tanimationrotation = {rot}\n\t\t\tanimationlooping = no\n\t\t\tanimationtime = 0.75\n'
+                '\t\t\tanimationdelay = 0\n\t\t\tanimationblendmode = "add"\n\t\t\tanimationtype = "scrolling"\n'
+                '\t\t\tanimationrotationoffset = { x = 0.0 y = 0.0 }\n'
+                '\t\t\tanimationtexturescale = { x = 1.0 y = 1.0 }\n\t\t}\n')
+
+    rel = lambda q: q.relative_to(mod).as_posix()
+    out, shine = ["spriteTypes = {\n"], ["spriteTypes = {\n"]
+    for q in sorted((mod / "gfx/interface/goals").glob("APL_*.dds")):
+        out.append(sprite(f"GFX_goal_{q.stem}", rel(q)))
+        shine.append(sprite(f"GFX_goal_{q.stem}_shine", rel(q), '\t\teffectFile = "gfx/FX/buttonstate.lua"\n'
+                            + anim(rel(q), "-90.0") + anim(rel(q), "90.0") + "\t\tlegacy_lazy_load = no\n"))
+    for q in sorted((mod / "gfx/interface/ideas").glob("APL_*.dds")):
+        out.append(sprite(f"GFX_idea_{q.stem}", rel(q)))
+    for q in sorted((mod / "gfx/interface/decisions").glob("APL_*.dds")):
+        if not q.stem.endswith("_category"):
+            out.append(sprite(f"GFX_decision_{q.stem}", rel(q)))
+    out.append(sprite("GFX_decision_cat_APL_rites", "gfx/interface/decisions/APL_rites_category.dds"))
+    out.append(sprite("GFX_decision_cat_APL_lantern", "gfx/interface/decisions/APL_lantern_category.dds"))
+    for q in sorted((mod / "gfx/event_pictures").glob("APL_*.dds")):
+        out.append(sprite(f"GFX_report_event_{q.stem}", rel(q)))
+    for q in sorted((mod / "gfx/interface/units").glob("APL_*.dds")):
+        for suffix in ("_icon_medium", "_icon_small"):
+            out.append(sprite(f"GFX_unit_{q.stem}{suffix}", rel(q)))
+    for q in sorted((mod / "gfx/interface/equipment").glob("APL_*_medium.dds")):
+        base = q.stem[:-len("_medium")]
+        small = rel(q.with_name(base + "_small.dds"))
+        out += [sprite(f"GFX_{base}_medium", rel(q)), sprite(f"GFX_{base}_icon_small", small), sprite(f"GFX_{base}_small", small)]
+    (mod / "interface/APL.gfx").write_text("".join(out) + "}\n")
+    (mod / "interface/APL_goals_shine.gfx").write_text("".join(shine) + "}\n")
 
 
 if __name__ == "__main__":

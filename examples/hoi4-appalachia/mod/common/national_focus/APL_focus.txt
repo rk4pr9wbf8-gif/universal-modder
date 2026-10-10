@@ -88,7 +88,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			add_ideas = APL_hollow_mist
+			add_ideas = APL_hollow_mist_spirit
 		}
 	}
 
@@ -389,7 +389,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			add_ideas = APL_children_of_the_night
+			add_ideas = APL_children_of_the_night_spirit
 		}
 	}
 
@@ -405,7 +405,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			swap_ideas = { remove_idea = APL_children_of_the_night add_idea = APL_the_wild_hunt }
+			swap_ideas = { remove_idea = APL_children_of_the_night_spirit add_idea = APL_the_wild_hunt_spirit }
 			army_experience = 25
 		}
 	}
@@ -517,7 +517,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			add_ideas = APL_the_matriarch
+			add_ideas = APL_the_matriarch_spirit
 		}
 	}
 
@@ -588,7 +588,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			add_ideas = APL_moonshine_economy
+			add_ideas = APL_moonshine_economy_spirit
 		}
 	}
 
@@ -681,7 +681,7 @@ focus_tree = {
 			factor = 1
 		}
 		completion_reward = {
-			add_ideas = APL_the_black_furnace
+			add_ideas = APL_the_black_furnace_spirit
 			random_owned_controlled_state = {
 				limit = { has_state_flag = APL_heartland }
 				add_extra_state_shared_building_slots = 2
@@ -690,4 +690,335 @@ focus_tree = {
 		}
 	}
 
+	focus = {
+		id = APL_the_creeping_fog
+		icon = GFX_goal_APL_the_creeping_fog
+		prerequisite = { focus = APL_wardstones }
+		x = 0
+		y = 3
+		cost = 10
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_country_flag = APL_creeping_fog
+			custom_effect_tooltip = APL_unlock_creeping_fog_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_fog_rolls_east
+		icon = GFX_goal_APL_the_fog_rolls_east
+		prerequisite = { focus = APL_the_creeping_fog }
+		x = 0
+		y = 4
+		cost = 10
+		available = {
+			has_global_flag = APL_veil_intact
+			any_state = {
+				has_state_flag = APL_frontier
+				is_owned_by = USA
+				any_neighbor_state = { is_owned_by = APL }
+			}
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			random_state = {
+				limit = {
+					has_state_flag = APL_frontier
+					is_owned_by = USA
+					any_neighbor_state = { is_owned_by = APL }
+				}
+				APL = { transfer_state = PREV }
+				add_core_of = APL
+			}
+			add_to_variable = { APL_veil_decay = 0.25 }
+			custom_effect_tooltip = APL_fog_rolls_east_tt
+			if = {
+				limit = { country_exists = USA }
+				USA = { country_event = { id = appalachia.81 days = 1 } }
+			}
+		}
+	}
+
+	focus = {
+		id = APL_fog_without_end
+		icon = GFX_goal_APL_fog_without_end
+		prerequisite = { focus = APL_the_fog_rolls_east }
+		prerequisite = { focus = APL_eternal_veil }
+		x = 0
+		y = 5
+		cost = 15
+		available = {
+			has_global_flag = APL_veil_intact
+		}
+		search_filters = { FOCUS_FILTER_STABILITY }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_country_flag = APL_fog_without_end
+			custom_effect_tooltip = APL_fog_without_end_tt
+			set_variable = { APL_veil_cap = 200 }
+			custom_effect_tooltip = APL_veil_cap_200_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_midnight_pact
+		icon = GFX_goal_APL_the_midnight_pact
+		prerequisite = { focus = APL_the_severance }
+		x = 22
+		y = 1
+		cost = 10
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			if = {
+				limit = { is_in_faction = no }
+				create_faction = APL_midnight_pact
+			}
+			add_political_power = 50
+		}
+	}
+
+	focus = {
+		id = APL_la_llorona
+		icon = GFX_goal_APL_la_llorona
+		prerequisite = { focus = APL_the_midnight_pact }
+		x = 19
+		y = 2
+		cost = 7
+		available = {
+			country_exists = MEX
+			MEX = {
+				is_in_faction = no
+				NOT = { has_war_with = APL }
+			}
+		}
+		bypass = {
+			NOT = { country_exists = MEX }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			MEX = { country_event = { id = appalachia.60 days = 3 } }
+			custom_effect_tooltip = APL_pact_invite_MEX_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_banshee_wails
+		icon = GFX_goal_APL_the_banshee_wails
+		prerequisite = { focus = APL_the_midnight_pact }
+		x = 20
+		y = 2
+		cost = 7
+		available = {
+			country_exists = IRE
+			IRE = {
+				is_in_faction = no
+				NOT = { has_war_with = APL }
+			}
+		}
+		bypass = {
+			NOT = { country_exists = IRE }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			IRE = { country_event = { id = appalachia.61 days = 3 } }
+			custom_effect_tooltip = APL_pact_invite_IRE_tt
+		}
+	}
+
+	focus = {
+		id = APL_strigoi_of_the_carpathians
+		icon = GFX_goal_APL_strigoi
+		prerequisite = { focus = APL_the_midnight_pact }
+		x = 21
+		y = 2
+		cost = 7
+		available = {
+			country_exists = ROM
+			ROM = {
+				is_in_faction = no
+				NOT = { has_war_with = APL }
+			}
+		}
+		bypass = {
+			NOT = { country_exists = ROM }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			ROM = { country_event = { id = appalachia.62 days = 3 } }
+			custom_effect_tooltip = APL_pact_invite_ROM_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_draugr_wake
+		icon = GFX_goal_APL_the_draugr_wake
+		prerequisite = { focus = APL_the_midnight_pact }
+		x = 23
+		y = 2
+		cost = 7
+		available = {
+			country_exists = NOR
+			# Norway's tag is also the logical operator NOR, so it can't open a scope here.
+			any_country = {
+				tag = NOR
+				is_in_faction = no
+				NOT = { has_war_with = APL }
+			}
+		}
+		bypass = {
+			NOT = { country_exists = NOR }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			every_country = {
+				limit = { tag = NOR }
+				country_event = { id = appalachia.63 days = 3 }
+			}
+			custom_effect_tooltip = APL_pact_invite_NOR_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_migoi_descend
+		icon = GFX_goal_APL_the_migoi_descend
+		prerequisite = { focus = APL_the_midnight_pact }
+		x = 24
+		y = 2
+		cost = 7
+		available = {
+			country_exists = TIB
+			TIB = {
+				is_in_faction = no
+				NOT = { has_war_with = APL }
+			}
+		}
+		bypass = {
+			NOT = { country_exists = TIB }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			TIB = { country_event = { id = appalachia.64 days = 3 } }
+			custom_effect_tooltip = APL_pact_invite_TIB_tt
+		}
+	}
+
+	focus = {
+		id = APL_the_mapinguari_stirs
+		icon = GFX_goal_APL_the_mapinguari_stirs
+		prerequisite = { focus = APL_the_midnight_pact }
+		x = 25
+		y = 2
+		cost = 7
+		available = {
+			country_exists = BRA
+			BRA = {
+				is_in_faction = no
+				NOT = { has_war_with = APL }
+			}
+		}
+		bypass = {
+			NOT = { country_exists = BRA }
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			BRA = { country_event = { id = appalachia.65 days = 3 } }
+			custom_effect_tooltip = APL_pact_invite_BRA_tt
+		}
+	}
+
+	focus = {
+		id = APL_a_world_of_nightmares
+		icon = GFX_goal_APL_a_world_of_nightmares
+		prerequisite = { focus = APL_la_llorona focus = APL_the_banshee_wails focus = APL_strigoi_of_the_carpathians focus = APL_the_draugr_wake focus = APL_the_migoi_descend focus = APL_the_mapinguari_stirs }
+		x = 22
+		y = 3
+		cost = 10
+		available = {
+			count_triggers = {
+				amount = 2
+				MEX = { is_in_faction_with = APL }
+				IRE = { is_in_faction_with = APL }
+				ROM = { is_in_faction_with = APL }
+				any_country = {
+					tag = NOR
+					is_in_faction_with = APL
+				}
+				TIB = { is_in_faction_with = APL }
+				BRA = { is_in_faction_with = APL }
+			}
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			every_country = {
+				limit = {
+					is_in_faction_with = APL
+					NOT = { tag = APL }
+				}
+				set_technology = {
+					APL_tech_mothman_flock = 1
+					APL_tech_woodbooger_brutes = 1
+					popup = no
+				}
+				add_equipment_to_stockpile = {
+					type = APL_binding_charms_1
+					amount = 500
+					producer = APL
+				}
+			}
+			custom_effect_tooltip = APL_world_of_nightmares_tt
+			add_political_power = 100
+		}
+	}
+
+	focus = {
+		id = APL_the_veil_shelters_the_pact
+		icon = GFX_goal_APL_the_veil_shelters_the_pact
+		prerequisite = { focus = APL_a_world_of_nightmares }
+		x = 22
+		y = 4
+		cost = 15
+		available = {
+			has_global_flag = APL_veil_intact
+		}
+		search_filters = { FOCUS_FILTER_POLITICAL }
+		ai_will_do = {
+			factor = 1
+		}
+		completion_reward = {
+			set_country_flag = APL_veil_shelters_pact
+			custom_effect_tooltip = APL_veil_shelters_pact_tt
+		}
+	}
 }

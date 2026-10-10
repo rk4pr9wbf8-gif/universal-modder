@@ -22,7 +22,7 @@ States as the **Veiled Commonwealth of Appalachia** (tag `APL`).
     political power). Focuses slow its decay, raise its cap to 150, or bind it forever.
   - The USA gets **Project Lantern**, two decisions that wear the Veil down. So it does fall eventually,
     unless Appalachia keeps feeding it.
-- **35-focus tree** in five branches, all with custom icons:
+- **47-focus tree** in six branches (including the two above), all with custom icons:
   - **The Veil** forks: the *Eternal Veil* (isolation forever), or *Part the Veil*. Parting leads into the
     *Night March*, with claims and war goals on the rest of old Appalachia: Virginia, the Carolinas,
     Pennsylvania, Ohio, Maryland, Georgia and Alabama. The branch ends with *A Shadow over America*.
@@ -32,6 +32,22 @@ States as the **Veiled Commonwealth of Appalachia** (tag `APL`).
     Rites of the Black Mountain. It forks between Maw Hettie's matriarchy and a bargain with Old Scratch.
   - **Hollow Industry:** coal and bone, the moonshine economy, the deep mines (something down there knocks
     back), bone foundries, the Hollow Laboratories and the Black Furnace.
+- **Spreading the Veil** (3 focuses and a map decision):
+  - *The Creeping Fog* unlocks **The Fog Swallows [state]**: pick a neighbouring US frontier state on the map.
+    The fog rolls over it, and 45 days later it's Appalachian, with no war. It costs 75 political power and 20
+    Veil strength, and every state taken makes the Veil decay a little faster.
+  - *The Fog Rolls East* takes one frontier state at once.
+  - *Fog Without End* (Eternal Veil path) lets the fog take **any** bordering US state, and raises the Veil cap
+    to 200.
+- **The Midnight Pact** (9 focuses): the Coven wakes the monsters of other countries' folklore and recruits
+  those countries into Appalachia's faction.
+  - La Llorona for Mexico, the Banshee and Dullahan for Ireland, the Strigoi for Romania, the Draugr for
+    Norway, the Migoi (Yeti) for Tibet, and the Mapinguari for Brazil.
+  - Each country gets an event to accept or refuse. Members get *Awakened Folklore*, can raise Hollow
+    Revenants, and can make Binding Charms.
+  - *A World of Nightmares* (needs 2 members) gives every member Mothman Flocks and Woodbooger Brutes.
+  - *The Veil Shelters the Pact*: while the Veil stands, attacks on any Pact member also end in a white peace,
+    and each one costs the Veil 10.
 - **Cryptid battalions.** Every one of them needs **Binding Charms**, a new equipment that only Appalachia
   can produce.
 

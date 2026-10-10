@@ -35,6 +35,13 @@ on_actions = {
 					OR = {
 						tag = APL
 						FROM = { tag = APL }
+						AND = {
+							APL = { has_country_flag = APL_veil_shelters_pact }
+							OR = {
+								is_in_faction_with = APL
+								FROM = { is_in_faction_with = APL }
+							}
+						}
 					}
 				}
 				APL = { country_event = { id = appalachia.13 days = 1 } }

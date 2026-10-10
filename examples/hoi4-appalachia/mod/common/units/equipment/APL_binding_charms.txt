@@ -1,5 +1,6 @@
 # Binding Charms: bone, iron nails, a lock of hair, a drop of the bearer's blood, sewn into a red flannel
-# bag. Cryptid battalions fight only while a charm holds them. Only Appalachia can make them.
+# bag. Cryptid battalions fight only while a charm holds them. Only Appalachia and the nations of the
+# Midnight Pact (APL_awakened_folklore) can make them.
 equipments = {
 	APL_binding_charms = {
 		year = 1936
@@ -24,7 +25,10 @@ equipments = {
 		resources = { }
 
 		can_be_produced = {
-			original_tag = APL
+			OR = {
+				original_tag = APL
+				has_idea = APL_awakened_folklore
+			}
 		}
 	}
 

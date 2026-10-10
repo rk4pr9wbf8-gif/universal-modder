@@ -4,6 +4,10 @@ spriteTypes = {
 		texturefile = "gfx/interface/goals/APL_a_shadow_over_america.dds"
 	}
 	spriteType = {
+		name = "GFX_goal_APL_a_world_of_nightmares"
+		texturefile = "gfx/interface/goals/APL_a_world_of_nightmares.dds"
+	}
+	spriteType = {
 		name = "GFX_goal_APL_bargain_with_old_scratch"
 		texturefile = "gfx/interface/goals/APL_bargain_with_old_scratch.dds"
 	}
@@ -44,12 +48,20 @@ spriteTypes = {
 		texturefile = "gfx/interface/goals/APL_feed_the_veil.dds"
 	}
 	spriteType = {
+		name = "GFX_goal_APL_fog_without_end"
+		texturefile = "gfx/interface/goals/APL_fog_without_end.dds"
+	}
+	spriteType = {
 		name = "GFX_goal_APL_granny_witch_healers"
 		texturefile = "gfx/interface/goals/APL_granny_witch_healers.dds"
 	}
 	spriteType = {
 		name = "GFX_goal_APL_hollow_mist"
 		texturefile = "gfx/interface/goals/APL_hollow_mist.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_la_llorona"
+		texturefile = "gfx/interface/goals/APL_la_llorona.dds"
 	}
 	spriteType = {
 		name = "GFX_goal_APL_moonshine_economy"
@@ -72,12 +84,24 @@ spriteTypes = {
 		texturefile = "gfx/interface/goals/APL_sheepsquatch_herds.dds"
 	}
 	spriteType = {
+		name = "GFX_goal_APL_strigoi"
+		texturefile = "gfx/interface/goals/APL_strigoi.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_banshee_wails"
+		texturefile = "gfx/interface/goals/APL_the_banshee_wails.dds"
+	}
+	spriteType = {
 		name = "GFX_goal_APL_the_bell_witch"
 		texturefile = "gfx/interface/goals/APL_the_bell_witch.dds"
 	}
 	spriteType = {
 		name = "GFX_goal_APL_the_black_furnace"
 		texturefile = "gfx/interface/goals/APL_the_black_furnace.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_creeping_fog"
+		texturefile = "gfx/interface/goals/APL_the_creeping_fog.dds"
 	}
 	spriteType = {
 		name = "GFX_goal_APL_the_dark_sermons"
@@ -88,8 +112,16 @@ spriteTypes = {
 		texturefile = "gfx/interface/goals/APL_the_deep_mines.dds"
 	}
 	spriteType = {
+		name = "GFX_goal_APL_the_draugr_wake"
+		texturefile = "gfx/interface/goals/APL_the_draugr_wake.dds"
+	}
+	spriteType = {
 		name = "GFX_goal_APL_the_flatwoods_visitors"
 		texturefile = "gfx/interface/goals/APL_the_flatwoods_visitors.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_fog_rolls_east"
+		texturefile = "gfx/interface/goals/APL_the_fog_rolls_east.dds"
 	}
 	spriteType = {
 		name = "GFX_goal_APL_the_hollow_crown"
@@ -100,8 +132,20 @@ spriteTypes = {
 		texturefile = "gfx/interface/goals/APL_the_hollow_laboratories.dds"
 	}
 	spriteType = {
+		name = "GFX_goal_APL_the_mapinguari_stirs"
+		texturefile = "gfx/interface/goals/APL_the_mapinguari_stirs.dds"
+	}
+	spriteType = {
 		name = "GFX_goal_APL_the_matriarch"
 		texturefile = "gfx/interface/goals/APL_the_matriarch.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_midnight_pact"
+		texturefile = "gfx/interface/goals/APL_the_midnight_pact.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_migoi_descend"
+		texturefile = "gfx/interface/goals/APL_the_migoi_descend.dds"
 	}
 	spriteType = {
 		name = "GFX_goal_APL_the_mothman_compact"
@@ -118,6 +162,10 @@ spriteTypes = {
 	spriteType = {
 		name = "GFX_goal_APL_the_severance"
 		texturefile = "gfx/interface/goals/APL_the_severance.dds"
+	}
+	spriteType = {
+		name = "GFX_goal_APL_the_veil_shelters_the_pact"
+		texturefile = "gfx/interface/goals/APL_the_veil_shelters_the_pact.dds"
 	}
 	spriteType = {
 		name = "GFX_goal_APL_the_wild_hunt"
@@ -140,6 +188,10 @@ spriteTypes = {
 		texturefile = "gfx/interface/goals/APL_whispers_in_the_fog.dds"
 	}
 	spriteType = {
+		name = "GFX_idea_APL_awakened_folklore"
+		texturefile = "gfx/interface/ideas/APL_awakened_folklore.dds"
+	}
+	spriteType = {
 		name = "GFX_idea_APL_bell_witch_torment"
 		texturefile = "gfx/interface/ideas/APL_bell_witch_torment.dds"
 	}
@@ -160,8 +212,8 @@ spriteTypes = {
 		texturefile = "gfx/interface/ideas/APL_blood_price_eased.dds"
 	}
 	spriteType = {
-		name = "GFX_idea_APL_children_of_the_night"
-		texturefile = "gfx/interface/ideas/APL_children_of_the_night.dds"
+		name = "GFX_idea_APL_children_of_the_night_spirit"
+		texturefile = "gfx/interface/ideas/APL_children_of_the_night_spirit.dds"
 	}
 	spriteType = {
 		name = "GFX_idea_APL_fog_madness"
@@ -172,40 +224,40 @@ spriteTypes = {
 		texturefile = "gfx/interface/ideas/APL_hollow_folk.dds"
 	}
 	spriteType = {
-		name = "GFX_idea_APL_hollow_mist"
-		texturefile = "gfx/interface/ideas/APL_hollow_mist.dds"
+		name = "GFX_idea_APL_hollow_mist_spirit"
+		texturefile = "gfx/interface/ideas/APL_hollow_mist_spirit.dds"
 	}
 	spriteType = {
 		name = "GFX_idea_APL_mist_rite"
 		texturefile = "gfx/interface/ideas/APL_mist_rite.dds"
 	}
 	spriteType = {
-		name = "GFX_idea_APL_moonshine_economy"
-		texturefile = "gfx/interface/ideas/APL_moonshine_economy.dds"
+		name = "GFX_idea_APL_moonshine_economy_spirit"
+		texturefile = "gfx/interface/ideas/APL_moonshine_economy_spirit.dds"
 	}
 	spriteType = {
 		name = "GFX_idea_APL_old_scratch_bargain"
 		texturefile = "gfx/interface/ideas/APL_old_scratch_bargain.dds"
 	}
 	spriteType = {
-		name = "GFX_idea_APL_the_black_furnace"
-		texturefile = "gfx/interface/ideas/APL_the_black_furnace.dds"
+		name = "GFX_idea_APL_the_black_furnace_spirit"
+		texturefile = "gfx/interface/ideas/APL_the_black_furnace_spirit.dds"
 	}
 	spriteType = {
 		name = "GFX_idea_APL_the_eternal_veil"
 		texturefile = "gfx/interface/ideas/APL_the_eternal_veil.dds"
 	}
 	spriteType = {
-		name = "GFX_idea_APL_the_matriarch"
-		texturefile = "gfx/interface/ideas/APL_the_matriarch.dds"
+		name = "GFX_idea_APL_the_matriarch_spirit"
+		texturefile = "gfx/interface/ideas/APL_the_matriarch_spirit.dds"
 	}
 	spriteType = {
 		name = "GFX_idea_APL_the_veil"
 		texturefile = "gfx/interface/ideas/APL_the_veil.dds"
 	}
 	spriteType = {
-		name = "GFX_idea_APL_the_wild_hunt"
-		texturefile = "gfx/interface/ideas/APL_the_wild_hunt.dds"
+		name = "GFX_idea_APL_the_wild_hunt_spirit"
+		texturefile = "gfx/interface/ideas/APL_the_wild_hunt_spirit.dds"
 	}
 	spriteType = {
 		name = "GFX_idea_APL_veil_parted"
@@ -226,6 +278,10 @@ spriteTypes = {
 	spriteType = {
 		name = "GFX_decision_APL_bury_the_bones"
 		texturefile = "gfx/interface/decisions/APL_bury_the_bones.dds"
+	}
+	spriteType = {
+		name = "GFX_decision_APL_creeping_fog"
+		texturefile = "gfx/interface/decisions/APL_creeping_fog.dds"
 	}
 	spriteType = {
 		name = "GFX_decision_APL_curse"

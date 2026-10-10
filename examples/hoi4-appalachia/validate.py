@@ -150,11 +150,14 @@ def check_block(items, kind, vocab, where, scripted):
             if isinstance(v, list):
                 check_block(v, "trigger", vocab, where, scripted)
             continue
-        if k in ("OR", "AND", "NOT", "NOR", "NAND") and isinstance(v, list):
+        if k in ("OR", "AND", "NOT", "NOR", "NAND") and isinstance(v, list) and kind == "trigger":
             check_block(v, "trigger", vocab, where, scripted)
             continue
         if k in ("if", "else_if", "else", "hidden_effect") and isinstance(v, list):
             check_block(v, kind if k != "hidden_effect" else "effect", vocab, where, scripted)
+            continue
+        if k in ("NOR", "NAND") and kind == "effect":
+            PROBLEMS.append(f"{where}: '{k} = {{' in an effect is ambiguous (Norway's tag vs the operator); use every_country with tag")
             continue
         if is_scope_key(k):
             if isinstance(v, list):
@@ -227,6 +230,13 @@ def main():
             for k, _, v in blk:
                 decisions[k] = v
     categories = {k for f, t in by("/decisions/categories/").items() for k, _, _ in t}
+
+    # ---- one loc key per thing: a focus, idea, decision and category must not share a name
+    seen = {}
+    for kind, names in (("focus", focus_ids), ("idea", ideas), ("decision", set(decisions)), ("category", categories)):
+        for n in names:
+            need(n not in seen, f"name clash: {n} is both a {seen.get(n)} and a {kind}")
+            seen[n] = kind
 
     # ---- localisation coverage
     for fid in focus_ids:

@@ -61,7 +61,7 @@ IDEAS = {
     "hollow_folk": ("Hollow Folk",
         "Mountain people have always known to leave a saucer of milk on the step and never to whistle after dark. "
         "Now everyone else knows why. They are hard, suspicious, and very, very loyal."),
-    "hollow_mist": ("The Hollow Mist",
+    "hollow_mist_spirit": ("The Hollow Mist",
         "The fog no longer stays on the ridges. It pools in the valleys wherever our soldiers stand, and things move "
         "inside it that are on our side."),
     "the_eternal_veil": ("The Eternal Veil",
@@ -70,22 +70,22 @@ IDEAS = {
     "veil_parted": ("The Veil Parted",
         "We have lowered the Veil ourselves. Let them see what lives in the hollows. Let them see it coming down the "
         "mountain toward them."),
-    "children_of_the_night": ("Children of the Night",
+    "children_of_the_night_spirit": ("Children of the Night",
         "Our battalions march after sundown. The enemy sentries hear hoofbeats where there are no horses, and see "
         "eyes in the treeline at the height of a second-floor window."),
-    "the_wild_hunt": ("The Wild Hunt",
+    "the_wild_hunt_spirit": ("The Wild Hunt",
         "Every cryptid in the hollows runs with our army now: the flock above, the brutes beside, the packs ahead. "
         "Behind them, nothing grows for a season."),
-    "the_matriarch": ("The Matriarch's Blessing",
+    "the_matriarch_spirit": ("The Matriarch's Blessing",
         "Maw Hettie has blessed every cradle in the Commonwealth. Children are born crying again. That is how you "
         "know it worked."),
     "old_scratch_bargain": ("The Bargain with Old Scratch",
         "A man in a fine black suit came to the crossroads at midnight with a fiddle and a contract. The factories "
         "have never run faster. Nobody asks where the night shift goes."),
-    "moonshine_economy": ("The Moonshine Economy",
+    "moonshine_economy_spirit": ("The Moonshine Economy",
         "Corn liquor buys silence, cures fever, fuels trucks and keeps the haints off. Every holler has a still, "
         "and the Coven taxes all of them."),
-    "the_black_furnace": ("The Black Furnace",
+    "the_black_furnace_spirit": ("The Black Furnace",
         "In the deepest mine in Harlan County there is a fire that was not lit by men. We have built a foundry around it."),
     "veil_shattered": ("The Veil Shattered",
         "The fog is gone. For the first time since the Severance, the outside world can see in. Our people are "
@@ -401,6 +401,138 @@ L.update({
     "appalachia.2.a.tt": "§RThe patrol will not come back.§!",
     "appalachia.11.a.tt": "§RThe war is over. The Veil has refused us.§!",
     "appalachia.12.a.tt": "§YThe Veil§! weakened by §R10§! for every enemy it repelled.",
+})
+
+# ---------------------------------------------------------------- spreading the Veil
+FOCUS2 = {
+    "the_creeping_fog": ("The Creeping Fog",
+        "The Veil was raised along the ridges. Nothing says it has to stay there. Teach it to creep downhill, "
+        "one county at a time."),
+    "the_fog_rolls_east": ("The Fog Rolls East",
+        "One night the fog simply keeps going. By morning a whole neighbouring state is inside it, and its people "
+        "wake up Appalachian."),
+    "fog_without_end": ("Fog Without End",
+        "Bound forever and hungry forever, the Eternal Veil can now swallow any American state that borders it."),
+    "the_midnight_pact": ("The Midnight Pact",
+        "Every land has its own things in the dark: its weeping women, its walking dead, its tracks in the snow. "
+        "They are only sleeping. The Coven knows the words that wake them, and the nations that let them wake "
+        "will owe us."),
+    "la_llorona": ("La Llorona",
+        "Send the Coven to Mexico. In the canals of Xochimilco and the arroyos of Chihuahua, a woman in white is "
+        "still looking for her children."),
+    "the_banshee_wails": ("The Banshee Wails",
+        "Send the Coven to Ireland, where the old families still have a keening woman who cries before a death, and "
+        "a headless rider who stops where someone is about to die."),
+    "strigoi_of_the_carpathians": ("Strigoi of the Carpathians",
+        "Send the Coven to Romania. The strigoi never really stayed in their graves. They just learned to be quiet."),
+    "the_draugr_wake": ("The Draugr Wake",
+        "Send the Coven to Norway. Under the barrow mounds the old dead are heavy as oxen, and they guard what is theirs."),
+    "the_migoi_descend": ("The Migoi Descend",
+        "Send the Coven to Tibet. The migoi, the wild men of the snows, leave tracks across passes no human has crossed."),
+    "the_mapinguari_stirs": ("The Mapinguari Stirs",
+        "Send the Coven to Brazil. Deep in the Amazon there is a giant with a mouth in its belly and a smell that "
+        "stops hunters in their tracks."),
+    "a_world_of_nightmares": ("A World of Nightmares",
+        "The Pact is real now. Share the Mothman and the Woodbooger with our allies, and the charms that bind them."),
+    "the_veil_shelters_the_pact": ("The Veil Shelters the Pact",
+        "Stretch the Veil around every nation of the Midnight Pact. Anyone who attacks our allies walks into our fog."),
+}
+for k, (name, desc) in FOCUS2.items():
+    L[f"APL_{k}"] = name
+    L[f"APL_{k}_desc"] = desc
+
+L.update({
+    "APL_midnight_pact": "The Midnight Pact",
+    "APL_awakened_folklore": "Awakened Folklore",
+    "APL_awakened_folklore_desc": "The old stories came true here too. The things from them fight for the nation that "
+        "let them wake, and so do the Appalachian charms that bind them. Our nation can raise Hollow Revenants and "
+        "make Binding Charms.",
+    "APL_creeping_fog_category": "The Creeping Fog",
+    "APL_creeping_fog_category_desc": "The Veil holds at §Y[?APL_veil_strength|0]§! out of §Y[?APL_veil_cap|0]§!, and loses "
+        "§R[?APL_veil_decay|2]§! a week.\\n\\nPick a state bordering ours on the map. The fog rolls over it; when it "
+        "lifts 45 days later, the state is Appalachian. Every state the fog takes makes the Veil decay faster.",
+    "APL_the_fog_swallows": "The Fog Swallows [FROM.GetName]",
+    "APL_the_fog_swallows_desc": "Let the fog roll down over [FROM.GetName]. When it lifts, the state will be ours.",
+    "APL_unlock_creeping_fog_tt": "Unlocks the §YCreeping Fog§! decision: the Veil can swallow neighbouring "
+        "§Yfrontier states§! owned by the United States, without a war.",
+    "APL_fog_rolls_east_tt": "The fog swallows one §Yfrontier state§! that borders Appalachia. It becomes ours, "
+        "with a core.\\n§YThe Veil§! decays §R0.25§! faster each week.",
+    "APL_fog_without_end_tt": "§YThe Creeping Fog§! can now swallow §Yany§! US state that borders Appalachia.",
+    "APL_veil_cap_200_tt": "§YThe Veil§! can now reach a strength of §G200§!.",
+    "APL_veil_minus_20_tt": "§YThe Veil§! weakens by §R20§! while the fog spreads.",
+    "APL_veil_decay_up_tt": "The state becomes ours. §YThe Veil§! decays §R0.25§! faster each week.",
+    "APL_world_of_nightmares_tt": "Every member of the §YMidnight Pact§! can raise §YMothman Flocks§! and "
+        "§YWoodbooger Brutes§!, and receives §Y500§! Binding Charms.",
+    "APL_veil_shelters_pact_tt": "While the Veil stands, any country that attacks a member of our faction is "
+        "repelled like an attacker of Appalachia: §Ywhite peace§!, and §R10§! Veil strength each time.",
+})
+for tag, name in (("MEX", "Mexico"), ("IRE", "Ireland"), ("ROM", "Romania"), ("NOR", "Norway"),
+                  ("TIB", "Tibet"), ("BRA", "Brazil")):
+    L[f"APL_pact_invite_{tag}_tt"] = (f"§Y{name}§! will be invited to join the §YMidnight Pact§!. If it accepts, "
+        "it gains §YAwakened Folklore§!, Hollow Revenants, Binding Charms and a place in our faction.")
+
+PACT_EV = {
+    60: ("The Weeping Woman", "Fishermen on the lakes of Xochimilco heard a woman crying all night: "
+         "“¡Ay, mis hijos!” At dawn they found her footprints leading into the water and none coming out. "
+         "Since then she has been seen in Chihuahua, in Veracruz and outside the National Palace, always in white "
+         "and always soaking wet.\\n\\nA delegation of Appalachian mountain folk is waiting in the capital. "
+         "They say they woke her, they can bind her, and she will weep outside our enemies' barracks instead of "
+         "our children's windows. All we have to do is join their Midnight Pact."),
+    61: ("The Keening", "For three nights the keening has been heard in every county of Ireland: a woman's "
+         "voice wailing outside the houses of the old families. On the fourth night a headless rider on a black "
+         "horse galloped down the Dublin quays, holding up his own head like a lantern.\\n\\nThe Appalachians who "
+         "came over on the last boat say the Banshee and the Dullahan will cry for our enemies now, if we stand with "
+         "them in the Midnight Pact."),
+    62: ("They Did Not Stay in Their Graves", "In Transylvanian villages the old custom has come back: garlic on "
+         "the doors, a sickle across the throat of the dead. It isn't working. Families wake to find the "
+         "grandfather they buried last winter sitting at the table, waiting to be fed.\\n\\nThe Appalachian "
+         "witches in Bucharest say the strigoi can be bound with their charms and pointed at our enemies. They "
+         "want only our signature on the Midnight Pact."),
+    63: ("The Barrows Open", "Farmers in Trøndelag woke to find the old burial mounds split open from the inside. "
+         "Huge, bloated shapes walk the fjords at night, heavy as oxen, and the cattle die wherever they pass. "
+         "The draugr are guarding their land again.\\n\\nThe Appalachian Coven offers to bind them, so that what "
+         "they guard is Norway. In return, Norway joins the Midnight Pact."),
+    64: ("Tracks in the Snow", "Monks at Rongbuk found tracks across the glacier: huge, manlike and barefoot, "
+         "crossing a pass no human could have climbed. Herdsmen speak of the migoi, the wild men, coming down to "
+         "the villages and watching from the ridgelines.\\n\\nStrangers from the far side of the world have arrived "
+         "in Lhasa with charms of red flannel and bone. They say the migoi will guard the passes for us if we join "
+         "their Midnight Pact."),
+    65: ("The Smell in the Forest", "Rubber tappers along the Amazon are refusing to go into the forest. They speak "
+         "of the Mapinguari, a giant with one eye and a gaping mouth in its belly, and of the Curupira, whose feet "
+         "point backwards so that anyone tracking it walks the wrong way.\\n\\nThe Appalachian emissaries in Rio "
+         "promise that with their charms the forest will fight for Brazil. All Brazil has to do is join the "
+         "Midnight Pact."),
+}
+for n, (title, desc) in PACT_EV.items():
+    L[f"appalachia.{n}.t"] = title
+    L[f"appalachia.{n}.d"] = desc
+    L[f"appalachia.{n}.a"] = "Let our legends fight for us. We join the Midnight Pact."
+    L[f"appalachia.{n}.b"] = "Burn the charms and drive these witches out!"
+L.update({
+    "appalachia.70.t": "[From.GetNameDefCap] Joins the Midnight Pact",
+    "appalachia.70.d": "The emissaries have sent word: [From.GetNameDefCap] has accepted the Pact. Its old legends are "
+        "awake and bound, and they will fight beside the things from our hollows.",
+    "appalachia.70.a": "The night grows larger.",
+    "appalachia.71.t": "[From.GetNameDefCap] Refuses the Pact",
+    "appalachia.71.d": "[From.GetNameDefCap] burned our charms and drove out our emissaries. The things we woke "
+        "there are still awake, but now they belong to no one.",
+    "appalachia.71.a": "They will regret it.",
+    "appalachia.14.t": "The Fog Shelters Them",
+    "appalachia.14.d": "Our offensive rolled forward into a fog bank that wasn't there the day before. Inside it "
+        "we could hear our own men calling for help in voices that were not theirs.\\n\\nThe whole front has "
+        "fallen back. The General Staff has concluded that this war cannot be fought while the Appalachian Veil "
+        "protects them.",
+    "appalachia.14.a": "Call off the attack.",
+    "appalachia.80.t": "The Fog Takes Another State",
+    "appalachia.80.d": "The fog lifted this morning. Behind it the towns are quiet, the church bells ring backwards "
+        "at noon, and the people have barred their doors and lit their lamps like everyone else in the hollows.\\n\\n"
+        "Another state belongs to Appalachia.",
+    "appalachia.80.a": "The mountains grow.",
+    "appalachia.81.t": "The Fog Advances",
+    "appalachia.81.d": "The Appalachian fog is moving. It has rolled off the ridges and is creeping across the "
+        "farmland toward the next state, a few miles a day. Towns in its path are emptying onto the highways.\\n\\n"
+        "Army engineers report that nothing stops it: not floodlights, not fire, not prayer.",
+    "appalachia.81.a": "Evacuate the border counties.",
 })
 
 
