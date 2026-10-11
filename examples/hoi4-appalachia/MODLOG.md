@@ -165,6 +165,17 @@
       country (cold_war_1949.ARMY).
 19. Inside `every_country` during on_startup, ROOT is empty. Use THIS for `create_unit`'s owner.
 
+## Round 5: v14 runs; the 90-focus tree
+- v14 opened in game: the vanilla start dates are replaced, histories are sanitized, and armies are
+  raised at startup.
+- The user asked for a massive tree (50+). `make_focus_tree.py` appends 43 focuses in five branches (the
+  Endless Hunt, the Council of Two Worlds, the Hollow Treasury, the Black Library, Beyond the Fog) to the
+  hand-tuned 47. Each branch hooks into a system already built: the BOP (`add_power_balance_value`),
+  the treasury and Library variables, cryptid techs, `add_nuclear_bombs`, a non-aggression pact
+  (`diplomatic_relation`), Eastern Bloc membership. It also adds 9 spirits, 4 Cold War events and a
+  rendered preview (focus_tree.png).
+- The tree is now 12 rows deep, so `continuous_focus_position` moved below it.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are

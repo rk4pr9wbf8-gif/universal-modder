@@ -71,6 +71,23 @@ longer exist. The 1949 setup then raises new armies, alliances and subjects.
   - *A World of Nightmares* (needs 2 members) gives every member Mothman Flocks and Woodbooger Brutes.
   - *The Veil Shelters the Pact*: while the Veil stands, attacks on any Pact member also end in a white peace,
     and each one costs the Veil 10.
+- **A 90-focus tree** in eight branches. A preview is in `focus_tree.png`.
+  - **The Veil and the creeping fog:** hide forever, or part the Veil and march on old Appalachia and
+    then America. The fog can swallow neighbouring states.
+  - **The Cryptid Corps and the Endless Hunt:** the Mothman, Woodboogers, Sheepsquatch, the Flatwoods
+    visitors, then the Snallygaster's air wing, hellhound kennels, the Grafton Horror, Tailypo scouts and
+    the Night Doctrine.
+  - **The Coven and the Council of Two Worlds:** granny witches, the Bell Witch, Old Scratch or the
+    Matriarch. Then rule by the Thirteen (the Black Throne) or by the Mountain Assembly (charters,
+    elections, schools), moving the balance of power. Both paths end in *A Nation of Two Worlds*.
+  - **Hollow Industry and the Hollow Treasury:** coal and bone, moonshine cartels, the charm trade, the
+    Coal Road and an economy of bone.
+  - **The Midnight Pact:** wake the legends of Mexico, Ireland, Romania, Norway, Tibet and Brazil.
+  - **The Black Library:** the scholars of Hollow Creek, Oak Ridge defectors, the Mothman computer,
+    atomic witchcraft (real nuclear bombs), the Black Sun Reactor and *The Unwritten Science*.
+  - **Beyond the Fog (the Cold War):** whisper to Moscow and join the Eastern Bloc, cut a quiet deal with
+    Washington, or lead the unaligned. Then the Mothman Satellite, Duck and Cover, an atomic rite on Black
+    Mountain, proxy wars of the night, and *The Long Twilight*.
 - **A real government (balance of power).** The Coven of Thirteen and the Mountain Assembly (union halls,
   courthouses, coal camps) pull against each other.
   - The Veil strengthens the Coven every month, and a full treasury strengthens the Assembly.
@@ -183,6 +200,7 @@ None of these affect gameplay.
 | `build_mod.py` | reads your install, generates the state overrides and the templates, and installs the mod |
 | `make_art.py` | draws every texture, written as uncompressed DDS and TGA |
 | `cold_war_1949.py` / `make_cold_war.py` | the 1949 world as data (states, governments, blocs) and the static files made from it |
+| `make_focus_tree.py` | the five newer focus branches, their spirits, Cold War events, text and icons, from one table |
 | `make_decisions.py` | council, treasury, Black Library, Cold War and cheat decisions, generated from tables |
 | `survey_base_mod.py` / `survey.bat` | reads a base mod and writes a names-only report for the agent |
 | `make_loc.py` | all English text: names, descriptions, events, tooltips |

@@ -1,0 +1,76 @@
+add_namespace = appalachia_cw
+
+# SOV: a message from the fog.
+country_event = {
+	id = appalachia_cw.1
+	title = appalachia_cw.1.t
+	desc = appalachia_cw.1.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia_cw.1.a
+		ai_chance = { factor = 70 }
+		APL = {
+			add_equipment_to_stockpile = {
+				type = infantry_equipment_1
+				amount = 3000
+				producer = SOV
+			}
+			add_to_variable = { APL_treasury = 150 }
+		}
+		custom_effect_tooltip = appalachia_cw.1.a.tt
+	}
+	option = {
+		name = appalachia_cw.1.b
+		ai_chance = { factor = 30 }
+	}
+}
+
+# USA: a voice on the back channel.
+country_event = {
+	id = appalachia_cw.2
+	title = appalachia_cw.2.t
+	desc = appalachia_cw.2.d
+	picture = GFX_report_event_APL_fog
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia_cw.2.a
+		ai_chance = { factor = 60 }
+		set_country_flag = { flag = APL_lantern_truce days = 365 value = 1 }
+		APL = { add_to_variable = { APL_treasury = 150 } }
+		custom_effect_tooltip = appalachia_cw.2.a.tt
+	}
+	option = {
+		name = appalachia_cw.2.b
+		ai_chance = { factor = 40 }
+	}
+}
+
+# APL: something in orbit.
+country_event = {
+	id = appalachia_cw.3
+	title = appalachia_cw.3.t
+	desc = appalachia_cw.3.d
+	picture = GFX_report_event_APL_mothman
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia_cw.3.a
+	}
+}
+
+# USA and SOV: a flash over Black Mountain.
+country_event = {
+	id = appalachia_cw.4
+	title = appalachia_cw.4.t
+	desc = appalachia_cw.4.d
+	picture = GFX_report_event_APL_ritual
+	is_triggered_only = yes
+
+	option = {
+		name = appalachia_cw.4.a
+		add_stability = -0.02
+	}
+}
