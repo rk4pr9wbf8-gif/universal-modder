@@ -40,7 +40,7 @@ TAG = "APL"
 # Vanilla states are matched by English name; the Cold War map is matched by id, with the name checked.
 PROFILES = {
     "vanilla": {
-        "label": "vanilla Hearts of Iron IV (1936, 1939 and the 1949 Cold War)",
+        "label": "vanilla Hearts of Iron IV, turned into the 1949 Cold War",
         "heartland": ["West Virginia", "Kentucky", "Tennessee"],
         "frontier": ["Virginia", "North Carolina", "South Carolina", "Pennsylvania", "Ohio", "Maryland", "Georgia",
                      "Alabama"],
@@ -330,6 +330,68 @@ def cold_war_states(index, heart_ids, out: Path, cw) -> int:
     return changed
 
 
+# Top-level statements in a country history that only make sense in 1936-1939: armies placed for that
+# map, and the diplomacy of the coming war. In 1949 several of those countries no longer exist, and
+# armies or subjects belonging to a country that isn't there crash the game. APL_cw_setup_1949 sets
+# 1949 armies, alliances and subjects itself.
+HISTORY_DROP = {"oob", "set_naval_oob", "set_air_oob", "load_oob", "puppet", "set_autonomy", "create_faction",
+                "add_to_faction", "give_guarantee", "give_military_access", "diplomatic_relation", "declare_war_on",
+                "end_puppet", "release", "release_puppet", "add_opinion_modifier", "set_cosmetic_tag"}
+
+
+def top_level_spans(text: str):
+    """Yield (key, start, end, body) for each statement at depth 0; body is None for `key = value`.
+    Comments and quoted strings are skipped. An unclosed final block runs to the end of the text."""
+    i, n = 0, len(text)
+    while i < n:
+        c = text[i]
+        if c == "#":
+            j = text.find("\n", i)
+            i = n if j < 0 else j + 1
+            continue
+        m = re.compile(r"([\w.\-@:]+)\s*(=|<|>)\s*").match(text, i)
+        if not m:
+            i += 1
+            continue
+        start, j = i, m.end()
+        if j < n and text[j] == "{":
+            depth, k = 1, j + 1
+            while k < n and depth:
+                ch = text[k]
+                if ch == "#":
+                    e = text.find("\n", k)
+                    k = n if e < 0 else e
+                elif ch == '"':
+                    e = text.find('"', k + 1)
+                    k = n if e < 0 else e
+                elif ch == "{":
+                    depth += 1
+                elif ch == "}":
+                    depth -= 1
+                k += 1
+            yield m.group(1), start, k, text[j + 1:k - 1]
+            i = k
+        else:
+            v = re.compile(r'"[^"\n]*"|[^\s{}#]+').match(text, j)
+            k = v.end() if v else j
+            yield m.group(1), start, k, None
+            i = k
+
+
+def sanitize_history(text: str) -> str:
+    """Drop vanilla's dated entries (1939 and later), its armies and its wartime diplomacy."""
+    out, last = [], 0
+    for key, start, end, body in top_level_spans(text):
+        drop = key in HISTORY_DROP or DATE_RE.fullmatch(key) is not None
+        if key == "if" and body is not None and any(re.search(rf"\b{k}\b", body) for k in HISTORY_DROP):
+            drop = True
+        if drop:
+            out.append(text[last:start])
+            last = end
+    out.append(text[last:])
+    return "".join(out)
+
+
 def brace_depth(text: str) -> int:
     """Open braces left at the end of a script file, ignoring comments and quoted strings."""
     text = re.sub(r'"[^"\n]*"', "", re.sub(r"#[^\n]*", "", text))
@@ -337,8 +399,19 @@ def brace_depth(text: str) -> int:
 
 
 def cold_war_countries(src: Sources, out: Path, cw) -> int:
-    """Append each country's 1949 government to its own history file."""
+    """Strip every country history back to 1936 basics (sanitize_history), then append each country's
+    1949 government."""
     files = {f.name[:3]: f for f in src.files("history/countries")}
+    for tag, f in files.items():
+        if tag in ("APL", "PRK"):
+            continue
+        dst = out / "history" / "countries" / f.name
+        text = sanitize_history(read(dst) if dst.exists() else read(f))
+        depth = brace_depth(text)
+        if depth > 0:
+            text = text.rstrip() + "\n" + "}" * depth + "\n"
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        dst.write_text(text, encoding="utf-8")
     done = 0
     for tag, (party, pop, key, name, sub, cosmetic) in cw.COUNTRIES.items():
         if tag in ("PRK", "APL") or tag not in files:
@@ -538,6 +611,9 @@ def build(game: Path, out_root: Path, dry_run: bool, base_arg: str | None = None
     inner = (SRC / "descriptor.mod").read_text().replace('supported_version="1.*"', f'supported_version="{version}"')
     if prof["dependency"]:
         inner += f'dependencies={{\n\t"{prof["dependency"]}"\n}}\n'
+    if prof_name == "vanilla":
+        # The Cold War replaces the vanilla start dates: only the 1949 bookmark is offered.
+        inner += 'replace_path="common/bookmarks"\n'
     (out / "descriptor.mod").write_text(inner, encoding="utf-8")
     (out_root / f"{MOD_NAME}.mod").write_text(inner + f'path="{out.as_posix()}"\n', encoding="utf-8")
     print(f"built for game version {version} on {prof['label']}.")

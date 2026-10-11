@@ -171,3 +171,12 @@ TECH_YEAR = {"USA": 1946, "SOV": 1946, "ENG": 1945, "FRA": 1944, "WGR": 1943, "D
              "BEL": 1943, "NOR": 1942, "DEN": 1942, "ISR": 1942, "RAJ": 1941, "PAK": 1940, "KOR": 1940,
              "PRK": 1941, "SPR": 1941, "TUR": 1941}
 TECH_YEAR_DEFAULT = 1939
+
+# 1949 armies: infantry divisions raised at each country's capital when the game starts. Vanilla's
+# 1936 armies are removed for this start (build_mod.sanitize_history), so these are all there is until
+# the 1949 orders of battle (stage 2). Any country not listed gets ARMY_DEFAULT; Appalachia keeps its own.
+ARMY = {"USA": 30, "SOV": 60, "ENG": 20, "FRA": 20, "PRC": 40, "CHI": 30, "ITA": 10, "POL": 12, "YUG": 14,
+        "TUR": 14, "RAJ": 14, "PAK": 6, "KOR": 6, "PRK": 10, "ISR": 5, "EGY": 6, "CZE": 8, "HUN": 5, "ROM": 8,
+        "BUL": 6, "ALB": 2, "GRE": 8, "SPR": 12, "PER": 6, "ARG": 6, "BRA": 6, "CAN": 4, "AST": 4, "SWE": 6,
+        "FIN": 5, "DDR": 2, "WGR": 2, "JAP": 0, "INS": 6, "VIN": 4, "MON": 3, "SAU": 3, "IRQ": 3, "SYR": 3}
+ARMY_DEFAULT = 2

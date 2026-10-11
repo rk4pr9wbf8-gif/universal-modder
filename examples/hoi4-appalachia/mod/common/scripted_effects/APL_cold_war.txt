@@ -590,6 +590,749 @@ APL_cw_setup_1949 = {
 		}
 	}
 	log = "The Veiled Hollows 1949: technology"
+	log = "The Veiled Hollows 1949: armies"
+	# armies: a standard infantry template and divisions at the capital
+	every_country = {
+		limit = { tag = USA }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 30
+		}
+	}
+	every_country = {
+		limit = { tag = SOV }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 60
+		}
+	}
+	every_country = {
+		limit = { tag = ENG }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 20
+		}
+	}
+	every_country = {
+		limit = { tag = FRA }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 20
+		}
+	}
+	every_country = {
+		limit = { tag = PRC }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 40
+		}
+	}
+	every_country = {
+		limit = { tag = CHI }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 30
+		}
+	}
+	every_country = {
+		limit = { tag = ITA }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 10
+		}
+	}
+	every_country = {
+		limit = { tag = POL }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 12
+		}
+	}
+	every_country = {
+		limit = { tag = YUG }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 14
+		}
+	}
+	every_country = {
+		limit = { tag = TUR }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 14
+		}
+	}
+	every_country = {
+		limit = { tag = RAJ }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 14
+		}
+	}
+	every_country = {
+		limit = { tag = PAK }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = KOR }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = PRK }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 10
+		}
+	}
+	every_country = {
+		limit = { tag = ISR }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 5
+		}
+	}
+	every_country = {
+		limit = { tag = EGY }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = CZE }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 8
+		}
+	}
+	every_country = {
+		limit = { tag = HUN }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 5
+		}
+	}
+	every_country = {
+		limit = { tag = ROM }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 8
+		}
+	}
+	every_country = {
+		limit = { tag = BUL }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = ALB }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 2
+		}
+	}
+	every_country = {
+		limit = { tag = GRE }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 8
+		}
+	}
+	every_country = {
+		limit = { tag = SPR }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 12
+		}
+	}
+	every_country = {
+		limit = { tag = PER }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = ARG }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = BRA }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = CAN }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 4
+		}
+	}
+	every_country = {
+		limit = { tag = AST }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 4
+		}
+	}
+	every_country = {
+		limit = { tag = SWE }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = FIN }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 5
+		}
+	}
+	every_country = {
+		limit = { tag = DDR }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 2
+		}
+	}
+	every_country = {
+		limit = { tag = WGR }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 2
+		}
+	}
+	every_country = {
+		limit = { tag = INS }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 6
+		}
+	}
+	every_country = {
+		limit = { tag = VIN }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 4
+		}
+	}
+	every_country = {
+		limit = { tag = MON }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 3
+		}
+	}
+	every_country = {
+		limit = { tag = SAU }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 3
+		}
+	}
+	every_country = {
+		limit = { tag = IRQ }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 3
+		}
+	}
+	every_country = {
+		limit = { tag = SYR }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 3
+		}
+	}
+	every_country = {
+		limit = { NOT = { tag = USA tag = SOV tag = ENG tag = FRA tag = PRC tag = CHI tag = ITA tag = POL tag = YUG tag = TUR tag = RAJ tag = PAK tag = KOR tag = PRK tag = ISR tag = EGY tag = CZE tag = HUN tag = ROM tag = BUL tag = ALB tag = GRE tag = SPR tag = PER tag = ARG tag = BRA tag = CAN tag = AST tag = SWE tag = FIN tag = DDR tag = WGR tag = JAP tag = INS tag = VIN tag = MON tag = SAU tag = IRQ tag = SYR tag = APL } }
+		division_template = {
+			name = "Infantry Division"
+			regiments = {
+				infantry = { x = 0 y = 0 }
+				infantry = { x = 0 y = 1 }
+				infantry = { x = 0 y = 2 }
+				infantry = { x = 1 y = 0 }
+				infantry = { x = 1 y = 1 }
+				infantry = { x = 1 y = 2 }
+			}
+		}
+		create_unit = {
+			division = "division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 0.8"
+			owner = THIS
+			count = 2
+		}
+	}
 	# 1949 technology (generated by build_mod.py from the game's own technologies)
 	APL_cw_set_tech = yes
 	log = "The Veiled Hollows 1949: done"

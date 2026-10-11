@@ -8,14 +8,14 @@ States as the **Veiled Commonwealth of Appalachia** (tag `APL`).
 
 ![thumbnail](mod/thumbnail.png)
 
-## Three starts, one install
+## The Cold War, on the normal game
 
-The mod builds on the normal game, with no other mods needed:
+The mod replaces the vanilla start dates: the only start is **The Cold War, 23 May 1949**. For it, the
+installer strips the game's own country histories back to their 1936 basics. It removes the 1939 entries,
+the 1936 armies and the wartime puppets and alliances, because in 1949 several of those countries no
+longer exist. The 1949 setup then raises new armies, alliances and subjects.
 
-- **1936 (The Gathering Storm)** and **1939**: Appalachia (West Virginia, Kentucky, Tennessee) breaks away
-  on New Year's Eve 1935.
-- **1949 (The Cold War)**, a new bookmark: the world on 23 May 1949, with Appalachia breaking away that
-  night. The previous four entries spell out the details:
+- **The world on 23 May 1949**, with Appalachia breaking away that night. The previous four entries spell out the details:
   - **Europe:** Germany split into the Federal Republic and the Soviet zone. Poland moved west. The Baltics,
     eastern Poland, Königsberg, Karelia, Bessarabia and Carpathian Ruthenia in the USSR. Austria
     restored. Communist governments from East Berlin to Tirana, with Tito's Yugoslavia on its own.

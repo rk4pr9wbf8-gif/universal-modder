@@ -152,6 +152,19 @@
 17. `APL_cw_setup_1949` writes `log = "The Veiled Hollows 1949: <step>"` lines to game.log, so the next
     crash report shows the last step reached.
 
+### Third 1949 test: same crash, so the vanilla start dates go
+18. Still crashing right after "Executing History … to 1949.5.23". The most likely cause: on the way to
+    1949, the game also replays vanilla's 1939 country entries (1939 armies, puppets, factions) for
+    countries that no longer exist in 1949 (GER, MAN, MEN…).
+    - The user agreed to replace the vanilla start dates. The descriptor gets
+      `replace_path="common/bookmarks"`, and 1949 is the only (default) bookmark.
+    - `sanitize_history()` drops every dated entry and every top-level `oob`, `set_*_oob`, `puppet`,
+      `set_autonomy`, faction, guarantee and diplomacy statement (and `if` blocks holding them) from all
+      country histories.
+    - `APL_cw_setup_1949` then raises armies: a 6-infantry template and `create_unit` with a `count` per
+      country (cold_war_1949.ARMY).
+19. Inside `every_country` during on_startup, ROOT is empty. Use THIS for `create_unit`'s owner.
+
 ## Verification so far
 - `validate.py --cwt`: 18 files parse. 263 loc keys, 129 sprites and every texture present. 35 focuses with no
   overlapping positions, 19 ideas, 8 decisions, 19 events, 6 units. All effect, trigger and modifier names are
